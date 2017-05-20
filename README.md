@@ -1,6 +1,7 @@
 New Vinaget Script 3.2 Dev - Developed by LTT♥  
-Referer from: https://github.com/giaythuytinh176/vinaget-script  
-  
+Referer from: https://github.com/giaythuytinh176/vinaget-script   
+Contact email for request plugin updates: lethanhtuan2897@gmail.com  
+
 ######################################  
 How to use:  
 CHMOD the folder "data" to 777  
