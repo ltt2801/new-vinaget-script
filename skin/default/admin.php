@@ -1,8 +1,7 @@
 <?php
 echo '<h3><a href="?id=admin&page=config">Config</a> | 
 	  <a href="?id=admin&page=host">Host</a> | 
-	  <a href="?id=admin&page=account">Account</a> |
-	  <a href="?id=admin&page=debrid">Debrid</a> |	  
+	  <a href="?id=admin&page=account">Account</a> |  
 	  <a href="?id=admin&page=cookie">Cookie</a> | 
 	  <a href="?id=admin&page=debug">Debug</a></h3>';
 
@@ -136,29 +135,24 @@ elseif($page == 'account'){
 	echo "</table>";
 }
 elseif($page == 'host'){
-	if ($obj->debrid_mode == true) {
-		echo "<BR><BR><font color=red size=2>".$obj->lang['dbnotaccess']."</b></font>";
+	echo '<table id="tableHOST" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
+			<tr class="flisttblhdr" valign="bottom">
+				<td align="center"><B>Host</B></td>
+				<td align="center"><B>Max Size</B></td>
+				<td align="center"><B>Proxy</B></td>
+				<td align="center"><B>Direct</B></td>
+			</tr>
+		';
+	foreach ($obj->acc as $ckey=>$val){
+		echo '<tr class="flistmouseoff">
+				<td><B>'.$ckey.'</B></td>
+				<td><input type="text" name="host['.$ckey.'][max_size]" value="'.$val['max_size'].'"/></td>
+				<td><input type="text" name="host['.$ckey.'][proxy]" value="'.$val['proxy'].'"/></td>
+				<td><input type="checkbox" name="host['.$ckey.'][direct]" value="ON" '.($val['direct'] ? 'checked' : '').'/></td>
+			</tr>';
 	}
-	else {
-		echo '<table id="tableHOST" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
-				<tr class="flisttblhdr" valign="bottom">
-					<td align="center"><B>Host</B></td>
-					<td align="center"><B>Max Size</B></td>
-					<td align="center"><B>Proxy</B></td>
-					<td align="center"><B>Direct</B></td>
-				</tr>
-			';
-		foreach ($obj->acc as $ckey=>$val){
-			echo '<tr class="flistmouseoff">
-					<td><B>'.$ckey.'</B></td>
-					<td><input type="text" name="host['.$ckey.'][max_size]" value="'.$val['max_size'].'"/></td>
-					<td><input type="text" name="host['.$ckey.'][proxy]" value="'.$val['proxy'].'"/></td>
-					<td><input type="checkbox" name="host['.$ckey.'][direct]" value="ON" '.($val['direct'] ? 'checked' : '').'/></td>
-				</tr>';
-		}
-		echo "</table>";
-		echo "<input id='submit' type='submit' name='submit' value='Save Changed'/>";
-	}
+	echo "</table>";
+	echo "<input id='submit' type='submit' name='submit' value='Save Changed'/>";
 }
 elseif($page == 'debug'){
 ?>
