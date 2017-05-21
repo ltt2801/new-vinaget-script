@@ -205,7 +205,7 @@
 						<?php showStat();?>
 						<!-- End Server Info -->
 						<hr />
-						<script type="text/javascript" language="javascript" src="ajax.js?ver=1.0"></script> 
+						<script type="text/javascript" language="javascript" src="ajax.js?v=<?php echo mt_rand(); ?>"></script> 
 					<!-- Copyright please don't remove-->
 						<?php printf($obj->lang['footer']);?>
 						<STRONG><SPAN class='powered'>Based on <a href='https://github.com/giaythuytinh176/vinaget-script'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br/>

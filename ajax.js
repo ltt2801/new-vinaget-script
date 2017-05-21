@@ -92,8 +92,14 @@ function get(obj) {
 }
 
 function ajaxget(id,url,type){
-	if (document.getElementById("autopcbox").checked === true) var autopcbox = 1;
-	if (document.getElementById("autosearchuser").checked === true) var autosearchuser = 1;
+	var autopcbox = 0;
+	var autosearchuser = 0;
+	
+	if (document.getElementById("autopcbox") && document.getElementById("autopcbox").checked === true)
+		autopcbox = 1;
+	if (document.getElementById("autosearchuser") && document.getElementById("autosearchuser").checked === true)
+		autosearchuser = 1;
+	
 	var nick = $("#nick").val();
 	var pass = $("#pass").val();
 	var param = $("form[name=formlink]").serialize();

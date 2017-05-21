@@ -26,7 +26,7 @@ require_once('class.php');
 $obj = new stream_get(); 
 $obj->using = $using;
 $obj->current_version = 93;
-$obj->ltt_version = 1;
+$obj->ltt_version = 2;
 $obj->msg = false;
 if (!empty($_COOKIE['msg'])) $obj->msg = htmlspecialchars($_COOKIE['msg']);
 setcookie('msg', '');
