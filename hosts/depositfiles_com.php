@@ -39,7 +39,7 @@ class dl_depositfiles_com extends Download {
 /*
 * Open Source Project
 * New Vinaget by LTT❤
-* Version: 3.2 Dev
+* Version: 3.3
 * Depositfiles.com Download Plugin  
 * Date: 21.05.2017
 */

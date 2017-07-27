@@ -15,7 +15,7 @@ class dl_turbobit_net extends Download {
     }
          
     public function Login($user, $pass){
-        $data = $this->lib->curl("http://turbobit.net/user/login", "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
+        $data = $this->lib->curl("https://turbobit.net/user/login", "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
 		if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isredirect($data)) $this->lib->curl(trim($this->redirect), "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
         $cookie = "user_lang=en;".$this->lib->GetCookies($data);
         return $cookie;
@@ -45,12 +45,9 @@ class dl_turbobit_net extends Download {
 
 /*
 * Open Source Project
-* Vinaget by ..::[H]::..
-* Version: 2.7.0
+* New Vinaget by LTT❤
+* Version: 3.3
 * Turbobit Download Plugin
-* Downloader Class By [FZ]
-* Fixed By djkristoph
-* Fixed check account by giaythuytinh176 [28.7.2013]
-* Fixed check account by rayyan [12.9.2014]
+* Date: 09.06.2017
 */
 ?>
