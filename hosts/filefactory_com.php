@@ -22,20 +22,20 @@ class dl_filefactory_com extends Download {
 	}
 
 	public function CheckAcc($cookie){
-		$data = $this->lib->curl("http://www.filefactory.com/account/", "ff_locale=en_US.utf8;".$cookie, "");
-		if(stristr($data, 'Premium valid until: <strong>')) return array(true, "Until ".$this->lib->cut_str($data, 'Premium valid until: <strong>', '</strong>">'));
-		elseif(stristr($data, '>Free Member</strong>')) return array(false, "accfree");
+		$data = $this->lib->curl("http://www.filefactory.com/account/", "locale=en_US.utf8;".$cookie, "");
+		if(stristr($data, 'Premium valid until:')) return array(true, "Until ".$this->lib->cut_str($data, 'Premium valid until: <strong>', '</strong>">'));
+		elseif(stristr($data, '<strong>Free Member</strong>')) return array(false, "accfree");
 		else return array(false, "accinvalid");
 	}
 	
 	public function Login($user, $pass){
-		$data = $this->lib->curl("http://www.filefactory.com", "ff_locale=en_US.utf8", "");
+		$data = $this->lib->curl("http://www.filefactory.com", "locale=en_US.utf8", "");
 		$cookies = $this->lib->Getcookies($data);
 		$post["loginEmail"] = $user;
 		$post["loginPassword"] = $pass;
 		$post['Submit'] = "Sign%20In";
-		$data = $this->lib->curl("http://www.filefactory.com/member/signin.php", "ff_locale=en_US.utf8; {$cookies}", $post);
-		return "ff_locale=en_US.utf8; {$cookies};".$this->lib->GetCookies($data);
+		$data = $this->lib->curl("http://www.filefactory.com/member/signin.php", "locale=en_US.utf8; {$cookies}", $post);
+		return "locale=en_US.utf8; {$cookies};".$this->lib->GetCookies($data);
 	}
 	
     public function Leech($url) {
@@ -46,6 +46,7 @@ class dl_filefactory_com extends Download {
 		elseif(stristr($url,'code=251'))  $this->error("dead", true, false, 2);
 		elseif(stristr($url,'code=253'))  $this->error("Server Maintenance", true, false);
 		$data = $this->lib->curl($url, $this->lib->cookie, "");
+
 		if($pass) {
 			$post["password"] = $pass;
 			$post["Submit"] = "Continue";
@@ -58,7 +59,7 @@ class dl_filefactory_com extends Download {
 		}
 		if(stristr($data,'name="password" id="password" type="password"')) 	$this->error("reportpass", true, false);
         elseif(!$this->isredirect($data)) {
-			if(preg_match('/href="(https?:\/\/.+filefactory\.com\/get\/.+)" class/i', $data, $link))	return trim($link[1]);
+			if(preg_match('/href="(https?:\/\/.+filefactory\.com\/get\/.+)">/i', $data, $link)) return trim($link[1]);
 		}
 		else return trim($this->redirect);
 		return false;
@@ -68,13 +69,9 @@ class dl_filefactory_com extends Download {
 
 /*
 * Open Source Project
-* Vinaget by ..::[H]::..
-* Version: 2.7.0
-* Filefactory.com Download Plugin by giaythuytinh176
-* Downloader Class By [FZ]
-* Date: 16.7.2013
-* Fixed check account: 18.7 
-* Fix download link Filefactory, Add support file password by giaythuytinh176 [29.7.2013]
-* Fixed check account, download link by giaythuytinh176  [12.9.2013][They change a lot :D] 
+* New Vinaget by LTT❤
+* Version: 3.3
+* Filefactory.com Download Plugin
+* Date: 30.07.2017
 */
 ?>
