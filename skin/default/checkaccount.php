@@ -41,7 +41,7 @@ if (isset($_POST["check"])) {
 				}
 			}
 			if(!$obj->isadmin()) $account = substr($account, 0, 5)."****";
-			echo '<tr class="flistmouseoff" align="center"><td><B>'.$account.'</B></td><td>'.$type.'</td><td id="unknown-'.$check.'">'.$msg[0].'</td><td id="unknown-'.$check.'">'.$msg[1].'</td></tr>';
+			echo '<tr class="flistmouseoff" align="center"><td style="word-break:break-all"><B>'.$account.'</B></td><td>'.$type.'</td><td id="unknown-'.$check.'">'.$msg[0].'</td><td id="unknown-'.$check.'">'.$msg[1].'</td></tr>';
 			$i++;
 		}
 		echo "</table>";
@@ -61,7 +61,7 @@ if (isset($_POST["check"])) {
 	
 }
 else {
-	echo '<div style="overflow: auto; height: auto; width: 800px;" align="left">'; 
+	echo '<div style="overflow: auto; height: auto; width: 713px;" align="left">'; 
 	foreach($obj->acc as $host => $acc){
 		if(count($acc["accounts"])>0){
 			echo '<table id="table-'.$host.'" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
@@ -75,7 +75,7 @@ else {
 				if (stristr($account,':')) $type = "account";
 				else $type = "cookie";
 				if(!$obj->isadmin()) $account = substr($account, 0, 5)."****";
-				echo '<tr class="flistmouseoff" align="center"><td><B>'.$account.'</B></td><td>'.$type.'</td><td id="unknown-'.$host.'">'.$obj->lang['unknown'].'</td><td id="unknown-'.$host.'">'.$obj->lang['unknown'].'</td></tr>';
+				echo '<tr class="flistmouseoff" align="center"><td style="word-break:break-all"><B>'.$account.'</B></td><td>'.$type.'</td><td id="unknown-'.$host.'">'.$obj->lang['unknown'].'</td><td id="unknown-'.$host.'">'.$obj->lang['unknown'].'</td></tr>';
 			}
 			echo "</table>";
 			echo "<a onclick=\"checkacc('{$host}');\" href=\"javascript:void(0)\" style='TEXT-DECORATION: none'><font color=#FF6600>".sprintf($obj->lang['checkacc'], $host)."</font></a><BR><BR>";

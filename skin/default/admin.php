@@ -6,9 +6,12 @@ echo '<h3><a href="?id=admin&page=config">Config</a> |
 	  <a href="?id=admin&page=debug">Debug</a></h3>';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'config';
+
 if($page == "debug") echo "<form method='POST' action='debug.php' target='debug'>";
 else echo "<form method='POST' action='proccess.php?page={$page}'>";
 if($obj->msg) echo "<b>{$obj->msg}</b>";
+
+// config
 if($page == 'config'){
 	include ("config.php");
 	echo '<table id="tableCONFIG" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
@@ -41,7 +44,7 @@ if($page == 'config'){
 	foreach($obj->config as $ckey => $cval){
 		echo '<tr class="flistmouseoff"><td><i><b>'.$ckey.'</b></i></td><td style="text-align:right">';
 		if(gettype($cval) == 'string' || gettype($cval) == 'integer') {
-			if ($ckey == "api_ads1" || $ckey == "api_ads2" || $ckey == "api_ads3") echo '<input size="40" type="text" name="config['.$ckey.']" value="'.$cval.'" placeholder="only support sh.st, ouo.io, adf.ly, bc.vc" spellcheck="false" autocomplete="off">';
+			if ($ckey == "api_ads") echo '<input size="40" type="text" name="config['.$ckey.']" value="'.$cval.'" placeholder="only support sh.st, ouo.io, adf.ly, bc.vc" spellcheck="false" autocomplete="off">';
 			else echo '<input size="40" type="text" name="config['.$ckey.']" value="'.$cval.'" spellcheck="false" autocomplete="off">';
 		}
 		elseif(gettype($cval) == 'boolean') echo '<label for="config['.$ckey.'][\'on\']"><input type="radio" id="config['.$ckey.'][\'on\']" value="on" name="config['.$ckey.']"'.($cval ? ' checked="checked"' : '').'/> On</label> <label for="config['.$ckey.'][\'off\']"><input type="radio" id="config['.$ckey.'][\'off\']" value="off" name="config['.$ckey.']"'.(!$cval ? ' checked="checked"' : '').'/> Off</label>';
@@ -58,6 +61,8 @@ if($page == 'config'){
 	<br/>
 <?php
 }
+
+// cookie
 elseif($page == 'cookie'){
 ?>
 	<table>
@@ -84,16 +89,18 @@ elseif($page == 'cookie'){
 	</tr>
 	</table>
 <?php
-	echo '<table id="tableCOOKIE" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
+	echo '<table id="tableCOOKIE" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center" colspan="3"><B>COOKIE</B></td>
 			</tr>
 		';
 	foreach ($obj->cookies as $ckey=>$cookies){
-		if($cookies['cookie'] != "") echo '<tr class="flistmouseoff"><td><B>'.$ckey.'</B></td><td>'.$cookies['cookie'].'</td><td><a style="color: black;" href="proccess.php?page=cookie&del='.$ckey.'">[X]</a></td></tr>';
+		if($cookies['cookie'] != "") echo '<tr class="flistmouseoff"><td><B>'.$ckey.'</B></td><td style="word-break:break-all">'.$cookies['cookie'].'</td><td width="1"><B><a style="color: black;" href="proccess.php?page=cookie&del='.$ckey.'">[DELETE]</a></B></td></tr>';
 	}
 	echo "</table>";
 }
+
+// account
 elseif($page == 'account'){
 ?>
 	<table>
@@ -119,7 +126,7 @@ elseif($page == 'account'){
 	</tr>
 	</table>
 <?php
-	echo '<table id="tableAccount" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
+	echo '<table id="tableAccount" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center" colspan="3"><B>Account</B></td>
 			</tr>
@@ -128,14 +135,14 @@ elseif($page == 'account'){
 		$max = count($val['accounts']);
 		if($max != 0){
 			for($i=0;$i<$max;$i++){
-				echo '<tr class="flistmouseoff"><td><B>'.$ckey.'</B></td><td>'.$val['accounts'][$i].'</td><td><a style="color: black;" href="proccess.php?page=account&del='.$i.'&host='.$ckey.'">Delete</a></td></tr>';
+				echo '<tr class="flistmouseoff"><td><B>'.$ckey.'</B></td><td style="word-break:break-all">'.$val['accounts'][$i].'</td><td width="1"><B><a style="color: black;" href="proccess.php?page=account&del='.$i.'&host='.$ckey.'">[DELETE]</a></B></td></tr>';
 			}
 		}
 	}
 	echo "</table>";
 }
 elseif($page == 'host'){
-	echo '<table id="tableHOST" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
+	echo '<table id="tableHOST" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center"><B>Host</B></td>
 				<td align="center"><B>Max Size</B></td>
@@ -154,6 +161,8 @@ elseif($page == 'host'){
 	echo "</table>";
 	echo "<input id='submit' type='submit' name='submit' value='Save Changed'/>";
 }
+
+// debug
 elseif($page == 'debug'){
 ?>
 <table style="width:70%;">
