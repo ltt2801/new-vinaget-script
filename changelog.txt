@@ -1,0 +1,7 @@
+v3:
+- Fixed overflow table admin cookie, account, checkacc
+- Update alfafile.net, filefactory.com, depositfiles.com, yunfile.com, katfile.com, catshare.net, turbobit.net
+v2:
+- Small bugs fixed
+v1:
+- First release v3.2 Dev

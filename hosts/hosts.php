@@ -49,20 +49,4 @@ while ( $hostname = readdir ( $folderhost ) ) {
 	}
 }
 closedir ( $folderhost );
-
-// debrid hosts
-$folderhost = opendir ( "hosts/debrid/" );
-while ( $hostname = readdir ( $folderhost ) ) {		
-	if($hostname == "." || $hostname == ".." || strpos($hostname,"bak") || $hostname == "hosts.php") {continue;}
-	if(stripos($hostname,"php")){
-		$site = str_replace("_", ".", substr($hostname, 0, -4));
-		$debrid[$site] = array(
-			'alias' => false,
-			'site' => $site,
-			'file' => $hostname,
-			'class' => "dl_".str_replace(array(".","-"), "_", $site)
-		);
-	}
-}
-closedir ( $folderhost );
 ?>

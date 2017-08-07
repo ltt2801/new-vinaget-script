@@ -162,8 +162,9 @@
 								<font color="#FF3300"><b><font color="#FFFF66"><?php printf($obj->lang['version']);?></font> - <?php printf($obj->lang['welcome']);?></b></font>
 								<?php if($obj->isadmin()){
 									$obj->last_version = $obj->getversion();
-									if($obj->last_version > $obj->ltt_version)
-										echo '<br><font color="#dbac58"><b>'.sprintf($obj->lang['update1']).'</b> - <a href="https://github.com/ltt2801/new-vinaget-script">'.sprintf($obj->lang['update2'],$obj->last_version).'</a></font>';
+									if($obj->last_version > $obj->ltt_version) {
+										echo '<br><font color="#dbac58"><b>'.sprintf($obj->lang['update1']).'</b> - <a href="https://github.com/ltt2801/new-vinaget-script">'.sprintf($obj->lang['update2'],$obj->last_version).'</a></font> - <a href="https://raw.githubusercontent.com/ltt2801/new-vinaget-script/master/changelog.txt">changelog</a><br>';
+									}
 								}
 								?>
 								<br><font face=Arial size=1><span style="font-familty: Arial; color: #FFFFFF; font-size: 10px">Example: http://www.megaupload.com/?d=ABCDEXYZ<font size="3">|</font>password</span></font><BR>
