@@ -1,6 +1,6 @@
 v3:
 - Fixed overflow table admin cookie, account, checkacc
-- Update alfafile.net, filefactory.com, depositfiles.com, yunfile.com, katfile.com, catshare.net, turbobit.net
+- Updated alfafile.net, filefactory.com, depositfiles.com, yunfile.com, katfile.com, catshare.net, turbobit.net, rapidgator.net
 v2:
 - Small bugs fixed
 v1:
