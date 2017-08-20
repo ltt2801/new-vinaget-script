@@ -161,7 +161,7 @@ elseif($page == 'host'){
 			</tr>';
 	}
 	echo "</table>";
-	echo "<input id='submit' type='submit' name='submit' value='Save Changed'/>";
+	echo "&nbsp;<br/><input id='submit' type='submit' name='submit' value='Save Changes'/><br/>&nbsp;";
 }
 
 // debug
