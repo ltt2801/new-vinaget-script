@@ -1,7 +1,7 @@
 <?php
 $lang = array (
 'sitetile'		=> 'Vinaget',
-'version'		=> 'VinaGet 3.3 Dev',
+'version'		=> 'VinaGet 3.3 LTSB',
 'homepage'		=> 'vinaget.us',
 'title'			=> '%s - Tạo link nhanh và không giới hạn',
 'login'			=> 'Mời điền mật khẩu để đăng nhập.',
@@ -31,7 +31,6 @@ $lang = array (
 'dsuccess'		=> 'Tặng thành công!',
 'getloading'	=> 'đang kiểm tra...',
 'notaccess'		=> 'Bạn không có quyền truy cập !',
-'dbnotaccess'		=> 'Bạn đang ở chế độ debrid. Vui lòng truy cập tab Debrid',
 'notice'		=> 'Tự động xóa tệp tin sau <b>%s</b>. Giới hạn <b>%s</b> tệp tin trên <b>%s</b> trên <b>1</b> IP',
 'yourip'  		=> 'IP của bạn:',
 'yourjob' 		=> 'Đã sử dụng:',
@@ -64,7 +63,7 @@ $lang = array (
 'notfile'		=> 'Không tim thấy tệp tin',
 'acdis'			=> 'Bị khóa',
 'ac'			=> 'Dùng',
-'name'			=> 'Tên',
+'name'			=> 'Tên tập tin',
 'size'			=> 'Dung lượng',
 'date'			=> 'Thời gian',
 'original'		=> 'Liên kết gốc',
@@ -105,6 +104,7 @@ $lang = array (
 'notwork'		=> 'Không hoạt động',
 'work'			=> 'Hoạt động',
 'removed'		=> '[Đã xóa]',
+'notremoved'	=> '[Không xoá]',
 'unknown'		=> 'không rõ',
 'linkpass'		=> 'Liên kết có mật khẩu!',
 'wrongpass'		=> 'Mật khẩu không đúng!',
@@ -117,10 +117,11 @@ $lang = array (
 'autoreset'		=> 'Tự động xoá',
 'postcbox'		=> 'Tự đăng trên cbox',
 'searchuser'	=> 'Tự tìm user',
+'debridtype'	=> 'Loại Debrid:',
 );
 /*
-* Vinaget by ..::[H]::..
-* Version: 3.1 Final
+* Vinaget by LTT♥
+* Version: 3.3 LTSB
 * Language: Vietnamese
 */
 ?>

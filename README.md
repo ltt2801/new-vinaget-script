@@ -1,4 +1,4 @@
-New Vinaget Script 3.2 Dev - Developed by LTT♥  
+New Vinaget Script 3.3 LTSB - Developed by LTT♥  
 Referer from: https://github.com/giaythuytinh176/vinaget-script   
 Contact email for request plugin updates: lethanhtuan2897@gmail.com  
 
@@ -14,7 +14,7 @@ Password default: admin
 ######################################  
   
 Home page: http://vinaget.us  
-Version: VinaGet 3.2 Dev  
+Version: VinaGet 2.7 Final   
   
 Description:  
 Vinaget is script generator premium link that allows you to download files instantly and at the best of your Internet speed.  

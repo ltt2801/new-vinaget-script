@@ -43,4 +43,5 @@ $config['hide_plugins_col'] = false;
 $config['hide_preacc_col'] = false;
 $config['hide_number_acc'] = false;
 $config['show_func_cbox'] = false;
+$config['del_checked_acc'] = true;
 ?>

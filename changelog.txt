@@ -1,3 +1,10 @@
+v4:
+- Updated 1fichier.com, rapidgator.net
+- Fixed get wrong filename of download link
+- Added function not delete account die in menu check account
+- Fixed non-static class in class.php
+- Added prefiles.com, filejoker.net
+- Change to version 3.3 LTSB
 v3:
 - Fixed overflow table admin cookie, account, checkacc
 - Updated alfafile.net, filefactory.com, depositfiles.com, yunfile.com, katfile.com, catshare.net, turbobit.net, rapidgator.net

@@ -1,14 +1,15 @@
 <?php
 /*
-* Home page: http://vinaget.us
-* Blog:	http://blog.vinaget.us
+* Vinaget by LTT♥
 * Script Name: Vinaget 
-* Version: 3.2 Dev
-* Based on Vinaget 2.7.0
+* Version: 3.3 LTSB
 */
-// #################################### Begin class getinfo #####################################
-class getinfo
 
+/* Set default timezone */
+date_default_timezone_set('UTC');
+
+// #################################### Begin class getinfo #####################################
+class getinfo extends Tools_get
 {
 	function config()
 	{
@@ -65,6 +66,7 @@ class getinfo
 			@chmod($this->fileinfo_dir . "/files/index.php", 0666);
 		}
 	}
+	
 	function set_config(){
 		include("lang/{$this->config['language']}.php");
 		$this->lang = $lang;
@@ -106,19 +108,23 @@ class getinfo
 		$this->hide_preacc_col = $this->config['hide_preacc_col'];
 		$this->hide_number_acc = $this->config['hide_number_acc'];
 		$this->show_func_cbox = $this->config['show_func_cbox'];
+		$this->del_checked_acc = $this->config['del_checked_acc'];
 		$this->prox = isset($_POST['proxy']) ? $_POST['proxy'] : "";
 		$this->autopost = isset($_POST['autopcbox']) ? $_POST['autopcbox'] : "";
 		$this->autosearch = isset($_POST['autosearchuser']) ? $_POST['autosearchuser'] : "";
 		$this->user = isset($_POST['nick']) ? $_POST['nick'] : "";
 		$this->pass = isset($_POST['pass']) ? $_POST['pass'] : "";
 	}
+	
 	function isadmin(){
 		return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : $this->admin);
 	}
+	
 	function getversion(){
 		$version = $this->curl("https://raw.githubusercontent.com/ltt2801/new-vinaget-script/master/version.txt","","",0);
 		return intval($version);
 	}
+	
 	function notice($id="notice")
 	{
 		if($id=="notice") return sprintf($this->lang['notice'], Tools_get::convert_time($this->ttl * 60) , $this->limitPERIP, Tools_get::convert_time($this->ttl_ip * 60));
@@ -142,6 +148,7 @@ class getinfo
 			if($id=="useronline") return Tools_get::useronline();
 		}
 	}
+	
 	function load_jobs()
 	{
 		if (isset($this->jobs)) return;
@@ -165,6 +172,7 @@ class getinfo
 			}
 		}
 	}
+	
 	function save_jobs()
 	{
 		if (!isset($this->jobs) || is_array($this->jobs) == false) return;
@@ -191,6 +199,7 @@ class getinfo
 		if (count($this->lists)) foreach($this->lists as $file) if (file_exists($file)) @unlink($file);
 		return true;
 	}
+	
 	function load_json($file)
 	{
 		$hash = substr($file, 1);
@@ -202,6 +211,7 @@ class getinfo
 		}
 		return $data;
 	}
+	
 	function save_json($file, $data)
 	{
 		$tmp = json_encode($data);
@@ -215,11 +225,13 @@ class getinfo
 			return true;
 		}
 	}
+	
 	function load_cookies()
 	{
 		if (isset($this->cookies)) return;
 		$this->cookies = $this->load_json($this->filecookie);
 	}
+	
 	function get_cookie($site)
 	{
 		$cookie = "";
@@ -233,6 +245,7 @@ class getinfo
 		}
 		return $cookie;
 	}
+	
 	function save_cookies($site, $cookie)
 	{
 		if (!isset($this->cookies)) return;
@@ -245,6 +258,7 @@ class getinfo
 		}
 		$this->save_json($this->filecookie, $this->cookies);
 	}
+	
 	function load_account(){
 		if (isset($this->acc)) return;
 		$this->acc = $this->load_json($this->fileaccount);
@@ -257,12 +271,14 @@ class getinfo
 			}
 		}		
 	}
+	
 	function save_account($service, $acc){
 		foreach ($this->acc[$service]['accounts'] as $value) if ($acc == $value) return false; 
 		if(empty($this->acc[$service])) $this->acc[$service]['max_size'] = $this->max_size_default;
 		$this->acc[$_POST['type']]['accounts'][] = $_POST['account'];
 		$this->save_json($this->fileaccount, $this->acc);
 	}
+	
 	function get_account($service)
 	{
 		$acc = '';
@@ -273,6 +289,7 @@ class getinfo
 		}
 		return $acc;
 	}
+	
 	function lookup_job($hash)
 	{
 		$this->load_jobs();
@@ -281,6 +298,27 @@ class getinfo
 		}
 		return false;
 	}
+	
+	function check_jobs()
+	{
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$heute = 0;
+		$lasttime = time();
+		$altr = $lasttime - $this->ttl_ip * 60;
+		foreach($this->jobs as $job) {
+			if ($job['ip'] === $ip && $job['mtime'] > $altr) {
+				$heute++;
+				if ($job['mtime'] < $lasttime) $lasttime = $job['mtime'];
+			}
+		}
+		$lefttime = $this->ttl_ip * 60 - time() + $lasttime;
+		$lefttime = $this->convert_time($lefttime);
+		return array(
+			$heute,
+			$lefttime
+		);
+	}
+	
 	function get_load($i = 0)
 	{
 		$load = array(
@@ -308,6 +346,7 @@ class getinfo
 		}
 		return $i == - 1 ? $load : $load[$i];
 	}
+	
 	function lookup_ip($ip)
 	{
 		$this->load_jobs();
@@ -316,25 +355,6 @@ class getinfo
 			if ($job['ip'] === $ip) $cnt++;
 		}
 		return $cnt;
-	}
-	function Checkjobs()
-	{
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$heute = 0;
-		$lasttime = time();
-		$altr = $lasttime - $this->ttl_ip * 60;
-		foreach($this->jobs as $job) {
-			if ($job['ip'] === $ip && $job['mtime'] > $altr) {
-				$heute++;
-				if ($job['mtime'] < $lasttime) $lasttime = $job['mtime'];
-			}
-		}
-		$lefttime = $this->ttl_ip * 60 - time() + $lasttime;
-		$lefttime = Tools_get::convert_time($lefttime);
-		return array(
-			$heute,
-			$lefttime
-		);
 	}
 }
 // #################################### End class getinfo #######################################
@@ -371,6 +391,7 @@ class stream_get extends getinfo
 			setcookie('owner', $this->owner, 0);
 		}
 	}
+	
 	function download($hash)
 	{
 		error_reporting(0);
@@ -796,7 +817,7 @@ class stream_get extends getinfo
 			$this->error1('countMBIP', Tools_get::convertmb($this->limitMBIP * 1024 * 1024) , Tools_get::convert_time($this->ttl * 60) , Tools_get::convert_time($this->timebw));
 		}
 		/* check 1 */
-		$checkjobs = $this->Checkjobs();
+		$checkjobs = $this->check_jobs();
 		$heute = $checkjobs[0];
 		$lefttime = $checkjobs[1];
 		if ($heute >= $this->limitPERIP) {
@@ -881,7 +902,7 @@ class stream_get extends getinfo
 		}
 
 		/* check 2 */
-		$checkjobs = $this->Checkjobs();
+		$checkjobs = $this->check_jobs();
 		$heute = $checkjobs[0];
 		$lefttime = $checkjobs[1];
 		if ($heute >= $this->limitPERIP) {
@@ -1015,7 +1036,7 @@ class stream_get extends getinfo
 			$this->error1('countMBIP', Tools_get::convertmb($this->limitMBIP * 1024 * 1024) , Tools_get::convert_time($this->ttl * 60) , Tools_get::convert_time($this->timebw));
 		}
 		/* check 1 */
-		$checkjobs = $this->Checkjobs();
+		$checkjobs = $this->check_jobs();
 		$heute = $checkjobs[0];
 		$lefttime = $checkjobs[1];
 		if ($heute >= $this->limitPERIP) {
@@ -1064,7 +1085,7 @@ class stream_get extends getinfo
 		}
 		
 		/* check 2 */
-		$checkjobs = $this->Checkjobs();
+		$checkjobs = $this->check_jobs();
 		$heute = $checkjobs[0];
 		$lefttime = $checkjobs[1];
 		if ($heute >= $this->limitPERIP) {
@@ -1266,8 +1287,7 @@ class stream_get extends getinfo
 		if ($act == "") echo "<option value=\"dis\"> " . $this->lang['acdis'] . " </option>";
 		else echo '<option selected="selected">' . $this->lang['ac'] . '</option>' . $act;
 		echo '</select>';
-		echo '<div style="overflow: auto; height: auto; max-height: 450px; width: 800px;"><table id="table_filelist" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%"><thead><tr class="flisttblhdr" valign="bottom"><td id="file_list_checkbox_title" class="sorttable_checkbox">&nbsp;</td><td class="sorttable_alpha"><b>' . $this->lang['name'] . '</b></td>'.($this->directdl ? '<td><b>'.$this->lang['direct'].'</b></td>' : '').'<td><b>' . $this->lang['original'] . '</b></td><td><b>' . $this->lang['size'] . '</b></td><td><b>' . $this->lang['date'] . '</b></td><td><b>IP</b></td></tr></thead><tbody>
-    ';
+		echo '<div style="overflow: auto; height: auto; max-height: 500px; width: 713px;"><table id="table_filelist" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%"><thead><tr class="flisttblhdr" valign="bottom"><td id="file_list_checkbox_title" class="sorttable_checkbox">&nbsp;</td><td class="sorttable_alpha"><b>' . $this->lang['name'] . '</b></td>'.($this->directdl ? '<td><b>'.$this->lang['direct'].'</b></td>' : '').'<td><b>' . $this->lang['original'] . '</b></td><td><b>' . $this->lang['size'] . '</b></td><td><b>' . $this->lang['date'] . '</b></td><td><b>IP</b></td></tr></thead><tbody>';
 		usort($files, array(
 			$this,
 			'datecmp'
@@ -1289,7 +1309,7 @@ class stream_get extends getinfo
         ".($this->directdl ? "<td><a href='$file[7]' style='color: rgb(0, 0, 0);'>" . $hosting . "</a></td>" : "")."
         <td><a href='$file[0]' style='color: rgb(0, 0, 0);'>" . $hosting . "</a></td>
         <td>" . $file[6] . "</td>
-        <td><a href=http://www.google.com/search?q=$file[0] title='" . $this->lang['clickcheck'] . "' target='$file[1]'><font color=#000000>$timeago</font></a></center></td><td title='IP has generated link'>".$file[5]."</td>
+        <td><a target='_blank' href='https://www.google.com/search?q=$file[0]' title='" . $this->lang['clickcheck'] . "' target='$file[1]'><font color=#000000>$timeago</font></a></center></td><td><a target='_blank' href='http://whatismyipaddress.com/ip/$file[5]'><font color=#000000>".$file[5]."</font></a></td>
       </tr>";
 		}
 
@@ -1482,8 +1502,7 @@ class stream_get extends getinfo
 // #################################### End class stream_get ###################################
 // #################################### Begin class Tools_get ###################################
 
-class Tools_get extends getinfo
-
+class Tools_get
 {
 	function useronline()
 	{
@@ -1581,10 +1600,13 @@ class Tools_get extends getinfo
 		else $filesize = - 1;
 		if (!is_numeric($filesize)) $filesize = - 1;
 		$filename = "";
+		
 		if (stristr($header, "filename")) {
-			$filename = trim($this->cut_str($header, "filename", "\n"));
+			if (preg_match("/; filename=(.*?);/", $header, $match)) $filename = trim($match[1]);
+			else $filename = trim($this->cut_str($header, "filename", "\n"));
 		}
 		else $filename = substr(strrchr($link, '/') , 1);
+		
 		$filename = self::convert_name($filename);
 		return array(
 			$filesize,
@@ -1705,8 +1727,7 @@ class Tools_get extends getinfo
 	}
 }
 // #################################### End class Tools_get #####################################
-
-
+// #################################### Begin class Download ####################################
 class Download {
 	public $last = false;
 	public function __construct ($lib, $site) {
@@ -1857,6 +1878,7 @@ class Download {
 		return false;
 	}
 }
+// #################################### End class Download ####################################
 
 /**
  * Mega.co.nz downloader

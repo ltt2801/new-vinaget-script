@@ -3,14 +3,14 @@
 class dl_rapidgator_net extends Download {
 
 	public function CheckAcc($cookie){
-		$data = $this->lib->curl("http://rapidgator.net/profile/index", "lang=en;{$cookie}", "");
+		$data = $this->lib->curl("https://rapidgator.net/profile/index", "lang=en;{$cookie}", "");
 		if(stristr($data, 'Free</a>')) return array(false, "accfree");
 		elseif(stristr($data, 'Premium</a>')) {
 			if (stristr($data, 'Bandwith available</td>')) {
 				return array(true, "Bandwith available: ".strip_tags($this->lib->cut_str($data, 'Bandwith available</td>','</tr>')));
 			}
 			else {
-				$oob = $this->lib->curl("http://rapidgator.net/file/53bf8b159fb4c291f42b0ecb4e416292", "lang=en;{$cookie}", "");
+				$oob = $this->lib->curl("https://rapidgator.net/file/53bf8b159fb4c291f42b0ecb4e416292", "lang=en;{$cookie}", "");
 				if(stristr($oob, 'You have reached quota of downloaded information')) return array(true, "Until ".$this->lib->cut_str($data, ' ">Premium','</a></li>'). "<br> Account out of BW");
 				else return array(true, "Until ".$this->lib->cut_str($data, 'Premium services will end on ','<br/>If')." <br/>Bandwith available:" .$this->lib->cut_str($this->lib->cut_str($data, 'Bandwith available</td>','<div style='), '<td>','</br>'));
 			}

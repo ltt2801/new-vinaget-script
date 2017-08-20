@@ -1,7 +1,7 @@
 <?php
 $lang = array (
 'sitetile'		=> 'Vinaget',
-'version'		=> 'VinaGet 3.2 Dev',
+'version'		=> 'VinaGet 3.3 LTSB',
 'homepage'		=> 'vinaget.us',
 'title'			=> '%s - Premium link generator',
 'login'			=> 'Please enter password to login.',
@@ -31,8 +31,7 @@ $lang = array (
 'dsuccess'		=> 'Donate Success!',
 'getloading'	=> 'checking...',
 'notaccess'		=> 'You do not have permission to access this page !',
-'dbnotaccess'		=> 'You are in debrid mode. Please move to Debrid tab',
-'notice'		=> 'Auto del file after <b>%s</b>. Limit <b>%s</b> file per <b>%s</b> for <b>1</b> IP',
+'notice'		=> 'Auto delete file after <b>%s</b>. Limit <b>%s</b> file per <b>%s</b> for <b>1</b> IP',
 'yourip'		=> 'Your IP:',
 'yourjob'		=> 'Your jobs:',
 'youused'		=> 'You used',
@@ -64,7 +63,7 @@ $lang = array (
 'notfile'		=> 'No Files Found',
 'acdis'			=> 'Action Disabled',
 'ac'			=> 'Action',
-'name'			=> 'Name',
+'name'			=> 'File Name',
 'size'			=> 'Size',
 'date'			=> 'Date',
 'original'		=> 'Original Link',
@@ -105,6 +104,7 @@ $lang = array (
 'notwork'		=> 'Not Work',
 'work'			=> 'Work',
 'removed'		=> '[REMOVED]',
+'notremoved'	=> '[NOT REMOVE]',
 'unknown'		=> 'unknown',
 'linkpass'		=> 'Link have password!',
 'wrongpass'		=> 'Wrong password!',
@@ -117,10 +117,11 @@ $lang = array (
 'autoreset'		=> 'Auto reset',
 'postcbox'		=> 'Auto post cbox',
 'searchuser'	=> 'Auto search user',
+'debridtype'	=> 'Debrid Type:',
 );
 /*
-* Vinaget by ..::[H]::..
-* Version: 3.1 Final
-* Language: Vietnamese
+* Vinaget by LTT♥
+* Version: 3.3 LTSB
+* Language: English
 */
 ?>

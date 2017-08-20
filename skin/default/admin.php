@@ -1,7 +1,7 @@
 <?php
 echo '<h3><a href="?id=admin&page=config">Config</a> | 
 	  <a href="?id=admin&page=host">Host</a> | 
-	  <a href="?id=admin&page=account">Account</a> |  
+	  <a href="?id=admin&page=account">Account</a> | 
 	  <a href="?id=admin&page=cookie">Cookie</a> | 
 	  <a href="?id=admin&page=debug">Debug</a></h3>';
 
@@ -44,8 +44,8 @@ if($page == 'config'){
 	foreach($obj->config as $ckey => $cval){
 		echo '<tr class="flistmouseoff"><td><i><b>'.$ckey.'</b></i></td><td style="text-align:right">';
 		if(gettype($cval) == 'string' || gettype($cval) == 'integer') {
-			if ($ckey == "api_ads") echo '<input size="40" type="text" name="config['.$ckey.']" value="'.$cval.'" placeholder="only support sh.st, ouo.io, adf.ly, bc.vc" spellcheck="false" autocomplete="off">';
-			else echo '<input size="40" type="text" name="config['.$ckey.']" value="'.$cval.'" spellcheck="false" autocomplete="off">';
+			if ($ckey == "api_ads") echo '<input size="50" type="text" name="config['.$ckey.']" value="'.$cval.'" placeholder="only support sh.st, ouo.io, adf.ly, bc.vc" spellcheck="false" autocomplete="off">';
+			else echo '<input size="50" type="text" name="config['.$ckey.']" value="'.$cval.'" spellcheck="false" autocomplete="off">';
 		}
 		elseif(gettype($cval) == 'boolean') echo '<label for="config['.$ckey.'][\'on\']"><input type="radio" id="config['.$ckey.'][\'on\']" value="on" name="config['.$ckey.']"'.($cval ? ' checked="checked"' : '').'/> On</label> <label for="config['.$ckey.'][\'off\']"><input type="radio" id="config['.$ckey.'][\'off\']" value="off" name="config['.$ckey.']"'.(!$cval ? ' checked="checked"' : '').'/> Off</label>';
 		echo '</td></tr>';
@@ -54,7 +54,7 @@ if($page == 'config'){
 	echo '<tr class="flistmouseoff"><td><i><b>language</b></i></td><td style="text-align:right">'.$lang.'</td></tr>';
 	echo '<tr class="flistmouseoff"><td><i><b>skin</b></i></td><td style="text-align:right">'.$skin.'</td></tr>';
 	echo "</table>";
-?>	<br/>
+?>	<br/>&nbsp;
 	<center>
 		<input id='submit' type='submit' name="submit" value='Save Config'/>
 	</center>
@@ -141,8 +141,10 @@ elseif($page == 'account'){
 	}
 	echo "</table>";
 }
+
+// host
 elseif($page == 'host'){
-	echo '<table id="tableHOST" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
+	echo '<table id="tableHOST" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center"><B>Host</B></td>
 				<td align="center"><B>Max Size</B></td>
