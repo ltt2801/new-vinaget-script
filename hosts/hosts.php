@@ -23,6 +23,7 @@ $alias['putlocker.com'] = 'firedrive.com';
 $alias['rg.to'] = 'rapidgator.net';
 $alias['dl3.junocloud.me'] = 'junocloud.me';
 $alias['lumfile.com'] = 'terafile.co';
+$alias['depfile.us'] = 'depfile.com';
 
 // general hosts
 $folderhost = opendir ( "hosts/" );
@@ -46,6 +47,22 @@ while ( $hostname = readdir ( $folderhost ) ) {
 				'class' => "dl_".str_replace(array(".","-"), "_", $site)
 			);
 		}
+	}
+}
+closedir ( $folderhost );
+
+// debrid hosts
+$folderhost = opendir ( "hosts/debrid/" );
+while ( $hostname = readdir ( $folderhost ) ) {		
+	if($hostname == "." || $hostname == ".." || strpos($hostname,"bak") || $hostname == "hosts.php") {continue;}
+	if(stripos($hostname,"php")){
+		$site = str_replace("_", ".", substr($hostname, 0, -4));
+		$debrid[$site] = array(
+			'alias' => false,
+			'site' => $site,
+			'file' => $hostname,
+			'class' => "dl_".str_replace(array(".","-"), "_", $site)
+		);
 	}
 }
 closedir ( $folderhost );

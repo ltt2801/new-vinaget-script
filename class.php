@@ -649,7 +649,7 @@ class stream_get extends getinfo
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 		$page = curl_exec($ch);
@@ -1789,6 +1789,14 @@ class Download {
 		return $link;
 	}
 	
+	public function passredirect($data, $cookie){
+		if (stristr($data, "302 Found") && stristr($data, "ocation")) {
+			preg_match('/ocation: (.*)/',$data,$match);
+			$data = $this->lib->curl(trim($match[1]),$cookie,"");
+		}
+		return $data;
+	}
+	
 	public function parseForm($data){
 		$post = array();
 		if(preg_match_all('/<input(.*)>/U', $data, $matches)){
@@ -1823,7 +1831,7 @@ class Download {
 			}
 			else return $link;
 		}
-		$this->error("cantconnect", false, false); 
+		$this->error("cantconnect", false, false);
 		return false;
 	}
 	

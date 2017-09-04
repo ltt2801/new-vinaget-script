@@ -1,3 +1,8 @@
+v5:
+- Add depfile.us
+- Updated extmatrix.com, rapidgator.net, depfile.com
+- Add class passredirect in class.php
+- Miss function delete account die in checkaccount.php
 v4:
 - Updated 1fichier.com, rapidgator.net
 - Fixed get wrong filename of download link

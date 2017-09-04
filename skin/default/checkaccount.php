@@ -35,9 +35,15 @@ if (isset($_POST["check"])) {
 			else{
 				if($status[1] == "noplugin") $msg = array("unknown", $msgs);
 				else{
-					$msg = array("<font color='yellow'><b>{$obj->lang['notwork']}</b></font>", "<font color='black'><b>{$msgs} {$obj->lang['removed']}</b></font>");
-					$del[$check][$i] = true;
-					$update = true;
+					if ($obj->del_checked_acc === true) {
+						$msg = array("<font color='yellow'><b>{$obj->lang['notwork']}</b></font>", "<font color='black'><b>{$msgs} {$obj->lang['removed']}</b></font>");
+						$del[$check][$i] = true;
+						$update = true;
+					}
+					else {
+						$msg = array("<font color='yellow'><b>{$obj->lang['notwork']}</b></font>", "<font color='black'><b>{$msgs} {$obj->lang['notremoved']}</b></font>");
+						$update = false;
+					}
 				}
 			}
 			if(!$obj->isadmin()) $account = substr($account, 0, 5)."****";
