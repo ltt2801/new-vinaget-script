@@ -1,3 +1,6 @@
+v6:
+- Support mega.nz
+- Small bugs fixes
 v5:
 - Add depfile.us
 - Updated extmatrix.com, rapidgator.net, depfile.com

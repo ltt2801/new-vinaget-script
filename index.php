@@ -1,10 +1,8 @@
 <?php
 /*
-* Home page: http://vinaget.us
-* Blog:	http://blog.vinaget.us
-* Script Name: Vinaget 
-* Version: 3.2 Dev
-* Based on Vinaget 2.7.0
+* New Vinaget by LTT❤
+* Version: 3.3 LTSB
+* Based on Vinaget 2.7.0 Final Revision 93
 * Description: 
 	- Vinaget is script generator premium link that allows you to download files instantly and at the best of your Internet speed.
 	- Vinaget is your personal proxy host protecting your real IP to download files hosted on hosters like RapidShare, megaupload, hotfile...
@@ -13,6 +11,7 @@
 * Code LeechViet by VinhNhaTrang
 * Developed by - ..:: [H] ::..
 			   - [FZ]
+			   - LTT❤
 */
 $using = isset($_COOKIE['using']) ? $_COOKIE['using'] : 'default';
 $using = isset($_REQUEST['using']) ? $_REQUEST['using'] : $using;
@@ -26,7 +25,7 @@ require_once('class.php');
 $obj = new stream_get(); 
 $obj->using = $using;
 $obj->current_version = 93;
-$obj->ltt_version = 5;
+$obj->ltt_version = 6;
 $obj->msg = false;
 if (!empty($_COOKIE['msg'])) $obj->msg = htmlspecialchars($_COOKIE['msg']);
 setcookie('msg', '');

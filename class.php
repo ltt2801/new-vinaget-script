@@ -734,7 +734,7 @@ class stream_get extends getinfo
 		if (isset($url) && strlen($url) > 10) {
 			if (substr($url, 0, 4) == 'www.') $url = "http://" . $url;
 			if (!$this->check3x) {
-				if (stristr($url, 'mega.co.nz')) $dlhtml = $this->mega($url);
+				if (stristr($url, 'mega.co.nz') || stristr($url, 'mega.nz')) $dlhtml = $this->mega($url);
 				else $dlhtml = $this->get($url);
 			}
 			else {
@@ -756,7 +756,7 @@ class stream_get extends getinfo
 				}
 
 				if ($check3x == false) {
-					if (stristr($url, 'mega.co.nz')) $dlhtml = $this->mega($url);
+					if (stristr($url, 'mega.co.nz') || stristr($url, 'mega.nz')) $dlhtml = $this->mega($url);
 					else $dlhtml = $this->get($url);
 				}
 				else {
@@ -1059,7 +1059,7 @@ class stream_get extends getinfo
 		
 		$info = $megafile->file_info();
 		
-		$link = 'https://mega.co.nz/';
+		$link = $info['binary_url'];
 		 
 		$filesize = $info['size'];
 		$filename = isset($this->reserved['filename']) ? $this->reserved['filename'] : Tools_get::convert_name($info['attr']['n']);
@@ -1639,7 +1639,7 @@ class Tools_get
 		elseif (strpos($url, "up.4share.vn")  || strpos($url, "4share.vn"))  $site = "4ShareVN";
 		elseif (strpos($url, "share.vnn.vn"))   $site = "share.vnn.vn";
 		elseif (strpos($url, "upfile.vn"))   $site = "UpfileVN";
-		elseif (strpos($url, "mega.co.nz"))   $site = "MEGA";
+		elseif (strpos($url, "mega.co.nz") || strpos($url, "mega.nz"))   $site = "MEGA";
 		else {
 			$schema = parse_url($url);
 			$site = preg_replace("/(www\.|\.com|\.net|\.biz|\.info|\.org|\.us|\.vn|\.jp|\.fr|\.in|\.to)/", "", $schema['host']);
@@ -1933,16 +1933,16 @@ class MEGA {
     }
 
     function post($url, $post){
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-	$page = curl_exec($ch);
-	curl_close($ch);
-	return $page;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		$page = curl_exec($ch);
+		curl_close($ch);
+		return $page;
     }
 
 
