@@ -1,3 +1,7 @@
+v7:
+- Fixed uploaded.net
+- Change depfile.com to depfile.us
+- Updated depfile.us
 v6:
 - Support mega.nz
 - Small bugs fixes

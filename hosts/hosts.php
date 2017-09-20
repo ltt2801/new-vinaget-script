@@ -22,7 +22,7 @@ $alias['putlocker.com'] = 'firedrive.com';
 $alias['rg.to'] = 'rapidgator.net';
 $alias['dl3.junocloud.me'] = 'junocloud.me';
 $alias['lumfile.com'] = 'terafile.co';
-$alias['depfile.us'] = 'depfile.com';
+$alias['depfile.com'] = 'depfile.us';
 $alias['mega.co.nz'] = 'mega.nz';
 
 // general hosts

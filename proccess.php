@@ -71,7 +71,7 @@ switch ($page) {
 				$obj->acc[$_GET['host']]['accounts'][] = $val;
 			}
 			$obj->save_json($obj->fileaccount, $obj->acc);
-			$msg = $_GET['host'] . 'Account Deleted!';
+			$msg = $_GET['host'] . ' Account Deleted!';
 		}
 		break;
 
