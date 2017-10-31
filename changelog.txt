@@ -1,3 +1,7 @@
+v8:
+- Change code rapidgator.net
+- Fix fshare.vn
+- Updated depfile.us
 v7:
 - Fixed uploaded.net
 - Change depfile.com to depfile.us
