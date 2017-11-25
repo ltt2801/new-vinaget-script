@@ -816,7 +816,7 @@ class stream_get extends getinfo
 
     public function GetCookies($content)
     {
-        preg_match_all('/Set-Cookie: (.*);/ui', $content, $temp);
+        preg_match_all('/Set-Cookie: (.*);/U', $content, $temp);
         $cookie = $temp[1];
         $cookies = "";
         $a = array();
@@ -837,7 +837,7 @@ class stream_get extends getinfo
         $lines = explode("\n", $page);
         $retCookie = "";
         foreach ($lines as $val) {
-            preg_match('/Set-Cookie: (.*)/i', $val, $temp);
+            preg_match('/Set-Cookie: (.*)/', $val, $temp);
             if (isset($temp[1])) {
                 if ($cook = substr($temp[1], 0, stripos($temp[1], ';'))) {
                     $retCookie .= $cook . ";";
