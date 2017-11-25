@@ -1,3 +1,9 @@
+v9:
+- Add Uploadgig.com
+- Change up.4share.vn to 4share.vn
+- Change keep2share.cc, keep2s.cc to k2s.cc
+- Updated Novafile.com, Subyshare.com
+- Updated GetCookies, GetAllCookies in class.php
 v8:
 - Change code rapidgator.net
 - Fix fshare.vn
