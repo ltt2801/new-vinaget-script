@@ -18,8 +18,9 @@ class dl_share_online_biz extends Download {
 
     public function Leech($url) {
 		$data = $this->lib->curl($url, $this->lib->cookie, "");
-		$this->save($this->lib->GetCookies($data)); 
+		$this->save($this->lib->GetCookies($data));
 		if(stristr($data, 'The requested file is not available')) $this->error("dead", true, false, 2);
+		elseif ($this->isredirect($data)) return trim($this->redirect);
 		elseif(preg_match('/var dl="(.*)";var file/', $data, $en64)) {
 			$link = base64_decode($en64[1]);
 			return trim($link);
@@ -31,9 +32,9 @@ class dl_share_online_biz extends Download {
 
 /*
 * Open Source Project
-* Vinaget by ..::[H]::..
-* Version: 2.7.0
-* Share-online.biz Download Plugin by giaythuytinh176 [29.7.2013][16.11.2013][Fixed can't connect to SO]
-* Downloader Class By [FZ]
+* New Vinaget by LTT❤
+* Version: 3.3 LTSB
+* Share-online.biz Download Plugin  
+* Date: 02.12.2017
 */
 ?>

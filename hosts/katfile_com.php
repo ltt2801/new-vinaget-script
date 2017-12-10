@@ -24,6 +24,7 @@ class dl_katfile_com extends Download {
 		}
 		if(stristr($data,'type="password" name="password'))  $this->error("reportpass", true, false);
 		elseif (stristr($data,'<Title>File Not Found</Title>')) $this->error("dead", true, false, 2);
+		elseif (stristr($data, 'Your IP is blacklisted')) $this->error("blockIP", true, false, 2);
 		elseif (!$this->isredirect($data)) {
 			$this->error("Please enable direct download in katfile account", true, false, 2);
 		}
@@ -34,7 +35,7 @@ class dl_katfile_com extends Download {
 /*
 * Open Source Project
 * Vinaget by ..::[H]::..
-* Version: 3.3
+* Version: 3.3 LTSB
 * katfile Download Plugin
 * Downloader Class By LTT♥
 */

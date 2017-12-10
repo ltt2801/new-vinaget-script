@@ -3,9 +3,9 @@
 class dl_novafile_com extends Download {
 
 	public function CheckAcc($cookie){
-		$data = $this->lib->curl("http://novafile.com/?op=my_account", "lang=english;{$cookie}", "");
+		$data = $this->lib->curl("https://novafile.com/?op=my_account", "lang=english;{$cookie}", "");
 		if(stristr($data, 'Premium account expires:')) {
-			$checkbw = $this->lib->curl("http://novafile.com/?op=my_account", "lang=english;{$cookie}", "");
+			$checkbw = $this->lib->curl("https://novafile.com/?op=my_account", "lang=english;{$cookie}", "");
 			return array(true, "Until ".$this->lib->cut_str($data, 'Premium Account expires:','<a href="') ."<br/> Traffic Available: " .$this->lib->cut_str($this->lib->cut_str($checkbw, '<td>Traffic Available:</td>','</tr>'), '<td>','</td>'));
 		}
 		elseif(stristr($data, 'FREE - member')) return array(false, "accfree");
@@ -13,7 +13,7 @@ class dl_novafile_com extends Download {
 	}
 
     public function Login($user, $pass){
-        $data = $this->lib->curl("http://novafile.com/login", "lang=english", "login={$user}&password={$pass}&op=login&rand=&redirect=");
+		$data = $this->lib->curl("https://novafile.com/login", "lang=english", "login={$user}&password={$pass}&op=login&rand=&redirect=");
 		return "lang=english;{$this->lib->GetCookies($data)}";
     }
 	
@@ -35,10 +35,9 @@ class dl_novafile_com extends Download {
 
 /*
 * Open Source Project
-* Vinaget by ..::[H]::..
-* Version: 2.7.0
-* Novafile Download Plugin 
-* Downloader Class By [FZ]
-* Fixed download by giaythuytinh176 [20.7.2013]
+* New Vinaget by LTT❤
+* Version: 3.3 LTSB
+* Novafile.com Download Plugin  
+* Date: 15.11.2017
 */
 ?>

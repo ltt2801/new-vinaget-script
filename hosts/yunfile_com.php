@@ -4,8 +4,8 @@ class dl_yunfile_com extends Download {
     
     public function CheckAcc($cookie){
         $data = $this->lib->curl("http://www.yunfile.com/user/edit.html", "language=en_us;{$cookie}", "");
-        if(stristr($data, 'bottom ">Premium Member')) return array(true, "Until ".$this->lib->cut_str($data, '(Expire:',')'));
-        else if(stristr($data, 'Current Password:') && !stristr($data, 'bottom ">Premium Member')) return array(false, "accfree");
+        if(stristr($data, 'premium-pack') && stristr($data, 'bottom ">Yes')) return array(true, "Until ".$this->lib->cut_str($data, '(Expire:',')'));
+        else if(stristr($data, 'premium-pack')) return array(false, "accfree");
 		else return array(false, "accinvalid");
     }
     
