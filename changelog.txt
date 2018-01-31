@@ -1,3 +1,8 @@
+v10:
+- Update datafile.com: require chmod 666 datafile_descrypt.html
+- Update fshare.vn
+- Update README.md
+- Support quick link in ads shorten link service
 v9:
 - Add Uploadgig.com
 - Change up.4share.vn to 4share.vn

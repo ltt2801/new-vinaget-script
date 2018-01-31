@@ -1,4 +1,4 @@
-New Vinaget Script 3.3 LTSB - Developed by LTT♥  
+New Vinaget Script 3.2 Dev - Developed by LTT♥  
 Referer from: https://github.com/giaythuytinh176/vinaget-script   
 Contact email for request plugin updates: lethanhtuan2897@gmail.com  
 
@@ -10,11 +10,12 @@ CHMOD file "data/config.dat" to 666.
 CHMOD file "data/cookie.dat" to 666.  
 CHMOD file "data/online.dat" to 666.  
 CHMOD file "data/log.txt" to 666.  
+CHMOD file "datafile_descrypt.html" to 666.  
 Password default: admin  
 ######################################  
   
 Home page: http://vinaget.us  
-Version: VinaGet 2.7 Final   
+Version: VinaGet 3.2 Dev  
   
 Description:  
 Vinaget is script generator premium link that allows you to download files instantly and at the best of your Internet speed.  
