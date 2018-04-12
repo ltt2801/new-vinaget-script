@@ -45,6 +45,9 @@ class dl_fshare_vn extends Download
                     $this->error("wrongpass", true, false);
                     return false;
                 }
+                elseif (preg_match('@https?:\/\/download-?(\w+\.)?fshare\.vn\/dl\/[^"\'><\r\n\t]+@i', $$page, $match)) {
+                    return trim($match[0]);
+                }
                 else {
                     $page = $this->lib->curl('https://www.fshare.vn/download/get', $this->lib->cookie.$token, "_csrf-app={$_csrf_app}&linkcode={$linkcode}&withFcode5=0&fcode5=", 0);
                     $json = json_decode($page, true);

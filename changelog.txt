@@ -1,3 +1,8 @@
+v11:
+- Add Hitfile.net
+- Update fshare.vn
+- Update class.php - worked with PHP 7
+- Update uptobox.com
 v10:
 - Update datafile.com: require chmod 666 datafile_descrypt.html
 - Update fshare.vn

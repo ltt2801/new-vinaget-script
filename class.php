@@ -472,7 +472,7 @@ class getinfo extends Tools_get
 
 class stream_get extends getinfo
 {
-    public function stream_get()
+    public function __construct()
     {
         $this->config();
         $this->max_size_other_host = $this->file_size_limit;
