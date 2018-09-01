@@ -3,7 +3,7 @@ $config = array();
 $config['secure'] = true;
 $config['password'] = "user1, user2, user3, user4";
 $config['admin'] = "admin";
-$config['homepage'] = "vinaget.us";
+$config['homepage'] = "github.com/ltt2801/new-vinaget-script";
 $config['download_prefix'] = "vinaget_";
 $config['download_suffix'] = "";
 $config['limitMBIP'] = 100 * 1024;
@@ -44,4 +44,3 @@ $config['hide_preacc_col'] = false;
 $config['hide_number_acc'] = false;
 $config['show_func_cbox'] = false;
 $config['del_checked_acc'] = true;
-?>

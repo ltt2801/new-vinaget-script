@@ -64,9 +64,8 @@ class dl_tusfiles_net extends Download {
 
 /*
 * Open Source Project
-* Vinaget by ..::[H]::..
-* Version: 2.7.0
-* Tusfiles Download Plugin by giaythuytinh176 [31.7.2013]
-* Downloader Class By [FZ]
+* New Vinaget by LTT
+* Version: 3.3 LTSB
+* Tusfiles.net Download Plugin  
+* Date: 01.09.2018
 */
-?>

@@ -43,9 +43,8 @@ class dl_lumfile_com extends Download {
 
 /*
 * Open Source Project
-* Vinaget by ..::[H]::..
-* Version: 2.7.0
-* Lumfile Download Plugin, updated by giaythuytinh176 [3.8.2013]
-* Downloader Class By [FZ]
+* New Vinaget by LTT
+* Version: 3.3 LTSB
+* Lumfile.com Download Plugin  
+* Date: 01.09.2018
 */
-?>

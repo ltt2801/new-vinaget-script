@@ -1,3 +1,9 @@
+v13:
+- Remove died hosts
+- Add nitroflare.com
+- Update chiasenhac.vn, hitfile.net, datafile.com
+- Restyle all code hosts
+- Support prefix domain host
 v12:
 - Update prefiles.com
 v11:

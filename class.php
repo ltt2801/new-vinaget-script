@@ -1,6 +1,6 @@
 <?php
 /*
- * Vinaget by LTT♥
+ * Vinaget by LTT
  * Script Name: Vinaget
  * Version: 3.3 LTSB
  */
@@ -13,36 +13,36 @@ class getinfo extends Tools_get
 {
     public function config()
     {
-        $this->self         = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('/\?.*$/', '', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF']);
-        $this->Deny         = true;
-        $this->admin        = false;
+        $this->self = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('/\?.*$/', '', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF']);
+        $this->Deny = true;
+        $this->admin = false;
         $this->fileinfo_dir = "data";
-        $this->filecookie   = "/cookie.dat";
-        $this->fileconfig   = "/config.dat";
-        $this->fileaccount  = "/account.dat";
+        $this->filecookie = "/cookie.dat";
+        $this->fileconfig = "/config.dat";
+        $this->fileaccount = "/account.dat";
         $this->fileinfo_ext = "vng";
-        $this->banned       = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
-        $this->unit         = 512;
-        $this->UserAgent    = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36';
-        $this->config       = $this->load_json($this->fileconfig);
+        $this->banned = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
+        $this->unit = 512;
+        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36';
+        $this->config = $this->load_json($this->fileconfig);
         include "config.php";
         if (count($this->config) == 0) {
             $this->config = $config;
-            $_GET['id']   = 'admin';
-            $this->Deny   = false;
-            $this->admin  = true;
+            $_GET['id'] = 'admin';
+            $this->Deny = false;
+            $this->admin = true;
         } else {
             foreach ($config as $key => $val) {
                 if (!isset($this->config[$key])) {
                     $this->config[$key] = $val;
                 }
-                
+
             }
             if ($this->config['secure'] == false) {
                 $this->Deny = false;
             }
-            
-            $password   = explode(", ", $this->config['password']);
+
+            $password = explode(", ", $this->config['password']);
             $password[] = $this->config['admin'];
             foreach ($password as $login_vng) {
                 if (isset($_COOKIE["secureid"]) && $_COOKIE["secureid"] == md5($login_vng)) {
@@ -50,7 +50,7 @@ class getinfo extends Tools_get
                     break;
                 }
             }
-            
+
         }
         $this->set_config();
         if (!file_exists($this->fileinfo_dir)) {
@@ -74,142 +74,142 @@ class getinfo extends Tools_get
             @chmod($this->fileinfo_dir . "/files/index.php", 0666);
         }
     }
-    
+
     public function set_config()
     {
         include "lang/{$this->config['language']}.php";
-        $this->lang             = $lang;
-        $this->Secure           = $this->config['secure'];
-        $this->skin             = $this->config['skin'];
-        $this->download_prefix  = $this->config['download_prefix'];
-        $this->download_suffix  = $this->config['download_suffix'];
-        $this->limitMBIP        = $this->config['limitMBIP'];
-        $this->ttl              = $this->config['ttl'];
-        $this->limitPERIP       = $this->config['limitPERIP'];
-        $this->ttl_ip           = $this->config['ttl_ip'];
-        $this->max_jobs_per_ip  = $this->config['max_jobs_per_ip'];
-        $this->max_jobs         = $this->config['max_jobs'];
-        $this->max_load         = $this->config['max_load'];
+        $this->lang = $lang;
+        $this->Secure = $this->config['secure'];
+        $this->skin = $this->config['skin'];
+        $this->download_prefix = $this->config['download_prefix'];
+        $this->download_suffix = $this->config['download_suffix'];
+        $this->limitMBIP = $this->config['limitMBIP'];
+        $this->ttl = $this->config['ttl'];
+        $this->limitPERIP = $this->config['limitPERIP'];
+        $this->ttl_ip = $this->config['ttl_ip'];
+        $this->max_jobs_per_ip = $this->config['max_jobs_per_ip'];
+        $this->max_jobs = $this->config['max_jobs'];
+        $this->max_load = $this->config['max_load'];
         $this->max_size_default = $this->config['max_size_default'];
-        $this->file_size_limit  = $this->config['file_size_limit'];
-        $this->adslink          = $this->config['adslink'];
-        $this->api_ads          = $this->config['api_ads'];
-        $this->tinyurl          = $this->config['tinyurl'];
-        $this->badword          = explode(", ", $this->config['badword']);
-        $this->act              = array(
+        $this->file_size_limit = $this->config['file_size_limit'];
+        $this->adslink = $this->config['adslink'];
+        $this->api_ads = $this->config['api_ads'];
+        $this->tinyurl = $this->config['tinyurl'];
+        $this->badword = explode(", ", $this->config['badword']);
+        $this->act = array(
             'rename' => $this->config['rename'],
-            'delete' => $this->config['delete']
+            'delete' => $this->config['delete'],
         );
-        $this->listfile         = $this->config['listfile'];
-        $this->showlinkdown     = $this->config['showlinkdown'];
-        $this->checkacc         = $this->config['checkacc'];
-        $this->privatef         = $this->config['privatefile'];
-        $this->privateip        = $this->config['privateip'];
-        $this->redirdl          = $this->config['redirectdl'];
-        $this->check3x          = $this->config['checklinksex'];
-        $this->colorfn          = $this->config['colorfilename'];
-        $this->colorfs          = $this->config['colorfilesize'];
-        $this->title            = $this->config['title'];
-        $this->directdl         = $this->config['showdirect'];
-        $this->longurl          = $this->config['longurl'];
-        $this->display_error    = $this->config['display_error'];
-        $this->proxy            = false;
-        $this->bbcode           = $this->config['bbcode'];
-        $this->cbox_url         = $this->config['cbox_url'];
+        $this->listfile = $this->config['listfile'];
+        $this->showlinkdown = $this->config['showlinkdown'];
+        $this->checkacc = $this->config['checkacc'];
+        $this->privatef = $this->config['privatefile'];
+        $this->privateip = $this->config['privateip'];
+        $this->redirdl = $this->config['redirectdl'];
+        $this->check3x = $this->config['checklinksex'];
+        $this->colorfn = $this->config['colorfilename'];
+        $this->colorfs = $this->config['colorfilesize'];
+        $this->title = $this->config['title'];
+        $this->directdl = $this->config['showdirect'];
+        $this->longurl = $this->config['longurl'];
+        $this->display_error = $this->config['display_error'];
+        $this->proxy = false;
+        $this->bbcode = $this->config['bbcode'];
+        $this->cbox_url = $this->config['cbox_url'];
         $this->hide_plugins_col = $this->config['hide_plugins_col'];
-        $this->hide_preacc_col  = $this->config['hide_preacc_col'];
-        $this->hide_number_acc  = $this->config['hide_number_acc'];
-        $this->show_func_cbox   = $this->config['show_func_cbox'];
-        $this->del_checked_acc  = $this->config['del_checked_acc'];
-        $this->prox             = isset($_POST['proxy']) ? $_POST['proxy'] : "";
-        $this->autopost         = isset($_POST['autopcbox']) ? $_POST['autopcbox'] : "";
-        $this->autosearch       = isset($_POST['autosearchuser']) ? $_POST['autosearchuser'] : "";
-        $this->user             = isset($_POST['nick']) ? $_POST['nick'] : "";
-        $this->pass             = isset($_POST['pass']) ? $_POST['pass'] : "";
+        $this->hide_preacc_col = $this->config['hide_preacc_col'];
+        $this->hide_number_acc = $this->config['hide_number_acc'];
+        $this->show_func_cbox = $this->config['show_func_cbox'];
+        $this->del_checked_acc = $this->config['del_checked_acc'];
+        $this->prox = isset($_POST['proxy']) ? $_POST['proxy'] : "";
+        $this->autopost = isset($_POST['autopcbox']) ? $_POST['autopcbox'] : "";
+        $this->autosearch = isset($_POST['autosearchuser']) ? $_POST['autosearchuser'] : "";
+        $this->user = isset($_POST['nick']) ? $_POST['nick'] : "";
+        $this->pass = isset($_POST['pass']) ? $_POST['pass'] : "";
     }
-    
+
     public function isadmin()
     {
         return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : $this->admin);
     }
-    
+
     public function getversion()
     {
         $version = $this->curl("https://raw.githubusercontent.com/ltt2801/new-vinaget-script/master/version.txt", "", "", 0);
         return intval($version);
     }
-    
+
     public function notice($id = "notice")
     {
         if ($id == "notice") {
             return sprintf($this->lang['notice'], Tools_get::convert_time($this->ttl * 60), $this->limitPERIP, Tools_get::convert_time($this->ttl_ip * 60));
         } else {
             $this->CheckMBIP();
-            $MB1IP         = Tools_get::convertmb($this->countMBIP * 1024 * 1024);
+            $MB1IP = Tools_get::convertmb($this->countMBIP * 1024 * 1024);
             $thislimitMBIP = Tools_get::convertmb($this->limitMBIP * 1024 * 1024);
-            $maxsize       = Tools_get::convertmb($this->max_size_other_host * 1024 * 1024);
+            $maxsize = Tools_get::convertmb($this->max_size_other_host * 1024 * 1024);
             if ($id == "yourip") {
                 return $this->lang['yourip'];
             }
-            
+
             if ($id == "yourjob") {
                 return $this->lang['yourjob'];
             }
-            
+
             if ($id == "userjobs") {
                 return ' ' . $this->lookup_ip($_SERVER['REMOTE_ADDR']) . ' (max ' . $this->max_jobs_per_ip . ') ';
             }
-            
+
             if ($id == "youused") {
                 return sprintf($this->lang['youused']);
             }
-            
+
             if ($id == "used") {
                 return ' ' . $MB1IP . ' (max ' . $thislimitMBIP . ') ';
             }
-            
+
             if ($id == "sizelimit") {
                 return $this->lang['sizelimit'];
             }
-            
+
             if ($id == "maxsize") {
                 return $maxsize;
             }
-            
+
             if ($id == "totjob") {
                 return $this->lang['totjob'];
             }
-            
+
             if ($id == "totjobs") {
                 return ' ' . count($this->jobs) . ' (max ' . $this->max_jobs . ') ';
             }
-            
+
             if ($id == "serverload") {
                 return $this->lang['serverload'];
             }
-            
+
             if ($id == "maxload") {
                 return ' ' . $this->get_load() . ' (max ' . $this->max_load . ') ';
             }
-            
+
             if ($id == "uonline") {
                 return $this->lang['uonline'];
             }
-            
+
             if ($id == "useronline") {
                 return Tools_get::useronline();
             }
-            
+
         }
     }
-    
+
     public function load_jobs()
     {
         if (isset($this->jobs)) {
             return;
         }
-        
-        $dir         = opendir($this->fileinfo_dir . "/files/");
+
+        $dir = opendir($this->fileinfo_dir . "/files/");
         $this->lists = array();
         while ($file = readdir($dir)) {
             if (substr($file, -strlen($this->fileinfo_ext) - 1) == "." . $this->fileinfo_ext) {
@@ -222,20 +222,20 @@ class getinfo extends Tools_get
             sort($this->lists);
             foreach ($this->lists as $file) {
                 $contentsfile = @file_get_contents($file);
-                $jobs_data    = @json_decode($contentsfile, true);
+                $jobs_data = @json_decode($contentsfile, true);
                 if (is_array($jobs_data)) {
                     $this->jobs = array_merge($this->jobs, $jobs_data);
                 }
             }
         }
     }
-    
+
     public function save_jobs()
     {
         if (!isset($this->jobs) || is_array($this->jobs) == false) {
             return;
         }
-        
+
         // ## clean jobs ###
         $oldest = time() - $this->ttl * 60;
         $delete = array();
@@ -248,10 +248,10 @@ class getinfo extends Tools_get
             unset($this->jobs[$key]);
         }
         // ## clean jobs ###
-        $namedata       = $timeload = explode(" ", microtime());
-        $namedata       = $namedata[1] * 1000 + round($namedata[0] * 1000);
+        $namedata = $timeload = explode(" ", microtime());
+        $namedata = $namedata[1] * 1000 + round($namedata[0] * 1000);
         $this->fileinfo = $this->fileinfo_dir . "/files/" . $namedata . "." . $this->fileinfo_ext;
-        $tmp            = @json_encode($this->jobs);
+        $tmp = @json_encode($this->jobs);
         $fh = fopen($this->fileinfo, 'w') or die('<CENTER><font color=red size=3>Could not open file ! Try to chmod the folder "<B>' . $this->fileinfo_dir . "/files/" . '</B>" to 777</font></CENTER>');
         fwrite($fh, $tmp);
         fclose($fh);
@@ -263,25 +263,25 @@ class getinfo extends Tools_get
                 }
             }
         }
-        
+
         return true;
     }
-    
+
     public function load_json($file)
     {
-        $hash              = substr($file, 1);
+        $hash = substr($file, 1);
         $this->json[$hash] = @file_get_contents($this->fileinfo_dir . $file);
-        $data              = @json_decode($this->json[$hash], true);
+        $data = @json_decode($this->json[$hash], true);
         if (!is_array($data)) {
-            $data              = array();
+            $data = array();
             $this->json[$hash] = 'default';
         }
         return $data;
     }
-    
+
     public function save_json($file, $data)
     {
-        $tmp  = json_encode($data);
+        $tmp = json_encode($data);
         $hash = substr($file, 1);
         if ($tmp !== $this->json[$hash]) {
             $this->json[$hash] = $tmp;
@@ -292,16 +292,16 @@ class getinfo extends Tools_get
             return true;
         }
     }
-    
+
     public function load_cookies()
     {
         if (isset($this->cookies)) {
             return;
         }
-        
+
         $this->cookies = $this->load_json($this->filecookie);
     }
-    
+
     public function get_cookie($site)
     {
         $cookie = "";
@@ -315,53 +315,53 @@ class getinfo extends Tools_get
         }
         return $cookie;
     }
-    
+
     public function save_cookies($site, $cookie)
     {
         if (!isset($this->cookies)) {
             return;
         }
-        
+
         if ($site) {
-            $cookies              = array(
+            $cookies = array(
                 'cookie' => $cookie,
-                'time' => time()
+                'time' => time(),
             );
             $this->cookies[$site] = $cookies;
         }
-        
+
         $this->save_json($this->filecookie, $this->cookies);
     }
-    
+
     public function load_account()
     {
         if (isset($this->acc)) {
             return;
         }
-        
+
         $this->acc = $this->load_json($this->fileaccount);
         foreach ($this->list_host as $site => $host) {
             if (!$host['alias']) {
                 if (empty($this->acc[$site]['proxy'])) {
                     $this->acc[$site]['proxy'] = "";
                 }
-                
+
                 if (empty($this->acc[$site]['direct'])) {
                     $this->acc[$site]['direct'] = false;
                 }
-                
+
                 if (empty($this->acc[$site]['max_size'])) {
                     $this->acc[$site]['max_size'] = $this->max_size_default;
                 }
-                
+
                 if (empty($this->acc[$site]['accounts'])) {
                     $this->acc[$site]['accounts'] = array();
                 }
-                
+
             }
         }
     }
-    
+
     public function save_account($service, $acc)
     {
         foreach ($this->acc[$service]['accounts'] as $value) {
@@ -369,29 +369,29 @@ class getinfo extends Tools_get
                 return false;
             }
         }
-        
+
         if (empty($this->acc[$service])) {
             $this->acc[$service]['max_size'] = $this->max_size_default;
         }
-        
+
         $this->acc[$_POST['type']]['accounts'][] = $_POST['account'];
         $this->save_json($this->fileaccount, $this->acc);
     }
-    
+
     public function get_account($service)
     {
         $acc = '';
         if (isset($this->acc[$service])) {
-            $service        = $this->acc[$service];
+            $service = $this->acc[$service];
             $this->max_size = $service['max_size'];
             if (count($service['accounts']) > 0) {
                 $acc = $service['accounts'][rand(0, count($service['accounts']) - 1)];
             }
-            
+
         }
         return $acc;
     }
-    
+
     public function lookup_job($hash)
     {
         $this->load_jobs();
@@ -399,40 +399,40 @@ class getinfo extends Tools_get
             if ($job['hash'] === $hash) {
                 return $job;
             }
-            
+
         }
         return false;
     }
-    
+
     public function check_jobs()
     {
-        $ip       = $_SERVER['REMOTE_ADDR'];
-        $heute    = 0;
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $heute = 0;
         $lasttime = time();
-        $altr     = $lasttime - $this->ttl_ip * 60;
+        $altr = $lasttime - $this->ttl_ip * 60;
         foreach ($this->jobs as $job) {
             if ($job['ip'] === $ip && $job['mtime'] > $altr) {
                 $heute++;
                 if ($job['mtime'] < $lasttime) {
                     $lasttime = $job['mtime'];
                 }
-                
+
             }
         }
         $lefttime = $this->ttl_ip * 60 - time() + $lasttime;
         $lefttime = $this->convert_time($lefttime);
         return array(
             $heute,
-            $lefttime
+            $lefttime,
         );
     }
-    
+
     public function get_load($i = 0)
     {
         $load = array(
             '0',
             '0',
-            '0'
+            '0',
         );
         if (@file_exists('/proc/loadavg')) {
             if ($fh = @fopen('/proc/loadavg', 'r')) {
@@ -446,14 +446,14 @@ class getinfo extends Tools_get
                     $load = array(
                         $matches[1],
                         $matches[2],
-                        $matches[3]
+                        $matches[3],
                     );
                 }
             }
         }
         return $i == -1 ? $load : $load[$i];
     }
-    
+
     public function lookup_ip($ip)
     {
         $this->load_jobs();
@@ -462,7 +462,7 @@ class getinfo extends Tools_get
             if ($job['ip'] === $ip) {
                 $cnt++;
             }
-            
+
         }
         return $cnt;
     }
@@ -485,16 +485,16 @@ class stream_get extends getinfo
             } else {
                 $this->download($redir[3]);
             }
-            
+
         } elseif (isset($_REQUEST['file'])) {
             if (stristr($_REQUEST['file'], 'mega_')) {
                 $this->downloadmega($_REQUEST['file']);
             } else {
                 $this->download($_REQUEST['file']);
             }
-            
+
         } else {
-            include "hosts/hosts.php";
+            include "hosts.php";
             ksort($host);
             $this->list_host = $host;
             $this->load_account();
@@ -506,7 +506,7 @@ class stream_get extends getinfo
             setcookie('owner', $this->owner, 0);
         }
     }
-    
+
     public function download($hash)
     {
         error_reporting(0);
@@ -523,16 +523,16 @@ class stream_get extends getinfo
         if ($this->get_load() > $this->max_load) {
             sleep(15);
         }
-        
-        $link         = '';
-        $filesize     = $job['size'];
-        $referer      = urldecode($job['url']);
-        $filename     = $this->download_prefix . Tools_get::convert_name($job['filename']) . $this->download_suffix;
-        $directlink   = urldecode($job['directlink']['url']);
+
+        $link = '';
+        $filesize = $job['size'];
+        $referer = urldecode($job['url']);
+        $filename = $this->download_prefix . Tools_get::convert_name($job['filename']) . $this->download_suffix;
+        $directlink = urldecode($job['directlink']['url']);
         $this->cookie = $job['directlink']['cookies'];
-        $link         = $directlink;
-        $link         = str_replace(" ", "%20", $link);
-        
+        $link = $directlink;
+        $link = str_replace(" ", "%20", $link);
+
         if (!$link) {
             sleep(15);
             header("HTTP/1.1 404 Not Found");
@@ -553,17 +553,17 @@ class stream_get extends getinfo
             list($start, $end) = explode('-', $range);
             $new_length = $filesize - $start;
         }
-        $port   = 80;
+        $port = 80;
         $schema = parse_url(trim($link));
-        $host   = $schema['host'];
+        $host = $schema['host'];
         $scheme = "http://";
-        $gach   = explode("/", $link);
+        $gach = explode("/", $link);
         list($path1, $path) = explode($gach[2], $link);
         if (isset($schema['port'])) {
             $port = $schema['port'];
         } elseif ($schema['scheme'] == 'https') {
             $scheme = "ssl://";
-            $port   = 443;
+            $port = 443;
         }
         if ($scheme != "ssl://") {
             $scheme = "";
@@ -576,16 +576,16 @@ class stream_get extends getinfo
             } else {
                 $ip = $job['proxy'];
             }
-            
+
             $data = "GET {$link} HTTP/1.1\r\n";
             if (isset($auth)) {
                 $data .= "Proxy-Authorization: Basic $auth\r\n";
             }
-            
+
             $fp = @stream_socket_client("tcp://{$ip}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
         } else {
             $data = "GET {$path} HTTP/1.1\r\n";
-            $fp   = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+            $fp = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
         }
         if (!$fp) {
             sleep(15);
@@ -600,14 +600,14 @@ class stream_get extends getinfo
         if (!empty($range)) {
             $data .= "Range: bytes={$range}\r\n";
         }
-        
+
         $data .= "Connection: Close\r\n\r\n";
         @stream_set_timeout($fp, 2);
         fputs($fp, $data);
         fflush($fp);
         $header = '';
         $header .= stream_get_line($fp, $this->unit);
-        
+
         do {
             if (!$header) {
                 $header .= stream_get_line($fp, $this->unit);
@@ -615,13 +615,13 @@ class stream_get extends getinfo
                 if (!stristr($header, "HTTP/1")) {
                     break;
                 }
-                
+
             } else {
                 $header .= stream_get_line($fp, $this->unit);
             }
-            
+
         } while (stristr($header, "\r\n") == false);
-        
+
         /* debug */
         if ($this->isadmin() && isset($_GET['debug'])) {
             // Uncomment next line for enable to admins this debug code.
@@ -633,24 +633,24 @@ class stream_get extends getinfo
         if (headers_sent()) {
             die('Headers Sent');
         }
-        
+
         // Required for some browsers
         if (ini_get('zlib.output_compression')) {
             ini_set('zlib.output_compression', 'Off');
         }
-        
+
         header("Pragma: public"); // required
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private", false); // required for certain browsers
         header("Content-Transfer-Encoding: binary");
         header("Accept-Ranges: bytes");
-        
+
         if (stristr($header, "TTP/1.0 200 OK") || stristr($header, "TTP/1.1 200 OK")) {
             if (!is_numeric($filesize)) {
                 $filesize = trim($this->cut_str($header, "Content-Length:", "\n"));
             }
-            
+
             if (stristr($header, "filename") && !$filename) {
                 $filename = trim($this->cut_str($header, "filename", "\n"));
                 $filename = preg_replace("/(\"\;\?\=|\"|=|\*|UTF-8|\')/U", "", $filename);
@@ -684,7 +684,7 @@ class stream_get extends getinfo
             if ($i != $max - 1) {
                 echo "\r\n\r\n";
             }
-            
+
         }
         while (!feof($fp) && (connection_status() == 0)) {
             $recv = @stream_get_line($fp, $this->unit);
@@ -695,7 +695,7 @@ class stream_get extends getinfo
         fclose($fp);
         exit;
     }
-    
+
     public function downloadmega($hash)
     {
         error_reporting(0);
@@ -712,27 +712,27 @@ class stream_get extends getinfo
         if ($this->get_load() > $this->max_load) {
             sleep(15);
         }
-        
+
         $megafile = new MEGA(urldecode($job['url']));
         $megafile->stream_download();
     }
-    
+
     public function CheckMBIP()
     {
         $this->countMBIP = 0;
-        $this->totalMB   = 0;
-        $this->timebw    = 0;
-        $timedata        = time();
+        $this->totalMB = 0;
+        $this->timebw = 0;
+        $timedata = time();
         foreach ($this->jobs as $job) {
             if ($job['ip'] == $_SERVER['REMOTE_ADDR']) {
                 $this->countMBIP = $this->countMBIP + $job['size'] / 1024 / 1024;
                 if ($job['mtime'] < $timedata) {
                     $timedata = $job['mtime'];
                 }
-                
+
                 $this->timebw = $this->ttl * 60 + $timedata - time();
             }
-            
+
             if ($this->privatef == false) {
                 $this->totalMB = $this->totalMB + $job['size'] / 1024 / 1024;
                 $this->totalMB = round($this->totalMB);
@@ -743,15 +743,15 @@ class stream_get extends getinfo
                 }
             }
         }
-        
+
         $this->countMBIP = round($this->countMBIP);
         if ($this->countMBIP >= $this->limitMBIP) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     public function curl($url, $cookies, $post, $header = 1, $json = 0, $ref = 0, $xml = 0)
     {
         $ch = @curl_init();
@@ -767,11 +767,11 @@ class stream_get extends getinfo
         $head[] = "Keep-Alive: 300";
         $head[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
         $head[] = "Accept-Language: en-us,en;q=0.5";
-        
+
         if ($cookies) {
             curl_setopt($ch, CURLOPT_COOKIE, $cookies);
         }
-        
+
         curl_setopt($ch, CURLOPT_USERAGENT, $this->UserAgent);
         curl_setopt($ch, CURLOPT_REFERER, $ref === 0 ? $url : $ref);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $head);
@@ -781,7 +781,7 @@ class stream_get extends getinfo
         } else {
             curl_setopt($ch, CURLOPT_HEADER, $header);
         }
-        
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         if ($post) {
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -795,7 +795,7 @@ class stream_get extends getinfo
             } else {
                 $ip = $this->proxy;
             }
-            
+
             curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
             curl_setopt($ch, CURLOPT_PROXY, $ip);
         }
@@ -805,32 +805,32 @@ class stream_get extends getinfo
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Expect:'
+            'Expect:',
         ));
         $page = curl_exec($ch);
         curl_close($ch);
         return $page;
     }
-    
+
     public function cut_str($str, $left, $right)
     {
-        $str     = substr(stristr($str, $left), strlen($left));
+        $str = substr(stristr($str, $left), strlen($left));
         $leftLen = strlen(stristr($str, $right));
         $leftLen = $leftLen ? -($leftLen) : strlen($str);
-        $str     = substr($str, 0, $leftLen);
+        $str = substr($str, 0, $leftLen);
         return $str;
     }
-    
+
     public function GetCookies($content)
     {
         preg_match_all('/Set-Cookie: (.*); /Ui', $content, $temp);
-        $cookie  = $temp[1];
+        $cookie = $temp[1];
         $cookies = "";
-        $a       = array();
+        $a = array();
         foreach ($cookie as $c) {
-            $pos     = strpos($c, "=");
-            $key     = substr($c, 0, $pos);
-            $val     = substr($c, $pos + 1);
+            $pos = strpos($c, "=");
+            $key = substr($c, 0, $pos);
+            $val = substr($c, $pos + 1);
             $a[$key] = $val;
         }
         foreach ($a as $b => $c) {
@@ -838,10 +838,10 @@ class stream_get extends getinfo
         }
         return $cookies;
     }
-    
+
     public function GetAllCookies($page)
     {
-        $lines     = explode("\n", $page);
+        $lines = explode("\n", $page);
         $retCookie = "";
         foreach ($lines as $val) {
             preg_match('/Set-Cookie: (.*)/i', $val, $temp);
@@ -849,43 +849,43 @@ class stream_get extends getinfo
                 if ($cook = substr($temp[1], 0, stripos($temp[1], ';'))) {
                     $retCookie .= $cook . ";";
                 }
-                
+
             }
         }
-        
+
         return $retCookie;
     }
-    
+
     public function mf_str_conv($str_or)
     {
         $str_or = stripslashes($str_or);
         if (!preg_match("/unescape\(\W([0-9a-f]+)\W\);\w+=([0-9]+);[^\^]+\)([0-9\^]+)?\)\);eval/", $str_or, $match)) {
             return $str_or;
         }
-        
+
         $match[3] = $match[3] ? $match[3] : "";
-        $str_re   = "";
+        $str_re = "";
         for ($i = 0; $i < $match[2]; $i++) {
             $c = HexDec(substr($match[1], $i * 2, 2));
             eval("\$c = \$c" . $match[3] . ";");
             $str_re .= chr($c);
         }
-        
+
         $str_re = str_replace($match[0], stripslashes($str_re), $str_or);
         if (preg_match("/unescape\(\W([0-9a-f]+)\W\);\w+=([0-9]+);[^\^]+\)([0-9\^]+)?\)\);eval/", $str_re, $dummy)) {
             $str_re = $this->mf_str_conv($str_re);
         }
-        
+
         return $str_re;
     }
-    
+
     public function main()
     {
         if ($this->get_load() > $this->max_load) {
             echo '<center><b><i><font color=red>' . $this->lang['svload'] . '</font></i></b></center>';
             return;
         }
-        
+
         if (isset($_POST['urllist'])) {
             $url = $_POST['urllist'];
             $url = str_replace("\r", "", $url);
@@ -894,23 +894,23 @@ class stream_get extends getinfo
             $url = str_replace(">", "", $url);
             $url = str_replace(" ", "", $url);
         }
-        
+
         if (isset($url) && strlen($url) > 10) {
             if (substr($url, 0, 4) == 'www.') {
                 $url = "http://" . $url;
             }
-            
+
             if (!$this->check3x) {
                 if (stristr($url, 'mega.co.nz') || stristr($url, 'mega.nz')) {
                     $dlhtml = $this->mega($url);
                 } else {
                     $dlhtml = $this->get($url);
                 }
-                
+
             } else {
-                
+
                 // ################## CHECK 3X #########################
-                
+
                 $check3x = false;
                 if (strpos($url, "|not3x")) {
                     $url = str_replace("|not3x", "", $url);
@@ -925,65 +925,65 @@ class stream_get extends getinfo
                         }
                     }
                 }
-                
+
                 if ($check3x == false) {
                     if (stristr($url, 'mega.co.nz') || stristr($url, 'mega.nz')) {
                         $dlhtml = $this->mega($url);
                     } else {
                         $dlhtml = $this->get($url);
                     }
-                    
+
                 } else {
                     $dlhtml = printf($this->lang['issex'], $url);
                     unset($check3x);
                 }
                 // ################## CHECK 3X #########################
-                
+
             }
         } else {
             $dlhtml = "<b><a href=" . $url . " style='TEXT-DECORATION: none'><font color=red face=Arial size=2><s>" . $url . "</s></font></a> <img src=images/chk_error.png width='15' alt='errorlink'> <font color=#ffcc33><B>" . $this->lang['errorlink'] . "</B></font><br />";
         }
-        
+
         echo $dlhtml;
     }
-    
+
     public function google($q)
     {
-        $q               = urldecode($q);
-        $q               = str_replace(' ', '+', $q);
-        $oldagent        = $this->UserAgent;
+        $q = urldecode($q);
+        $q = str_replace(' ', '+', $q);
+        $oldagent = $this->UserAgent;
         $this->UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; NOKIA; Lumia 800)";
-        $data            = $this->curl("http://www.google.com/search?q={$q}&hl=en", '', '', 0);
+        $data = $this->curl("http://www.google.com/search?q={$q}&hl=en", '', '', 0);
         $this->UserAgent = $oldagent;
-        $parsing         = $this->cut_str($data, '<ol>', '</ol>');
-        $new             = "<ol>{$parsing}</ol>";
-        $new             = str_replace('<ol><li class="g">', "", $new);
-        $new             = str_replace('</li><li class="g">', "\n\n\n", $new);
-        $new             = str_replace('</li></ol>', "", $new);
-        $new             = preg_replace('%<a(.*?)href[^<>]+>|</a>%s', "", $new);
-        $new             = preg_replace('%<b>|</b>%s', "", $new);
-        $new             = preg_replace('%<h3 class="r">|</h3>%s', "", $new);
-        $new             = preg_replace('%<div class="s"><div class="kv" style="margin-bottom:2px"><cite>[^<]+</cite></div><span class="st">%s', " ", $new);
-        $new             = str_replace(' ...', "", $new);
-        $new             = strip_tags($new);
-        $new             = str_replace('â€Ž', '', $new);
-        $new             = str_replace('', '', $new);
-        $new             = htmlspecialchars_decode($new);
+        $parsing = $this->cut_str($data, '<ol>', '</ol>');
+        $new = "<ol>{$parsing}</ol>";
+        $new = str_replace('<ol><li class="g">', "", $new);
+        $new = str_replace('</li><li class="g">', "\n\n\n", $new);
+        $new = str_replace('</li></ol>', "", $new);
+        $new = preg_replace('%<a(.*?)href[^<>]+>|</a>%s', "", $new);
+        $new = preg_replace('%<b>|</b>%s', "", $new);
+        $new = preg_replace('%<h3 class="r">|</h3>%s', "", $new);
+        $new = preg_replace('%<div class="s"><div class="kv" style="margin-bottom:2px"><cite>[^<]+</cite></div><span class="st">%s', " ", $new);
+        $new = str_replace(' ...', "", $new);
+        $new = strip_tags($new);
+        $new = str_replace('â€Ž', '', $new);
+        $new = str_replace('', '', $new);
+        $new = htmlspecialchars_decode($new);
         return $new;
     }
-    
+
     public function getsize($link, $cookie = "")
     {
         $size_name = Tools_get::size_name($link, $cookie == "" ? $this->cookie : $cookie);
         return $size_name[0];
     }
-    
+
     public function getname($link, $cookie = "")
     {
         $size_name = Tools_get::size_name($link, $cookie == "" ? $this->cookie : $cookie);
         return $size_name[1];
     }
-    
+
     public function get($url)
     {
         $this->reserved = array();
@@ -997,8 +997,8 @@ class stream_get extends getinfo
         }
         /* check 1 */
         $checkjobs = $this->check_jobs();
-        $heute     = $checkjobs[0];
-        $lefttime  = $checkjobs[1];
+        $heute = $checkjobs[0];
+        $lefttime = $checkjobs[1];
         if ($heute >= $this->limitPERIP) {
             $this->error1('limitPERIP', $this->limitPERIP, Tools_get::convert_time($this->ttl_ip * 60), $lefttime);
         }
@@ -1006,80 +1006,63 @@ class stream_get extends getinfo
         if ($this->lookup_ip($_SERVER['REMOTE_ADDR']) >= $this->max_jobs_per_ip) {
             $this->error1('limitip');
         }
-        
+
         $url = trim($url);
-        
+
         if (empty($url)) {
             return;
         }
-        
+
         $Original = $url;
-        $link     = '';
-        $cookie   = '';
-        $report   = false;
-        
+        $link = '';
+        $cookie = '';
+        $report = false;
+
         if (!$link) {
-            $site        = $this->using;
+            $site = $this->using;
             $this->proxy = isset($this->acc[$site]['proxy']) ? $this->acc[$site]['proxy'] : false;
             $this->proxy = isset($this->prox) ? $this->prox : false;
             if ($this->get_account($site) != "") {
                 require_once 'hosts/' . $this->list_host[$site]['file'];
                 $download = new $this->list_host[$site]['class']($this, $this->list_host[$site]['site']);
-                $link     = $download->General($url);
+                $link = $download->General($url);
             }
         }
-        
+
         if (!$link) {
             $domain = str_replace("www.", "", $this->cut_str($Original, "://", "/"));
-            if (strpos($domain, "1fichier.com")) {
-                $domain = "1fichier.com";
-            }
-            
-            if (strpos($domain, "letitbit.net")) {
-                $domain = "letitbit.net";
-            }
-            
-            if (strpos($domain, "shareflare.net")) {
-                $domain = "shareflare.net";
-            }
-            
-            if (strpos($domain, "fileflash.net")) {
-                $domain = "fileflash.com";
-            }
-            
-            if (strpos($domain, "yfdisk.com") || strpos($domain, "filemarkets.com") || strpos($domain, "dfpan.com")) {
-                $domain = "yunfile.com";
-            }
-            
-            if (isset($this->list_host[$domain])) {
-                require_once 'hosts/' . $this->list_host[$domain]['file'];
-                $download    = new $this->list_host[$domain]['class']($this, $this->list_host[$domain]['site']);
-                $site        = $this->list_host[$domain]['site'];
-                $this->proxy = isset($this->acc[$site]['proxy']) ? $this->acc[$site]['proxy'] : false;
-                $this->proxy = isset($this->prox) ? $this->prox : false;
-                $link        = $download->General($url);
+            foreach ($this->list_host as $host => $arr_host) {
+                if (stristr($domain, $host)) {
+                    require_once 'hosts/' . $this->list_host[$host]['file'];
+                    $download = new $this->list_host[$host]['class']($this, $this->list_host[$host]['site']);
+                    $site = $this->list_host[$host]['site'];
+                    $this->proxy = isset($this->acc[$site]['proxy']) ? $this->acc[$site]['proxy'] : false;
+                    $this->proxy = isset($this->prox) ? $this->prox : false;
+                    $link = $download->General($url);
+                    break;
+                }
             }
         }
-        
+
         if (!$link) {
-            $this->proxy    = isset($this->acc[$site]['proxy']) ? $this->acc[$site]['proxy'] : false;
-            $this->proxy    = isset($this->prox) ? $this->prox : false;
-            $size_name      = Tools_get::size_name($Original, "");
-            $filesize       = $size_name[0];
-            $filename       = $size_name[1];
+            $this->proxy = isset($this->acc[$site]['proxy']) ? $this->acc[$site]['proxy'] : false;
+            $this->proxy = isset($this->prox) ? $this->prox : false;
+            $size_name = Tools_get::size_name($Original, "");
+            $filesize = $size_name[0];
+            $filename = $size_name[1];
             $this->max_size = $this->max_size_other_host;
             if ($size_name[0] > 1024 * 100) {
                 $link = $url;
             } else {
                 $this->error2('notsupport', $Original);
             }
-            
+
         } else {
             $size_name = Tools_get::size_name($link, $this->cookie);
-            $filesize  = $size_name[0];
-            $filename  = isset($this->reserved['filename']) ? $this->reserved['filename'] : $size_name[1];
+            $filesize = $size_name[0];
+            $filename = isset($this->reserved['filename']) ? $this->reserved['filename'] : $size_name[1];
         }
-        
+
         $hosting = Tools_get::site_hash($Original);
         if (!isset($filesize)) {
             $this->error2('notsupport', $Original);
@@ -1088,30 +1071,30 @@ class stream_get extends getinfo
         if (!isset($this->max_size)) {
             $this->max_size = $this->max_size_other_host;
         }
-        
+
         $msize = Tools_get::convertmb($filesize);
-        $hash  = md5($_SERVER['REMOTE_ADDR'] . $Original);
+        $hash = md5($_SERVER['REMOTE_ADDR'] . $Original);
         if ($hash === false) {
             $this->error1('cantjob');
         }
-        
+
         if ($filesize > $this->max_size * 1024 * 1024) {
             $this->error2('filebig', $Original, $msize, Tools_get::convertmb($this->max_size * 1024 * 1024));
         }
-        
+
         if (($this->countMBIP + $filesize / (1024 * 1024)) >= $this->limitMBIP) {
             $this->error1('countMBIP', Tools_get::convertmb($this->limitMBIP * 1024 * 1024), Tools_get::convert_time($this->ttl * 60), Tools_get::convert_time($this->timebw));
         }
-        
+
         /* check 2 */
         $checkjobs = $this->check_jobs();
-        $heute     = $checkjobs[0];
-        $lefttime  = $checkjobs[1];
+        $heute = $checkjobs[0];
+        $lefttime = $checkjobs[1];
         if ($heute >= $this->limitPERIP) {
             $this->error1('limitPERIP', $this->limitPERIP, Tools_get::convert_time($this->ttl_ip * 60), $lefttime);
         }
         /* /check 2 */
-        $job               = array(
+        $job = array(
             'hash' => substr(md5($hash), 0, 10),
             'path' => substr(md5(rand()), 0, 5),
             'filename' => urlencode($filename),
@@ -1126,18 +1109,18 @@ class stream_get extends getinfo
             'proxy' => $this->proxy == false ? 0 : $this->proxy,
             'directlink' => array(
                 'url' => urlencode($link),
-                'cookies' => $this->cookie
-            )
+                'cookies' => $this->cookie,
+            ),
         );
         $this->jobs[$hash] = $job;
         $this->save_jobs();
-        $tiam    = time() . rand(0, 999);
-        $gach    = explode('/', $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        $tiam = time() . rand(0, 999);
+        $gach = explode('/', $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
         $sv_name = "";
         for ($i = 0; $i < count($gach) - 1; $i++) {
             $sv_name .= $gach[$i] . "/";
         }
-        
+
         if ($this->acc[$site]['direct']) {
             $linkdown = $link;
         } elseif ($this->longurl) {
@@ -1146,11 +1129,11 @@ class stream_get extends getinfo
             } else {
                 $linkdown = 'http://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             }
-            
+
         } else {
             $linkdown = 'http://' . $sv_name . '?file=' . $job['hash'];
         }
-        
+
         // #########Begin short link ############
         /* create ads link */
         if (empty($linkdown) == false && $this->adslink == true && empty($this->api_ads) == false) {
@@ -1162,23 +1145,23 @@ class stream_get extends getinfo
             if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                 $linkdown = trim($shortlink[1]);
             }
-            
+
         }
         // ########### End short link  ##########
-        
+
         $lik = $linkdown;
-        
+
         if ($this->bbcode) {
             if (isset($this->autosearch) && $this->autosearch == 1) {
-                $domain  = parse_url($Original, PHP_URL_HOST);
+                $domain = parse_url($Original, PHP_URL_HOST);
                 $content = file_get_contents($this->cbox_url . "&sec=main");
                 $matches = explode('<tr id=', $content);
-                
+
                 for ($i = 2; $i < count($matches); $i++) {
                     $mess = $matches[$i];
                     preg_match('/<\/b>:(.*)/', $mess, $temp);
                     $chat = $temp[1]; //Get Chat
-                    
+
                     if (preg_match_all('/<a class="autoLink" href="(.*?' . $host_check . '.*?)" target="_blank">/i', $chat, $temp, PREG_PATTERN_ORDER)) {
                         foreach ($temp[1] as $linkcheck) {
                             if (stristr($linkcheck, $Original)) {
@@ -1188,7 +1171,7 @@ class stream_get extends getinfo
                         }
                     }
                 }
-                
+
                 if ($this->proxy != false && $this->redirdl == true) {
                     if (strpos($this->proxy, "|")) {
                         list($prox, $userpass) = explode("|", $this->proxy);
@@ -1197,7 +1180,7 @@ class stream_get extends getinfo
                     } else {
                         list($ip, $port) = explode(":", $this->proxy);
                     }
-                    
+
                     $entry = "[b]@{$name} :[/b][center][b][URL=" . urlencode($lik) . "]{$this->title} | [color={$this->colorfn}]" . urlencode($filename) . "[/color][color={$this->colorfs}] ({$msize})[/color]  [/b][/url][b] [br] ([color=green]You must add this proxy[/color] " . (strpos($this->proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ")[/b][/center]";
                     echo "<input name='176' type='text' size='100' value='{$entry}' onClick='this.select()'>";
                     echo "<br>";
@@ -1215,7 +1198,7 @@ class stream_get extends getinfo
                     } else {
                         list($ip, $port) = explode(":", $this->proxy);
                     }
-                    
+
                     $entry = "[center][b][URL={$lik}]{$this->title} | [color={$this->colorfn}]{$filename}[/color][color={$this->colorfs}] ({$msize})[/color]  [/b][/url][b] [br] ([color=green]You must add this proxy[/color] " . (strpos($this->proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ")[/b][/center]";
                     echo "<input name='176' type='text' size='100' value='{$entry}' onClick='this.select()'>";
                     echo "<br>";
@@ -1225,18 +1208,18 @@ class stream_get extends getinfo
                     echo "<br>";
                 }
             }
-            
+
             if (isset($this->autopost) && $this->autopost == 1 && isset($this->user) && isset($this->pass)) {
-                $url     = $this->cbox_url . '&sec=submit';
-                $data    = 'nme=' . $this->user . '&key=' . $this->pass . '&eml=&lvl=4&pst=' . $entry;
+                $url = $this->cbox_url . '&sec=submit';
+                $data = 'nme=' . $this->user . '&key=' . $this->pass . '&eml=&lvl=4&pst=' . $entry;
                 $content = $this->curl($url, '', $data);
             }
         }
-        
+
         $dlhtml = "<b><a title='click here to download' href='$lik' style='TEXT-DECORATION: none' target='$tiam'> <font color='#00CC00'>" . $filename . "</font> <font color='#FF66FF'>($msize)</font> " . ($this->directdl && !$this->acc[$site]['direct'] ? "<a href='{$link}'>Direct<a> " : "") . "</a>" . ($this->proxy != false ? "<font id='proxy'>({$this->proxy})</font>" : "") . "</b>" . (($this->proxy != false && $this->redirdl == true) ? "<br/><b><font color=\"green\">You must add proxy or you can not download this link</font></b>" : "");
         return $dlhtml;
     }
-    
+
     public function mega($url)
     {
         $this->reserved = array();
@@ -1250,8 +1233,8 @@ class stream_get extends getinfo
         }
         /* check 1 */
         $checkjobs = $this->check_jobs();
-        $heute     = $checkjobs[0];
-        $lefttime  = $checkjobs[1];
+        $heute = $checkjobs[0];
+        $lefttime = $checkjobs[1];
         if ($heute >= $this->limitPERIP) {
             $this->error1('limitPERIP', $this->limitPERIP, Tools_get::convert_time($this->ttl_ip * 60), $lefttime);
         }
@@ -1259,27 +1242,27 @@ class stream_get extends getinfo
         if ($this->lookup_ip($_SERVER['REMOTE_ADDR']) >= $this->max_jobs_per_ip) {
             $this->error1('limitip');
         }
-        
+
         $url = trim($url);
-        
+
         if (empty($url)) {
             return;
         }
-        
+
         $Original = $url;
-        $link     = '';
-        $cookie   = '';
-        $report   = false;
-        
+        $link = '';
+        $cookie = '';
+        $report = false;
+
         $megafile = new MEGA(urldecode($url));
-        
+
         $info = $megafile->file_info();
-        
+
         $link = $info['binary_url'];
-        
+
         $filesize = $info['size'];
         $filename = isset($this->reserved['filename']) ? $this->reserved['filename'] : Tools_get::convert_name($info['attr']['n']);
-        
+
         $hosting = Tools_get::site_hash($Original);
         if (!isset($filesize)) {
             $this->error2('notsupport', $Original);
@@ -1288,30 +1271,30 @@ class stream_get extends getinfo
         if (!isset($this->max_size)) {
             $this->max_size = $this->max_size_other_host;
         }
-        
+
         $msize = Tools_get::convertmb($filesize);
-        $hash  = md5($_SERVER['REMOTE_ADDR'] . $Original);
+        $hash = md5($_SERVER['REMOTE_ADDR'] . $Original);
         if ($hash === false) {
             $this->error1('cantjob');
         }
-        
+
         if ($filesize > $this->max_size * 1024 * 1024) {
             $this->error2('filebig', $Original, $msize, Tools_get::convertmb($this->max_size * 1024 * 1024));
         }
-        
+
         if (($this->countMBIP + $filesize / (1024 * 1024)) >= $this->limitMBIP) {
             $this->error1('countMBIP', Tools_get::convertmb($this->limitMBIP * 1024 * 1024), Tools_get::convert_time($this->ttl * 60), Tools_get::convert_time($this->timebw));
         }
-        
+
         /* check 2 */
         $checkjobs = $this->check_jobs();
-        $heute     = $checkjobs[0];
-        $lefttime  = $checkjobs[1];
+        $heute = $checkjobs[0];
+        $lefttime = $checkjobs[1];
         if ($heute >= $this->limitPERIP) {
             $this->error1('limitPERIP', $this->limitPERIP, Tools_get::convert_time($this->ttl_ip * 60), $lefttime);
         }
         /* /check 2 */
-        $job               = array(
+        $job = array(
             'hash' => "mega_" . substr(md5($hash), 0, 10),
             'path' => substr(md5(rand()), 0, 5),
             'filename' => urlencode($filename),
@@ -1326,18 +1309,18 @@ class stream_get extends getinfo
             'proxy' => 0,
             'directlink' => array(
                 'url' => urlencode($link),
-                'cookies' => $this->cookie
-            )
+                'cookies' => $this->cookie,
+            ),
         );
         $this->jobs[$hash] = $job;
         $this->save_jobs();
-        $tiam    = time() . rand(0, 999);
-        $gach    = explode('/', $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        $tiam = time() . rand(0, 999);
+        $gach = explode('/', $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
         $sv_name = "";
         for ($i = 0; $i < count($gach) - 1; $i++) {
             $sv_name .= $gach[$i] . "/";
         }
-        
+
         if ($this->acc[$site]['direct']) {
             $linkdown = $link;
         } elseif ($this->longurl) {
@@ -1346,11 +1329,11 @@ class stream_get extends getinfo
             } else {
                 $linkdown = 'http://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             }
-            
+
         } else {
             $linkdown = 'http://' . $sv_name . '?file=' . $job['hash'];
         }
-        
+
         // #########Begin short link ############
         if (empty($this->adslink) == true && empty($link) == false && empty($this->tinyurl) == true) {
             $datalink = $this->tinyurl($linkdown);
@@ -1359,7 +1342,7 @@ class stream_get extends getinfo
             } else {
                 $lik = $linkdown;
             }
-            
+
         } elseif (empty($this->adslink) == false && empty($link) == false) {
             $lik = $linkdown;
             if (empty($this->api_ads1) == false) {
@@ -1370,7 +1353,7 @@ class stream_get extends getinfo
                 if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                     $lik = trim($shortlink[1]);
                 }
-                
+
             }
             if (empty($this->api_ads2) == false) {
                 $lik = $this->api_zip($lik, $this->api_ads2);
@@ -1380,7 +1363,7 @@ class stream_get extends getinfo
                 if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                     $lik = trim($shortlink[1]);
                 }
-                
+
             }
             if (empty($this->api_ads3) == false) {
                 $lik = $this->api_zip($lik, $this->api_ads3);
@@ -1390,25 +1373,25 @@ class stream_get extends getinfo
                 if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                     $lik = trim($shortlink[1]);
                 }
-                
+
             }
         }
         // ########### End short link  ##########
         else {
             $lik = $linkdown;
         }
-        
+
         if ($this->bbcode) {
             if (isset($this->autosearch) && $this->autosearch == 1) {
-                $domain  = parse_url($Original, PHP_URL_HOST);
+                $domain = parse_url($Original, PHP_URL_HOST);
                 $content = file_get_contents($this->cbox_url . "&sec=main");
                 $matches = explode('<tr id=', $content);
-                
+
                 for ($i = 2; $i < count($matches); $i++) {
                     $mess = $matches[$i];
                     preg_match('/<\/b>:(.*)/', $mess, $temp);
                     $chat = $temp[1]; //Get Chat
-                    
+
                     if (preg_match_all('/<a class="autoLink" href="(.*?' . $host_check . '.*?)" target="_blank">/i', $chat, $temp, PREG_PATTERN_ORDER)) {
                         foreach ($temp[1] as $linkcheck) {
                             if (stristr($linkcheck, $Original)) {
@@ -1418,7 +1401,7 @@ class stream_get extends getinfo
                         }
                     }
                 }
-                
+
                 if ($this->proxy != false && $this->redirdl == true) {
                     if (strpos($this->proxy, "|")) {
                         list($prox, $userpass) = explode("|", $this->proxy);
@@ -1427,7 +1410,7 @@ class stream_get extends getinfo
                     } else {
                         list($ip, $port) = explode(":", $this->proxy);
                     }
-                    
+
                     $entry = "[b]@{$name} :[/b][center][b][URL=" . urlencode($lik) . "]{$this->title} | [color={$this->colorfn}]" . urlencode($filename) . "[/color][color={$this->colorfs}] ({$msize})[/color]  [/b][/url][b] [br] ([color=green]You must add this proxy[/color] " . (strpos($this->proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ")[/b][/center]";
                     echo "<input name='176' type='text' size='100' value='{$entry}' onClick='this.select()'>";
                     echo "<br>";
@@ -1445,7 +1428,7 @@ class stream_get extends getinfo
                     } else {
                         list($ip, $port) = explode(":", $this->proxy);
                     }
-                    
+
                     $entry = "[center][b][URL={$lik}]{$this->title} | [color={$this->colorfn}]{$filename}[/color][color={$this->colorfs}] ({$msize})[/color]  [/b][/url][b] [br] ([color=green]You must add this proxy[/color] " . (strpos($this->proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ")[/b][/center]";
                     echo "<input name='176' type='text' size='100' value='{$entry}' onClick='this.select()'>";
                     echo "<br>";
@@ -1455,34 +1438,34 @@ class stream_get extends getinfo
                     echo "<br>";
                 }
             }
-            
+
             if (isset($this->autopost) && $this->autopost == 1 && isset($this->user) && isset($this->pass)) {
-                $url     = $this->cbox_url . '&sec=submit';
-                $data    = 'nme=' . $this->user . '&key=' . $this->pass . '&eml=&lvl=4&pst=' . $entry;
+                $url = $this->cbox_url . '&sec=submit';
+                $data = 'nme=' . $this->user . '&key=' . $this->pass . '&eml=&lvl=4&pst=' . $entry;
                 $content = $this->curl($url, '', $data);
             }
         }
-        
+
         $dlhtml = "<b><a title='click here to download' href='$lik' style='TEXT-DECORATION: none' target='$tiam'> <font color='#00CC00'>" . $filename . "</font> <font color='#FF66FF'>($msize)</font> ";
         return $dlhtml;
     }
-    
+
     public function datecmp($a, $b)
     {
         return ($a[1] < $b[1]) ? 1 : 0;
     }
-    
+
     public function fulllist()
     {
         $act = "";
         if ($this->act['delete'] == true) {
             $act .= '<option value="del">' . $this->lang['del'] . '</option>';
         }
-        
+
         if ($this->act['rename'] == true) {
             $act .= '<option value="ren">' . $this->lang['rname'] . '</option>';
         }
-        
+
         if ($act != "") {
             if ((isset($_POST['checkbox'][0]) && $_POST['checkbox'][0] != null) || isset($_POST['renn']) || isset($_POST['remove'])) {
                 echo '<table style="width: 500px; border-collapse: collapse" border="1" align="center"><tr><td><center>';
@@ -1490,32 +1473,32 @@ class stream_get extends getinfo
                     case 'del':
                         $this->deljob();
                         break;
-                    
+
                     case 'ren':
                         $this->renamejob();
                         break;
                 }
-                
+
                 if (isset($_POST['renn'])) {
                     $this->renamejob();
                 }
-                
+
                 if (isset($_POST['remove'])) {
                     $this->deljob();
                 }
-                
+
                 echo "</center></td></tr></table><br/>";
             }
         } else {
             echo '</select>';
         }
-        
+
         $files = array();
         foreach ($this->jobs as $job) {
             if ($job['owner'] != $this->owner && $this->privatef == true) {
                 continue;
             }
-            
+
             $files[] = array(
                 urldecode($job['url']),
                 $job['mtime'],
@@ -1525,15 +1508,15 @@ class stream_get extends getinfo
                 $job['ip'],
                 $job['msize'],
                 urldecode($job['directlink']['url']),
-                $job['proxy']
+                $job['proxy'],
             );
         }
-        
+
         if (count($files) == 0) {
             echo "<Center>" . $this->lang['notfile'] . "<br/><a href='$this->self'> [" . $this->lang['main'] . "] </a></center>";
             return;
         }
-        
+
         echo "<script type=\"text/javascript\">function setCheckboxes(act){elts = document.getElementsByName(\"checkbox[]\");var elts_cnt  = (typeof(elts.length) != 'undefined') ? elts.length : 0;if (elts_cnt){ for (var i = 0; i < elts_cnt; i++){elts[i].checked = (act == 1 || act == 0) ? act : (elts[i].checked ? 0 : 1);} }}</script>";
         echo "<center><a href=javascript:setCheckboxes(1)> {$this->lang['checkall']} </a> | <a href=javascript:setCheckboxes(0)> {$this->lang['uncheckall']} </a> | <a href=javascript:setCheckboxes(2)> {$this->lang['invert']} </a></center><br/>";
         echo "<center><form action='$this->self' method='post' name='flist'><select onchange='javascript:void(document.flist.submit());'name='option'>";
@@ -1542,12 +1525,12 @@ class stream_get extends getinfo
         } else {
             echo '<option selected="selected">' . $this->lang['ac'] . '</option>' . $act;
         }
-        
+
         echo '</select>';
         echo '<div style="overflow: auto; height: auto; max-height: 500px; width: 713px;"><table id="table_filelist" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%"><thead><tr class="flisttblhdr" valign="bottom"><td id="file_list_checkbox_title" class="sorttable_checkbox">&nbsp;</td><td class="sorttable_alpha"><b>' . $this->lang['name'] . '</b></td>' . ($this->directdl ? '<td><b>' . $this->lang['direct'] . '</b></td>' : '') . '<td><b>' . $this->lang['original'] . '</b></td><td><b>' . $this->lang['size'] . '</b></td><td><b>' . $this->lang['date'] . '</b></td><td><b>IP</b></td></tr></thead><tbody>';
         usort($files, array(
             $this,
-            'datecmp'
+            'datecmp',
         ));
         $data = "";
         foreach ($files as $file) {
@@ -1555,7 +1538,7 @@ class stream_get extends getinfo
             if (strlen($file[3]) > 80) {
                 $file[3] = substr($file[3], 0, 70);
             }
-            
+
             $hosting = substr(Tools_get::site_hash($file[0]), 0, 15);
             if ($this->longurl) {
                 if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) {
@@ -1563,11 +1546,11 @@ class stream_get extends getinfo
                 } else {
                     $linkdown = 'index.php/' . Tools_get::site_hash($file[0]) . "/$file[2]/$file[3]";
                 }
-                
+
             } else {
                 $linkdown = '?file=' . $file[2];
             }
-            
+
             $data .= "
       <tr class='flistmouseoff' align='center'>
         <td><input name='checkbox[]' value='$file[2]+++$file[3]' type='checkbox'></td>
@@ -1578,13 +1561,13 @@ class stream_get extends getinfo
         <td><a target='_blank' href='https://www.google.com/search?q=$file[0]' title='" . $this->lang['clickcheck'] . "' target='$file[1]'><font color=#000000>$timeago</font></a></center></td><td><a target='_blank' href='http://whatismyipaddress.com/ip/$file[5]'><font color=#000000>" . $file[5] . "</font></a></td>
       </tr>";
         }
-        
+
         $this->CheckMBIP();
         echo $data;
-        $totalall      = Tools_get::convertmb($this->totalMB * 1024 * 1024);
-        $MB1IP         = Tools_get::convertmb($this->countMBIP * 1024 * 1024);
+        $totalall = Tools_get::convertmb($this->totalMB * 1024 * 1024);
+        $MB1IP = Tools_get::convertmb($this->countMBIP * 1024 * 1024);
         $thislimitMBIP = Tools_get::convertmb($this->limitMBIP * 1024 * 1024);
-        $timereset     = Tools_get::convert_time($this->ttl * 60);
+        $timereset = Tools_get::convert_time($this->ttl * 60);
         if ($this->config['showdirect'] == true) {
             echo "</tbody><tbody><tr class='flisttblftr'><td>&nbsp;</td><td>" . $this->lang['total'] . ":</td><td></td><td></td><td>$totalall</td><td></td><td>&nbsp;</td></tr></tbody></table>
 				</div></form><center><b>" . $this->lang['used'] . " $MB1IP/$thislimitMBIP - " . $this->lang['reset'] . " $timereset</b>.</center><br/>";
@@ -1592,67 +1575,67 @@ class stream_get extends getinfo
             echo "</tbody><tbody><tr class='flisttblftr'><td>&nbsp;</td><td>" . $this->lang['total'] . ":</td><td></td><td>$totalall</td><td></td><td>&nbsp;</td></tr></tbody></table>
 				</div></form><center><b>" . $this->lang['used'] . " $MB1IP/$thislimitMBIP - " . $this->lang['reset'] . " $timereset</b>.</center><br/>";
         }
-        
+
     }
-    
+
     public function deljob()
     {
         if ($this->act['delete'] == false) {
             return;
         }
-        
+
         if (isset($_POST['checkbox'])) {
             echo "<form action='$this->self' method='post'>";
             for ($i = 0; $i < count($_POST['checkbox']); $i++) {
                 $temp = explode("+++", $_POST['checkbox'][$i]);
-                $ftd  = $temp[0];
+                $ftd = $temp[0];
                 $name = $temp[1];
                 echo "<br/><b> $name </b>";
                 echo '<input type="hidden" name="ftd[]" value="' . $ftd . '" />';
                 echo '<input type="hidden" name="name[]" value="' . $name . '" />';
             }
-            
+
             echo "<br/><br/><input type='submit' value='" . $this->lang['del'] . "' name='remove'/> &nbsp; <input type='submit' value='" . $this->lang['canl'] . "' name='Cancel'/><br /><br />";
         }
-        
+
         if (isset($_POST['remove'])) {
             echo "<br />";
             for ($i = 0; $i < count($_POST['ftd']); $i++) {
-                $ftd  = $_POST['ftd'][$i];
+                $ftd = $_POST['ftd'][$i];
                 $name = $_POST['name'][$i];
-                $key  = "";
+                $key = "";
                 foreach ($this->jobs as $url => $job) {
                     if ($job['hash'] == $ftd) {
                         $key = $url;
                         break;
                     }
                 }
-                
+
                 if ($key) {
                     unset($this->jobs[$key]);
                     echo "<center>File: <b>$name</b> " . $this->lang['deld'];
                 } else {
                     echo "<center>File: <b>$name</b> " . $this->lang['notfound'];
                 }
-                
+
                 echo "</center>";
             }
-            
+
             echo "<br />";
             $this->save_jobs();
         }
-        
+
         if (isset($_POST['Cancel'])) {
             $this->fulllist();
         }
     }
-    
+
     public function renamejob()
     {
         if ($this->act['rename'] == false) {
             return;
         }
-        
+
         if (isset($_POST['checkbox'])) {
             echo "<form action='$this->self' method='post'>";
             for ($i = 0; $i < count($_POST['checkbox']); $i++) {
@@ -1663,17 +1646,17 @@ class stream_get extends getinfo
                 echo '<input type="hidden" name="name[]" value="' . $name . '" />';
                 echo '<br/>' . $this->lang['nname'] . ': <input type="text" name="nname[]" value="' . $name . '"/ size="70"><br />';
             }
-            
+
             echo "<br/><input type='submit' value='" . $this->lang['rname'] . "' name='renn'/> &nbsp; <input type='submit' value='" . $this->lang['canl'] . "' name='Cancel'/><br /><br />";
         }
-        
+
         if (isset($_POST['renn'])) {
             for ($i = 0; $i < count($_POST['name']); $i++) {
                 $orname = $_POST['name'][$i];
-                $hash   = $_POST['hash'][$i];
-                $nname  = $_POST['nname'][$i];
-                $nname  = Tools_get::convert_name($nname);
-                $nname  = str_replace($this->banned, '', $nname);
+                $hash = $_POST['hash'][$i];
+                $nname = $_POST['nname'][$i];
+                $nname = Tools_get::convert_name($nname);
+                $nname = str_replace($this->banned, '', $nname);
                 if ($nname == "") {
                     echo "<br />" . $this->lang['bname'] . "<br /><br />";
                     return;
@@ -1683,9 +1666,9 @@ class stream_get extends getinfo
                     foreach ($this->jobs as $url => $job) {
                         if ($job['hash'] == $hash) {
                             $key = $url;
-                            
+
                             // $hash = $this->create_hash($key,$nname);
-                            
+
                             $jobn = array(
                                 'hash' => $job['hash'],
                                 'path' => $job['path'],
@@ -1700,12 +1683,12 @@ class stream_get extends getinfo
                                 'type' => 'direct',
                                 'directlink' => array(
                                     'url' => $job['directlink']['url'],
-                                    'cookies' => $job['directlink']['cookies']
-                                )
+                                    'cookies' => $job['directlink']['cookies'],
+                                ),
                             );
                         }
                     }
-                    
+
                     if ($key) {
                         $this->jobs[$key] = $jobn;
                         $this->save_jobs();
@@ -1713,12 +1696,12 @@ class stream_get extends getinfo
                     } else {
                         echo "File <b>$orname</b> " . $this->lang['notfound'];
                     }
-                    
+
                     echo "<br/><br />";
                 }
             }
         }
-        
+
         if (isset($_POST['Cancel'])) {
             $this->fulllist();
         }
@@ -1728,7 +1711,7 @@ class stream_get extends getinfo
         if (isset($this->lang[$msg])) {
             $msg = sprintf($this->lang[$msg], $a, $b, $c, $d);
         }
-        
+
         $msg = sprintf($this->lang["error1"], $msg);
         die($msg);
     }
@@ -1737,24 +1720,24 @@ class stream_get extends getinfo
         if (isset($this->lang[$msg])) {
             $msg = sprintf($this->lang[$msg], $b, $c, $d);
         }
-        
+
         $msg = sprintf($this->lang["error2"], $msg, $a);
         die($msg);
     }
-    
+
     public function api_zip($url, $type)
     {
         $data = $this->curl($type . $url, '', '', 0);
         return $data;
     }
-    
+
     public function tinyurl($url)
     {
         $data = $this->curl("http://tinyurl.com/create.php", "", "url=$url", 0);
         preg_match('/<div class="indent"><b>(.*?)<\/b><div id="success">/', $data, $match);
         return trim($match[1]);
     }
-    
+
     public function wrong_proxy($proxy)
     {
         if (strpos($proxy, "|")) {
@@ -1764,7 +1747,7 @@ class stream_get extends getinfo
         } else {
             list($ip, $port) = explode(":", $proxy);
         }
-        
+
         die('<title>You must add this proxy to IDM ' . (strpos($proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . '</title><center><b><span style="color:#076c4e">You must add this proxy to IDM </span> <span style="color:#30067d">(' . (strpos($proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' and Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ')</span> <br><span style="color:red">PLEASE REMEMBER: IF YOU DO NOT ADD THE PROXY, YOU CAN NOT DOWNLOAD THIS LINK!</span><br><br>  Open IDM > Downloads > Options.<br><img src="http://i.imgur.com/v7FR3HE.png"><br><br>  Proxy/Socks > Choose "Use Proxy" > Add proxy server: <font color=\'red\'>' . $ip . '</font>, port: <font color=\'red\'>' . $port . '</font> ' . (strpos($proxy, "|") ? ', username: <font color=\'red\'>' . $user . '</font> and password: <font color=\'red\'>' . $pass . '</font>' : '') . ' > Choose http > OK.<br>' . (strpos($proxy, "|") ? '<img src="http://i.imgur.com/LUTpGyN.png">' : '<img src="http://i.imgur.com/zExhNVR.png">') . '<br><br>  Copy your link > Paste in IDM > OK.<br><img src="http://i.imgur.com/S355c5J.png"><br><br>  It will work > Start Download > Enjoy!<br><img src="http://i.imgur.com/vlh2vZf.png"></b></center>');
     }
 }
@@ -1776,27 +1759,27 @@ class Tools_get
 {
     public function useronline()
     {
-        $data   = @file_get_contents($this->fileinfo_dir . "/online.dat");
+        $data = @file_get_contents($this->fileinfo_dir . "/online.dat");
         $online = @json_decode($data, true);
         if (!is_array($online)) {
             $online = array();
-            $data   = 'vng';
+            $data = 'vng';
         }
-        
+
         $online[$_SERVER['REMOTE_ADDR']] = time();
-        
+
         // ## clean jobs ###
-        
+
         $oldest = time() - 45;
         foreach ($online as $ip => $time) {
             if ($time < $oldest) {
                 unset($online[$ip]);
             }
-            
+
         }
-        
+
         // ## clean jobs ###
-        
+
         /*-------------- save --------------*/
         $tmp = json_encode($online);
         if ($tmp !== $data) {
@@ -1806,41 +1789,41 @@ class Tools_get
             fclose($fh);
             @chmod($this->fileinfo_dir . "/online.dat", 0666);
         }
-        
+
         /*-------------- /save --------------*/
         return count($online);
     }
-    
+
     public function size_name($link, $cookie)
     {
         if (!$link || !stristr($link, 'http')) {
             return;
         }
-        
-        $link   = str_replace(" ", "%20", $link);
-        $port   = 80;
+
+        $link = str_replace(" ", "%20", $link);
+        $port = 80;
         $schema = parse_url(trim($link));
-        $host   = $schema['host'];
+        $host = $schema['host'];
         $scheme = "http://";
         if (empty($schema['path'])) {
             return;
         }
-        
+
         $gach = explode("/", $link);
         list($path1, $path) = explode($gach[2], $link);
         if (isset($schema['port'])) {
             $port = $schema['port'];
         } elseif ($schema['scheme'] == 'https') {
             $scheme = "ssl://";
-            $port   = 443;
+            $port = 443;
         }
-        
+
         if ($scheme != "ssl://") {
             $scheme = "";
         }
-        $errno  = 0;
+        $errno = 0;
         $errstr = "";
-        $hosts  = $scheme . $host . ':' . $port;
+        $hosts = $scheme . $host . ':' . $port;
         if ($this->proxy != 0) {
             if (strpos($this->proxy, "|")) {
                 list($ip, $user) = explode("|", $this->proxy);
@@ -1848,31 +1831,31 @@ class Tools_get
             } else {
                 $ip = $this->proxy;
             }
-            
+
             $data = "GET {$link} HTTP/1.1\r\n";
             if (isset($auth)) {
                 $data .= "Proxy-Authorization: Basic $auth\r\n";
             }
-            
+
             $fp = @stream_socket_client("tcp://{$ip}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
         } else {
             $data = "GET {$path} HTTP/1.1\r\n";
-            $fp   = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+            $fp = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
         }
-        
+
         $data .= "User-Agent: " . $this->UserAgent . "\r\n";
         $data .= "Host: {$host}\r\n";
         $data .= "Referer: {$this->url}\r\n";
         $data .= $cookie ? "Cookie: $cookie\r\n" : '';
         $data .= "Connection: Close\r\n\r\n";
-        
+
         if (!$fp) {
             return -1;
         }
-        
+
         fputs($fp, $data);
         fflush($fp);
-        
+
         $header = "";
         do {
             if (!$header) {
@@ -1880,43 +1863,43 @@ class Tools_get
                 if (!stristr($header, "HTTP/1")) {
                     break;
                 }
-                
+
             } else {
                 $header .= fgets($fp, 8192);
             }
-            
+
         } while (strpos($header, "\r\n\r\n") === false);
-        
+
         if (stristr($header, "TTP/1.0 200 OK") || stristr($header, "TTP/1.1 200 OK") || stristr($header, "TTP/1.1 206")) {
             $filesize = trim($this->cut_str($header, "Content-Length:", "\n"));
         } else {
             $filesize = -1;
         }
-        
+
         if (!is_numeric($filesize)) {
             $filesize = -1;
         }
-        
+
         $filename = "";
-        
+
         if (stristr($header, "filename")) {
             if (preg_match("/; filename=(.*?);/", $header, $match)) {
                 $filename = trim($match[1]);
             } else {
                 $filename = trim($this->cut_str($header, "filename", "\n"));
             }
-            
+
         } else {
             $filename = substr(strrchr($link, '/'), 1);
         }
-        
+
         $filename = self::convert_name($filename);
         return array(
             $filesize,
-            $filename
+            $filename,
         );
     }
-    
+
     public function site_hash($url)
     {
         if (strpos($url, "4shared.com")) {
@@ -1969,12 +1952,12 @@ class Tools_get
             $site = "MEGA";
         } else {
             $schema = parse_url($url);
-            $site   = preg_replace("/(www\.|\.com|\.net|\.biz|\.info|\.org|\.us|\.vn|\.jp|\.fr|\.in|\.to)/", "", $schema['host']);
+            $site = preg_replace("/(www\.|\.com|\.net|\.biz|\.info|\.org|\.us|\.vn|\.jp|\.fr|\.in|\.to)/", "", $schema['host']);
         }
-        
+
         return $site;
     }
-    
+
     public function convert($filesize)
     {
         $filesize = str_replace(",", ".", $filesize);
@@ -1990,26 +1973,26 @@ class Tools_get
             } else {
                 $value = $value[1];
             }
-            
+
         } else {
             $value = 0;
         }
-        
+
         return $value;
     }
-    
+
     public function convertmb($filesize)
     {
         if (!is_numeric($filesize)) {
             return $filesize;
         }
-        
+
         $soam = false;
         if ($filesize < 0) {
             $filesize = abs($filesize);
-            $soam     = true;
+            $soam = true;
         }
-        
+
         if ($filesize >= 1024 * 1024 * 1024 * 1024) {
             $value = ($soam ? "-" : "") . round($filesize / (1024 * 1024 * 1024 * 1024), 2) . " TB";
         } elseif ($filesize >= 1024 * 1024 * 1024) {
@@ -2021,10 +2004,10 @@ class Tools_get
         } else {
             $value = ($soam ? "-" : "") . $filesize . " Bytes";
         }
-        
+
         return $value;
     }
-    
+
     public function uft8html2utf8($s)
     {
         if (!function_exists('uft8html2utf8_callback')) {
@@ -2041,14 +2024,14 @@ class Tools_get
                     $utf .= chr(128 + ((($dec % 4096) - ($dec % 64)) / 64));
                     $utf .= chr(128 + ($dec % 64));
                 }
-                
+
                 return $utf;
             }
         }
-        
+
         return preg_replace_callback('|&#([0-9]{1,});|', 'uft8html2utf8_callback', $s);
     }
-    
+
     public function convert_name($filename)
     {
         $filename = urldecode($filename);
@@ -2059,10 +2042,10 @@ class Tools_get
         if (empty($filename) == true) {
             $filename = substr(md5(time() . $url), 0, 10);
         }
-        
+
         return $filename;
     }
-    
+
     public function convert_time($time)
     {
         if ($time >= 86400) {
@@ -2074,7 +2057,7 @@ class Tools_get
         } else {
             $time = $time . " " . $this->lang['sec'];
         }
-        
+
         return $time;
     }
 }
@@ -2085,70 +2068,70 @@ class Download
     public $last = false;
     public function __construct($lib, $site)
     {
-        $this->lib  = $lib;
+        $this->lib = $lib;
         $this->site = $site;
     }
-    
+
     public function error($msg, $force = false, $delcookie = true, $type = 1)
     {
         if (isset($this->lib->lang[$msg])) {
             $msg = sprintf($this->lib->lang[$msg], $this->site, $this->url);
         }
-        
+
         $msg = sprintf($this->lib->lang["error{$type}"], $msg, $this->url);
         if ($delcookie) {
             $this->save();
         }
-        
+
         if ($force || $this->last) {
             die($msg);
         }
-        
+
     }
-    
+
     public function filter_cookie($cookie, $del = array('', '""', 'deleted'))
     {
-        $cookie  = explode(";", $cookie);
+        $cookie = explode(";", $cookie);
         $cookies = "";
-        $a       = array();
+        $a = array();
         foreach ($cookie as $c) {
             $delete = false;
-            $pos    = strpos($c, "=");
-            $key    = str_replace(" ", "", substr($c, 0, $pos));
-            $val    = substr($c, $pos + 1);
+            $pos = strpos($c, "=");
+            $key = str_replace(" ", "", substr($c, 0, $pos));
+            $val = substr($c, $pos + 1);
             foreach ($del as $dul) {
                 if ($val == $dul) {
                     $delete = true;
                 }
-                
+
             }
             if (!$delete) {
                 $a[$key] = $val;
             }
-            
+
         }
         foreach ($a as $b => $c) {
             $cookies .= "{$b}={$c}; ";
         }
         return $cookies;
     }
-    
+
     public function save($cookies = "", $save = true)
     {
         $cookie = $cookies != "" ? $this->filter_cookie(($this->lib->cookie ? $this->lib->cookie . ";" : "") . $cookies) : "";
         if ($save) {
             $this->lib->save_cookies($this->site, $cookie);
         }
-        
+
         $this->lib->cookie = $cookie;
     }
-    
+
     public function exploder($del, $data, $i)
     {
         $a = explode($del, $data);
         return $a[$i];
     }
-    
+
     public function isredirect($data)
     {
         if (preg_match('/ocation: (.*)/', $data, $match)) {
@@ -2157,24 +2140,24 @@ class Download
         } else {
             return false;
         }
-        
+
     }
-    
+
     public function getredirect($link, $cookie = "")
     {
         $data = $this->lib->curl($link, $cookie, "", -1);
         if (preg_match('/ocation: (.*)/', $data, $match)) {
             $link = trim($match[1]);
         }
-        
+
         $cookies = $this->lib->GetCookies($data);
         if ($cookies != "") {
             $this->save($cookies);
         }
-        
+
         return $link;
     }
-    
+
     public function passredirect($data, $cookie)
     {
         if (stristr($data, "302 Found") && stristr($data, "ocation")) {
@@ -2183,7 +2166,7 @@ class Download
         }
         return $data;
     }
-    
+
     public function parseForm($data)
     {
         $post = array();
@@ -2192,7 +2175,7 @@ class Download
                 if (!stristr($input, "name=")) {
                     continue;
                 }
-                
+
                 if (preg_match('/name=(".*"|\'.*\')/U', $input, $name)) {
                     $key = substr($name[1], 1, -1);
                     if (preg_match('/value=(".*"|\'.*\')/U', $input, $value)) {
@@ -2200,31 +2183,31 @@ class Download
                     } else {
                         $post[$key] = "";
                     }
-                    
+
                 }
             }
         }
         return $post;
     }
-    
+
     public function linkpassword($url)
     {
         $password = "";
         if (strpos($url, "|")) {
             $linkpass = explode('|', $url);
-            $url      = $linkpass[0];
+            $url = $linkpass[0];
             $password = $linkpass[1];
         }
         if (isset($_POST['password'])) {
             $password = $_POST['password'];
         }
-        
+
         return array(
             $url,
-            $password
+            $password,
         );
     }
-    
+
     public function forcelink($link, $a)
     {
         $link = str_replace(" ", "%20", $link);
@@ -2234,21 +2217,21 @@ class Download
             } else {
                 return $link;
             }
-            
+
         }
         $this->error("cantconnect", false, false);
         return false;
     }
-    
+
     public function General($url)
     {
-        $this->url      = $url;
+        $this->url = $url;
         $this->lib->url = $url;
-        $this->cookie   = "";
+        $this->cookie = "";
         if ($this->lib->acc[$this->site]['proxy'] != "") {
             $this->lib->proxy = $this->lib->acc[$this->site]['proxy'];
         }
-        
+
         if (method_exists($this, "PreLeech")) {
             $this->PreLeech($this->url);
         }
@@ -2259,14 +2242,14 @@ class Download
                 if ($link) {
                     return $link;
                 }
-                
+
             }
         }
         $maxacc = count($this->lib->acc[$this->site]['accounts']);
         if ($maxacc == 0) {
             $this->error('noaccount', true);
         }
-        
+
         for ($k = 0; $k < $maxacc; $k++) {
             $account = trim($this->lib->acc[$this->site]['accounts'][$k]);
             if (stristr($account, ':')) {
@@ -2274,54 +2257,54 @@ class Download
             } else {
                 $cookie = $account;
             }
-            
+
             if (!empty($cookie) || (!empty($user) && !empty($pass))) {
                 for ($j = 0; $j < 2; $j++) {
                     if (($maxacc - $k) == 1 && $j == 1) {
                         $this->last = true;
                     }
-                    
+
                     if (empty($cookie)) {
                         $cookie = $this->lib->get_cookie($this->site);
                     }
-                    
+
                     if (empty($cookie)) {
                         $cookie = false;
                         if (method_exists($this, "Login")) {
                             $cookie = $this->Login($user, $pass);
                         }
-                        
+
                     }
                     if (!$cookie) {
                         continue;
                     }
-                    
+
                     $this->save($cookie);
                     if (method_exists($this, "CheckAcc")) {
                         $status = $this->CheckAcc($this->lib->cookie);
                     } else {
                         $status = array(
                             true,
-                            "Without Acc Checker"
+                            "Without Acc Checker",
                         );
                     }
-                    
+
                     if ($status[0]) {
                         $link = false;
                         if (method_exists($this, "Leech")) {
                             $link = $this->Leech($this->url);
                         }
-                        
+
                         if ($link) {
                             $link = $this->forcelink($link, 3);
                             if ($link) {
                                 return $link;
                             }
-                            
+
                         } else {
                             $this->error('pluginerror');
                         }
-                        
+
                     } else {
                         $this->error($status[1]);
                     }
@@ -2342,9 +2325,9 @@ class Download
  */
 class MEGA
 {
-    
+
     private $seqno, $f;
-    
+
     /**
      * Class constructor
      * @param string $file_hash File hash, coming after # in mega URL
@@ -2352,48 +2335,48 @@ class MEGA
     public function __construct($file_hash)
     {
         $this->seqno = rand(0, 0xFFFFFFFF);
-        $this->f     = $this->mega_get_file_info($file_hash);
+        $this->f = $this->mega_get_file_info($file_hash);
     }
-    
+
     public function a32_to_str($hex)
     {
         return call_user_func_array('pack', array_merge(array(
-            'N*'
+            'N*',
         ), $hex));
     }
-    
+
     public function aes_ctr_decrypt($data, $key, $iv)
     {
         return mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $data, 'ctr', $iv);
     }
-    
+
     public function base64_to_a32($s)
     {
         return $this->str_to_a32($this->base64urldecode($s));
     }
-    
+
     public function base64urldecode($data)
     {
         $data .= substr('==', (2 - strlen($data) * 3) % 4);
         $data = str_replace(array(
             '-',
             '_',
-            ','
+            ',',
         ), array(
             '+',
             '/',
-            ''
+            '',
         ), $data);
         return base64_decode($data);
     }
-    
+
     public function str_to_a32($b)
     {
         // Add padding, we need a string with a length multiple of 4
         $b = str_pad($b, 4 * ceil(strlen($b) / 4), "\0");
         return array_values(unpack('N*', $b));
     }
-    
+
     public function post($url, $post)
     {
         $ch = curl_init();
@@ -2407,27 +2390,27 @@ class MEGA
         curl_close($ch);
         return $page;
     }
-    
+
     /**
      * Handles query to mega servers
      * @param array $req data to be sent to mega
      * @return type
      */
-    
+
     public function mega_api_req($req)
     {
         $resp = $this->post('https://g.api.mega.co.nz/cs?id=' . ($this->seqno++) . '&', json_encode(array(
-            $req
+            $req,
         )), 0);
         $resp = json_decode($resp, true);
         return $resp[0];
     }
-    
+
     public function aes_cbc_decrypt($data, $key)
     {
         return mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $data, MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
     }
-    
+
     public function mega_dec_attr($attr, $key)
     {
         $attr = trim($this->aes_cbc_decrypt($attr, $this->a32_to_str($key)));
@@ -2436,14 +2419,14 @@ class MEGA
         }
         return json_decode(substr($attr, 4), true);
     }
-    
+
     /*
      * Downloads file from megaupload
      * @param string $as_attachment Download file as attachment, default true
      * @param string $local_path Save file to specified by $local_path folder
      * @return boolean True
      */
-    
+
     public function download($as_attachment = true, $local_path = null)
     {
         $ch = curl_init($this->f['binary_url']);
@@ -2466,39 +2449,39 @@ class MEGA
             return true;
         }
     }
-    
+
     public function get_chunks($size)
     {
         $chunks = array();
-        $p      = $pp = 0;
-        
+        $p = $pp = 0;
+
         for ($i = 1; $i <= 8 && $p < $size - $i * 0x20000; $i++) {
             $chunks[$p] = $i * 0x20000;
-            $pp         = $p;
+            $pp = $p;
             $p += $chunks[$p];
         }
-        
+
         while ($p < $size) {
             $chunks[$p] = 0x100000;
-            $pp         = $p;
+            $pp = $p;
             $p += $chunks[$p];
         }
-        
+
         $chunks[$pp] = ($size - $pp);
         if (!$chunks[$pp]) {
             unset($chunks[$pp]);
         }
-        
+
         return $chunks;
     }
-    
+
     /*
      * Downloads file from megaupload as a stream (useful if you want to implement megaupload proxy)
      * @param string $as_attachment Download file as attachment, default true
      * @param string $local_path Save file to specified by $local_path folder
      * @return boolean True
      */
-    
+
     public function stream_download($as_attachment = true, $local_path = null)
     {
         if ($as_attachment) {
@@ -2513,39 +2496,39 @@ class MEGA
             $destfile = fopen($local_path . DIRECTORY_SEPARATOR . $this->f['attr']['n'], 'wb');
         }
         $cipher = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', 'ctr', '');
-        
+
         mcrypt_generic_init($cipher, $this->a32_to_str($this->f['k']), $this->a32_to_str($this->f['iv']));
-        
+
         $chunks = $this->get_chunks($this->f['size']);
-        
+
         $protocol = parse_url($this->f['binary_url'], PHP_URL_SCHEME);
-        
+
         $opts = array(
             $protocol => array(
-                'method' => 'GET'
-            )
+                'method' => 'GET',
+            ),
         );
-        
+
         $context = stream_context_create($opts);
-        $stream  = fopen($this->f['binary_url'], 'rb', false, $context);
-        
+        $stream = fopen($this->f['binary_url'], 'rb', false, $context);
+
         $info = stream_get_meta_data($stream);
-        $end  = !$info['eof'];
+        $end = !$info['eof'];
         foreach ($chunks as $length) {
-            
+
             $bytes = strlen($buffer);
             while ($bytes < $length && $end) {
                 $data = fread($stream, min(1024, $length - $bytes));
                 $buffer .= $data;
-                
+
                 $bytes = strlen($buffer);
-                $info  = stream_get_meta_data($stream);
-                $end   = !$info['eof'] && $data;
+                $info = stream_get_meta_data($stream);
+                $end = !$info['eof'] && $data;
             }
-            
-            $chunk  = substr($buffer, 0, $length);
+
+            $chunk = substr($buffer, 0, $length);
             $buffer = $bytes > $length ? substr($buffer, $length) : '';
-            
+
             $chunk = mdecrypt_generic($cipher, $chunk);
             if ($as_attachment) {
                 print $chunk;
@@ -2553,9 +2536,9 @@ class MEGA
             } else {
                 fwrite($destfile, $chunk);
             }
-            
+
         }
-        
+
         // Terminate decryption handle and close module
         mcrypt_generic_deinit($cipher);
         mcrypt_module_close($cipher);
@@ -2563,36 +2546,36 @@ class MEGA
         if (!$as_attachment) {
             fclose($destfile);
         }
-        
+
         return true;
     }
-    
+
     private function mega_get_file_info($hash)
     {
         preg_match('/\!(.*?)\!(.*)/', $hash, $matches);
-        $id       = $matches[1];
-        $key      = $matches[2];
-        $key      = $this->base64_to_a32($key);
-        $k        = array(
+        $id = $matches[1];
+        $key = $matches[2];
+        $key = $this->base64_to_a32($key);
+        $k = array(
             $key[0] ^ $key[4],
             $key[1] ^ $key[5],
             $key[2] ^ $key[6],
-            $key[3] ^ $key[7]
+            $key[3] ^ $key[7],
         );
-        $iv       = array_merge(array_slice($key, 4, 2), array(
+        $iv = array_merge(array_slice($key, 4, 2), array(
             0,
-            0
+            0,
         ));
         $meta_mac = array_slice($key, 6, 2);
-        $info     = $this->mega_api_req(array(
+        $info = $this->mega_api_req(array(
             'a' => 'g',
             'g' => 1,
-            'p' => $id
+            'p' => $id,
         ));
         if (!$info['g']) {
             die('<b><font color=red>No such file on mega. Maybe it was deleted.</font></b>');
         }
-        
+
         return array(
             'id' => $id,
             'key' => $key,
@@ -2601,15 +2584,15 @@ class MEGA
             'meta_mac' => $meta_mac,
             'binary_url' => $info['g'],
             'attr' => $this->mega_dec_attr($this->base64urldecode($info['at']), $k),
-            'size' => $info['s']
+            'size' => $info['s'],
         );
     }
-    
+
     /**
      * Returns file information
      * @return array File information
      */
-    
+
     public function file_info()
     {
         return $this->f;

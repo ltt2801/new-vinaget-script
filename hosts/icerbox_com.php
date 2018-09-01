@@ -1,5 +1,5 @@
 <?php
-class dl_katfile_com extends Download
+class dl_icerbox_com extends Download
 {
 
     public function CheckAcc($cookie)
@@ -55,6 +55,6 @@ class dl_katfile_com extends Download
  * Open Source Project
  * New Vinaget by LTT
  * Version: 3.3 LTSB
- * Katfile.com Download Plugin
+ * Icerbox.com Download Plugin
  * Date: 31.01.2018
  */

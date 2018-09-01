@@ -1,4 +1,5 @@
-New Vinaget Script 3.3 LTSB - Developed by LTT♥  
+New Vinaget Script 3.3 LTSB - Developed by LTT  
+Worked with PHP 7. Required: php-curl, php-mbstring, php-mcrypt, mod_rewrite (apache)  
 Referer from: https://github.com/giaythuytinh176/vinaget-script   
 Contact email for request plugin updates: lethanhtuan2897@gmail.com  
 
@@ -10,7 +11,7 @@ CHMOD file "data/config.dat" to 666.
 CHMOD file "data/cookie.dat" to 666.  
 CHMOD file "data/online.dat" to 666.  
 CHMOD file "data/log.txt" to 666.  
-CHMOD file "datafile_descrypt.html" to 666.  
+CHMOD file "data/datafile_descrypt.html" to 666.  
 Password default: admin  
 ######################################  
   

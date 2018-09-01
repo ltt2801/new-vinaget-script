@@ -3,8 +3,8 @@
 		<meta http-equiv="Content-Language" content="en-us">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<link rel="SHORTCUT ICON" href="images/vngicon.png" type="image/x-icon" />
-		<meta name="keywords" content="<?php printf($obj->lang['version']); ?>, download, get, vinaget, file, generator, premium, link, sharing, bitshare.com, crocko.com, depositfiles.com, extabit.com, filefactory.com, filepost.com, filesmonster.com, freakshare.com, gigasize.com, hotfile.com, jumbofiles.com, letitbit.net, mediafire.com, megashares.com, netload.in, oron.com, rapidgator.net, rapidshare.com, ryushare.com, sendspace.com, share-online.biz, shareflare.net, uploaded.to, uploading.com" />
-		<title><?php printf($obj->lang['title'],$obj->lang['version']); ?></title>
+		<meta name="keywords" content="<?php printf($obj->lang['version']);?>, download, get, vinaget, file, generator, premium, link, sharing, bitshare.com, crocko.com, depositfiles.com, extabit.com, filefactory.com, filepost.com, filesmonster.com, freakshare.com, gigasize.com, hotfile.com, jumbofiles.com, letitbit.net, mediafire.com, megashares.com, netload.in, oron.com, rapidgator.net, rapidshare.com, ryushare.com, sendspace.com, share-online.biz, shareflare.net, uploaded.to, uploading.com" />
+		<title><?php printf($obj->lang['title'], $obj->lang['version']);?></title>
 		<style>
 		body {
 			background: #000000 repeat-x;
@@ -65,10 +65,10 @@
 		</code>
 		<div align="center">
 			<form method="POST" action="login.php">
-				<span class='login'><?php printf($obj->lang['login']); ?></span>
+				<span class='login'><?php printf($obj->lang['login']);?></span>
 				<table border="0" width="500" height="32">
 					<tr>
-						<td height="28" width="108"><span class='pass'><?php printf($obj->lang['password']); ?></span></td>
+						<td height="28" width="108"><span class='pass'><?php printf($obj->lang['password']);?></span></td>
 						<td height="28" width="316"><input type="password" name="secure" size="44"></td>
 						<td height="28" width="56"><input type="submit" value="Submit" name="submit"></td>
 					</tr>
@@ -76,9 +76,9 @@
 			</form>
 			<br/>
 		<!-- Copyright please don't remove-->
-			<STRONG><SPAN class='powered'>Based on <a href='http://rapidleech.com/forum/viewforum.php?f=23'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br/>
-			Rebuild code by ♥LTT♥. Current version: <a target='_blank' href='https://bitbucket.org/ltt2801/new-vinaget-script'><?php printf($obj->ltt_version); ?></a></SPAN><br/>
-			<SPAN class='copyright'>Copyright 2009-<?php echo date('Y');?> by <a href='http://vinaget.us/'>http://vinaget.us</a>. All rights reserved. </SPAN><br />
+			<STRONG><SPAN class='powered'>Based on <a href='http://rapidleech.com/forum/viewforum.php?f=23'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version);?></a> by [FZ]<br/>
+			Rebuild code by ♥LTT. Current version: <a target='_blank' href='https://bitbucket.org/ltt2801/new-vinaget-script'><?php printf($obj->ltt_version);?></a></SPAN><br/>
+			<SPAN class='copyright'>Copyright 2009-<?php echo date('Y'); ?> by <a href='http://vinaget.us/'>http://vinaget.us</a>. All rights reserved. </SPAN><br />
 		<!-- Copyright please don't remove-->
 		</div>
 	</body>

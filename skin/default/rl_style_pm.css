@@ -13,7 +13,9 @@ hr {
 	color: #4A4A4A;
 }
 
-img { border: 0; }
+img {
+	border: 0;
+}
 
 body {
 	font-family: "Segoe UI", Tahoma, sans-serif;
@@ -23,71 +25,110 @@ body {
 	margin: 0px;
 	padding: 0px;
 }
+
 .showlistlink {
-	background:url(../../images/bglist.png);
-	height:100%;
-	width:100%;
-	color:#FFFFFF;
-	font-size:16px;
-	position:fixed;
-	margin-left:0px;
-	margin-right:0px;
-	margin-top:0px;
-	margin-bottom:0px;
+	background: url(../../images/bglist.png);
+	height: 100%;
+	width: 100%;
+	color: #FFFFFF;
+	font-size: 16px;
+	position: fixed;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 	display: none;
 }
 
-tr { font-family: "Segoe UI", Tahoma; font-size: 11px; line-height: 14.5px; color: #FFFFFF; }
-input { font-family: "Segoe UI", Tahoma; font-size: 11px; }
-select { font-family: "Segoe UI", Tahoma; font-size: 11px; }
-textarea { font-family: "Segoe UI", Tahoma; font-size: 11.5px; }
-a { color: #55aaff;  }
-color { color: #FFFFFF; }
+tr {
+	font-family: "Segoe UI", Tahoma;
+	font-size: 11px;
+	line-height: 14.5px;
+	color: #FFFFFF;
+}
+
+input {
+	font-family: "Segoe UI", Tahoma;
+	font-size: 11px;
+}
+
+select {
+	font-family: "Segoe UI", Tahoma;
+	font-size: 11px;
+}
+
+textarea {
+	font-family: "Segoe UI", Tahoma;
+	font-size: 11.5px;
+}
+
+a {
+	color: #55aaff;
+}
+
+color {
+	color: #FFFFFF;
+}
 
 /*.show-table {display: block;}*/
-
-.hide-table {display: none;}
+.hide-table {
+	display: none;
+}
 
 .filelist a {
-	text-decoration:none;
+	text-decoration: none;
 }
+
 .filelist a:hover {
-	text-decoration:underline;
+	text-decoration: underline;
 }
+
 .title {
 	font-size: 18px;
 	font-weight: bold;
 }
+
 .g {
-	text-align:center;
-	color:#00FF00;
+	text-align: center;
+	color: #00FF00;
 }
+
 .y {
-	text-align:center;
-	color:#FFFF00;
+	text-align: center;
+	color: #FFFF00;
 }
+
 .r {
-	text-align:center;
-	color:#FF0000;
+	text-align: center;
+	color: #FF0000;
 }
+
 .n {
-	text-align:center;
-	color:blue;
+	text-align: center;
+	color: blue;
 }
+
 .style1 {
 	font-size: 12px;
 	font-weight: bold;
 }
-.style2 {font-weight: bold}
 
-.linkchecker-load{filter:alpha(opacity=20);-moz-opacity:0.2;opacity:0.2;}
+.style2 {
+	font-weight: bold
+}
+
+.linkchecker-load {
+	filter: alpha(opacity=20);
+	-moz-opacity: 0.2;
+	opacity: 0.2;
+}
 
 .font-black {
-	color:#000;
+	color: #000;
 }
 
 .font-blue {
-	color:#05F;
+	color: #05F;
 }
 
 .caption {
@@ -102,90 +143,76 @@ th {
 /*
 ** All previous inline-style classes **
 */
-
-
 /*the file checkbox menu */
-.chkmenu
-{
+.chkmenu {
 	color: #99C9E6;
 }
 
 /* the files list table header */
-.flisttblhdr
-{
+.flisttblhdr {
 	background-color: #4B433B;
 	text-align: center;
 	color: white;
 }
 
-.flisttblftr
-{
+.flisttblftr {
 	background-color: #4B433B;
 	color: white;
 	text-align: center;
 }
 
-.ftpprogress
-{
-	background-color:#FFFFFF;
-	margin:1px;
-	width:0%;
-	height:8px;
+.ftpprogress {
+	background-color: #FFFFFF;
+	margin: 1px;
+	width: 0%;
+	height: 8px;
 }
-
-
 
 /* main.php */
-.plugincolhd
-{
-	background-color:#657B87;
-	color:#eee;
-	padding:1px;
-	width:103px;
-	margin:1px auto 2px 2px;
+.plugincolhd {
+	background-color: #657B87;
+	color: #eee;
+	padding: 1px;
+	width: 103px;
+	margin: 1px auto 2px 2px;
 }
 
-.plugincollst
-{
+.plugincollst {
 	color: #ccc;
 }
-.ServerFiles
-{
+
+.ServerFiles {
 	text-decoration: none;
 	color: #FFC500;
 }
-.flistmouseon
-{
+
+.flistmouseon {
 	background-color: #F5A249;
 	color: black;
 }
 
-.flistmouseoff
-{
+.flistmouseoff {
 	background-color: #D49659;
 	color: black;
 }
 
-.workswith
-{
-	text-align:center;
-	padding:3px;
-	color:#dedede;
-	margin:0 auto;
-	width:450px;
-	font-size:9px;
-	height:50px;
-	overflow:auto;
-	border:1px solid #666;
+.workswith {
+	text-align: center;
+	padding: 3px;
+	color: #dedede;
+	margin: 0 auto;
+	width: 450px;
+	font-size: 9px;
+	height: 50px;
+	overflow: auto;
+	border: 1px solid #666;
 }
 
-.autodel
-{
-	color:#FFCC00;
+.autodel {
+	color: #FFCC00;
 }
 
-.cell-plugin
-{
+.cell-plugin {
 	height: 27px;
 	width: 109px;
 	font-family: "Tahoma";
@@ -198,8 +225,7 @@ th {
 	background-repeat: no-repeat;
 }
 
-.button-auto
-{
+.button-auto {
 	height: 23px;
 	width: 105px;
 	margin-bottom: 1px;
@@ -216,36 +242,32 @@ th {
 }
 
 /* The progressbar for upload and download, including the outer div holder */
-.progressouter
-{
-	border:1px solid #FFFFFF; width:300px; height:10px;
+.progressouter {
+	border: 1px solid #FFFFFF;
+	width: 300px;
+	height: 10px;
 }
 
-.progressdown
-{
-	background-color:#FFFFFF;
-	width:0%;
-	height:8px;
+.progressdown {
+	background-color: #FFFFFF;
+	width: 0%;
+	height: 8px;
 	margin: 1px;
 }
 
-.progressup
-{
-	background-color:#FFFFFF;
-	width:0%;
-	height:8px;
+.progressup {
+	background-color: #FFFFFF;
+	width: 0%;
+	height: 8px;
 	margin: 1px;
 }
 
 /* The "new-and-improved" tabs xD */
-
-.selected
-{
+.selected {
 	background-color: #85cbeb !important;
 }
 
-.cell-nav
-{
+.cell-nav {
 	height: 31px;
 	width: 119px;
 	font-family: "Tahoma";
@@ -257,20 +279,23 @@ th {
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
+
 .powered {
 	font-family: Arial;
 	color: #FF8700;
 	font-size: 10px;
 	line-height: 14px;
-	font-weight:bold;
+	font-weight: bold;
 }
+
 .copyright {
 	font-family: Arial;
 	line-height: 14px;
 	color: #CCCCCC;
 	font-size: 10px;
-	font-weight:bold;
+	font-weight: bold;
 }
+
 .copyright a {
 	color: red;
 	TEXT-DECORATION: none;

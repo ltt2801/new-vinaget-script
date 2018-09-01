@@ -120,7 +120,7 @@ $lang = array (
 'debridtype'	=> 'Debrid Type:',
 );
 /*
-* Vinaget by LTT♥
+* Vinaget by LTT
 * Version: 3.3 LTSB
 * Language: English
 */
