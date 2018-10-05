@@ -1,3 +1,6 @@
+v16:
+- Fix html footer
+- Update icerbox.com
 v15:
 - Update 1fichier.com
 - Fix icerbox.com

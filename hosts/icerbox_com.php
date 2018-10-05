@@ -19,7 +19,10 @@ class dl_icerbox_com extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://icerbox.com/api/v1/auth/login", "", '{"email": "' . $user . '", "password": "' . $pass . '"}', 0);
-        if (preg_match('/"token":"(.*?)"/', $data, $match)) {
+        if (stristr($data, 'status_code":429')) {
+            $this->error("Captcha found when login account. Please try again later", true, false);
+        }
+        elseif (preg_match('/"token":"(.*?)"/', $data, $match)) {
             return "token=" . trim($match[1]) . ';';
         }
 

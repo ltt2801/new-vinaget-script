@@ -208,9 +208,11 @@
 						<hr />
 						<script type="text/javascript" language="javascript" src="ajax.js?v=<?php echo mt_rand(); ?>"></script> 
 					<!-- Copyright please don't remove-->
-						<STRONG><SPAN class='powered'>Based on <a href='https://github.com/giaythuytinh176/vinaget-script'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br/>
-						Developed by LTT. Current version: <a target='_blank' href='https://github.com/ltt2801/new-vinaget-script'><?php printf($obj->ltt_version); ?></a></SPAN><br/>
-						<SPAN class='copyright'>Copyright 2009-<?php echo date('Y');?> by <a href='http://vinaget.us/'>http://vinaget.us</a>. All rights reserved. </SPAN><br />
+						<STRONG><SPAN class='powered'>
+							Based on <a href='https://github.com/giaythuytinh176/vinaget-script'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br/>
+							Developed by LTT. Find me on Github <a target='_blank' href='https://github.com/ltt2801/new-vinaget-script'><?php printf($obj->ltt_version); ?></a>
+						</SPAN></STRONG><br/>
+						<SPAN class='copyright'>Copyright 2009-<?php echo date('Y');?> by <a href='http://vinaget.us/'>http://vinaget.us</a>. All rights reserved.</SPAN><br />
 					<!-- Copyright please don't remove-->
 					</div>
 				</td></tr>
