@@ -4,11 +4,10 @@ class dl_1fichier_com extends Download
 {
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://www.1fichier.com/en/console/abo.pl", $cookie, "");
-
-        if (stristr($data, "You are a premium user until")) {
-            return array(true, $this->lib->cut_str($data, "You are a premium user ", "."));
-        } elseif (stristr($data, "You must be registered and logged in before subscribing")) {
+        $data = $this->lib->curl("https://1fichier.com/en/console/abo.pl", $cookie, "");
+        if (stristr($data, "offer subscription is valid")) {
+            return array(true, "Until " . $this->lib->cut_str($data, '<span style="font-weight:bold">', '</span>'));
+        } elseif (stristr($data, ">Identification")) {
             return array(false, "accinvalid");
         }
 
@@ -17,7 +16,7 @@ class dl_1fichier_com extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("https://www.1fichier.com/en/login.pl", "", "mail={$user}&pass={$pass}&lt=on&Login=Login");
+        $data = $this->lib->curl("https://1fichier.com/en/login.pl", "", "mail={$user}&pass={$pass}&lt=on&Login=Login");
         $cookie = $this->lib->GetCookies($data);
 
         return $cookie;
@@ -26,7 +25,6 @@ class dl_1fichier_com extends Download
     public function Leech($url)
     {
         $data = $this->lib->curl($url, $this->lib->cookie, "");
-
         if (stristr($data, "The requested file could not be found")) {
             $this->error("dead", true, false, 2);
         } elseif ($this->isredirect($data)) {
@@ -42,5 +40,5 @@ class dl_1fichier_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTSB
  * 1fichier.com Download Plugin
- * Date: 10.09.2017
+ * Date: 10.09.2018
  */

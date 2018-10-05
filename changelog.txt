@@ -1,3 +1,7 @@
+v15:
+- Update 1fichier.com
+- Fix icerbox.com
+- Update class.php
 v14:
 - Upgrade to vinaget 2.7.0 rev.94
 v13:

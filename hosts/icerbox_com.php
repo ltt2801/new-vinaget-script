@@ -4,47 +4,40 @@ class dl_icerbox_com extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://katfile.com/?op=my_account", "lang=english;{$cookie}", "");
-        if (stristr($data, 'Premium account expire')) {
-            return array(true, "Until " . $this->lib->cut_str($data, '<TD>Premium account expire</TD><TD><b>', '</b>'));
-        } else if (stristr($data, 'My affiliate link') && !stristr($data, 'Premium account expire')) {
+        $token = $this->lib->cut_str($cookie, 'token=', ';');
+        $data = $this->lib->curl("https://icerbox.com/api/v1/user/account", "", "", 0, 1, 0, 0, array("Authorization: Bearer {$token}"));
+        $json = json_decode($data, true);
+        if ($json['data']['has_premium'] == true) {
+            return array(true, "Duration: " . $json['data']['package']['duration'] . " days left<br/>Daily Limit: " . $this->lib->convertmb($json['data']['package']['volume']) . "<br/>Bandwidth Left: " . $this->lib->convertmb($json['data']['package']['bandwidth']));
+        } elseif ($json['data']['has_premium'] == false) {
             return array(false, "accfree");
-        } else {
-            return array(false, "accinvalid");
         }
 
+        return array(false, "accinvalid");
     }
+
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("https://katfile.com/", "lang=english", "op=login&login={$user}&password={$pass}&redirect=");
-        $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        $data = $this->lib->curl("https://icerbox.com/api/v1/auth/login", "", '{"email": "' . $user . '", "password": "' . $pass . '"}', 0);
+        if (preg_match('/"token":"(.*?)"/', $data, $match)) {
+            return "token=" . trim($match[1]) . ';';
+        }
+
+        return false;
     }
+
     public function Leech($url)
     {
-        list($url, $pass) = $this->linkpassword($url);
-        $data = $this->lib->curl($url, $this->lib->cookie, "");
-        if ($pass) {
-            $post = $this->parseForm($this->lib->cut_str($data, '<form', '</form>'));
-            $post["password"] = $pass;
-            $data = $this->lib->curl($url, $this->lib->cookie, $post);
-            if (stristr($data, 'Wrong password')) {
-                $this->error("wrongpass", true, false, 2);
-            } elseif (preg_match('@https?:\/\/www\d+\.katfile.com\/d\/[^\'\"\s\t<>\r\n]+@i', $data, $link)) {
-                return trim(str_replace('https', 'http', $link[0]));
+        $token = $this->lib->cut_str($this->lib->cookie, 'token=', ';');
+        if (preg_match('#^https?://icerbox.com/(folder/)?([\w\d]+)/?(.*)$#', $url, $match)) {
+            $id = trim($match[2]);
+            $data = $this->lib->curl("https://icerbox.com/api/v1/dl/ticket", "", '{"file": "' . $id . '"}', 0, 1, 0, 0, array("Authorization: Bearer {$token}"));
+            $json = json_decode($data, true);
+            if (isset($json['status_code'])) {
+                $this->error("dead", true, false, 2);
+            } elseif (isset($json['url'])) {
+                return trim($json['url']);
             }
-
-        }
-        if (stristr($data, 'type="password" name="password')) {
-            $this->error("reportpass", true, false);
-        } elseif (stristr($data, '<Title>File Not Found</Title>')) {
-            $this->error("dead", true, false, 2);
-        } elseif (stristr($data, 'Your IP is blacklisted')) {
-            $this->error("blockIP", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
-            $this->error("Please enable direct download in katfile account", true, false, 2);
-        } else {
-            return trim(str_replace('https', 'http', trim($this->redirect)));
         }
 
         return false;
@@ -56,5 +49,5 @@ class dl_icerbox_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTSB
  * Icerbox.com Download Plugin
- * Date: 31.01.2018
+ * Date: 05.10.2018
  */

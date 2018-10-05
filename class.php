@@ -752,7 +752,7 @@ class stream_get extends getinfo
         return true;
     }
 
-    public function curl($url, $cookies, $post, $header = 1, $json = 0, $ref = 0, $xml = 0)
+    public function curl($url, $cookies, $post, $header = 1, $json = 0, $ref = 0, $xml = 0, $h = NULL)
     {
         $ch = @curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -767,6 +767,10 @@ class stream_get extends getinfo
         $head[] = "Keep-Alive: 300";
         $head[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
         $head[] = "Accept-Language: en-us,en;q=0.5";
+           
+        if (is_array($h)) {
+            $head = array_merge($head, $h);
+        }
 
         if ($cookies) {
             curl_setopt($ch, CURLOPT_COOKIE, $cookies);
@@ -804,9 +808,13 @@ class stream_get extends getinfo
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Expect:',
-        ));
+
+        if (!is_array($h)) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Expect:',
+            ));
+        }
+
         $page = curl_exec($ch);
         curl_close($ch);
         return $page;
