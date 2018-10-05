@@ -2,7 +2,7 @@
 /*
  * Vinaget by LTT
  * Script Name: Vinaget
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  */
 
 /* Set default timezone */

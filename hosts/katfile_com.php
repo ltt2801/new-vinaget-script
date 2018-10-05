@@ -54,7 +54,7 @@ class dl_katfile_com extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Katfile.com Download Plugin
  * Date: 31.01.2018
  */

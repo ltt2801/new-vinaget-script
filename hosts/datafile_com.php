@@ -75,7 +75,7 @@ class dl_datafile_com extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Datafile.com Download Plugin
  * Date: 01.09.2018
  */

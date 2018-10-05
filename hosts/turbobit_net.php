@@ -72,7 +72,7 @@ class dl_turbobit_net extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Turbobit.net Download Plugin
  * Date: 09.06.2017
  */

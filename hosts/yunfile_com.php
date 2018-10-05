@@ -50,7 +50,7 @@ class dl_yunfile_com extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Yunfile.com Download Plugin
  * Date: 25.01.2018
  */

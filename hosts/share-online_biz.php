@@ -44,7 +44,7 @@ class dl_share_online_biz extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Share-online.biz Download Plugin
  * Date: 02.12.2017
  */

@@ -1,7 +1,7 @@
 <?php
 /*
 * New Vinaget by LTT
-* Version: 3.3 LTSB
+* Version: 3.3 LTS
 * Based on Vinaget 2.7.0 Final Revision 93
 * Description: 
 	- Vinaget is script generator premium link that allows you to download files instantly and at the best of your Internet speed.

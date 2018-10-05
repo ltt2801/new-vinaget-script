@@ -54,7 +54,7 @@ closedir($folderhost);
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Alias Hosts
  * Date: 23.06.2018
  */

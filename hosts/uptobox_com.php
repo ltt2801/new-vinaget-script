@@ -60,7 +60,7 @@ class dl_uptobox_com extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Uptobox.com Download Plugin
  * Date: 05.03.2017
  */

@@ -1,7 +1,7 @@
 <?php
 $lang = array (
 'sitetile'		=> 'Vinaget',
-'version'		=> 'VinaGet 3.3 LTSB',
+'version'		=> 'VinaGet 3.3 LTS',
 'homepage'		=> 'vinaget.us',
 'title'			=> '%s - Tạo link nhanh và không giới hạn',
 'login'			=> 'Mời điền mật khẩu để đăng nhập.',
@@ -121,7 +121,7 @@ $lang = array (
 );
 /*
 * Vinaget by LTT
-* Version: 3.3 LTSB
+* Version: 3.3 LTS
 * Language: Vietnamese
 */
 ?>

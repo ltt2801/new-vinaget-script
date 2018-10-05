@@ -39,7 +39,7 @@ class dl_furk_net extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Furk.net Download Plugin
  * Date: 01.09.2018
  */

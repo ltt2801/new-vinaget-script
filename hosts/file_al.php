@@ -62,7 +62,7 @@ class dl_file_al extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * File.al Download Plugin
  * Date: 01.09.2018
  */

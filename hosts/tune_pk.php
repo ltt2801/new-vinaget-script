@@ -23,7 +23,7 @@ class dl_tune_pk extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Tune.pk Download Plugin
  * Date: 01.09.2018
  */

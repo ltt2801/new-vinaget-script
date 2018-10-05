@@ -52,7 +52,7 @@ class dl_uploadgig_com extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Uploadgig.com Download Plugin
  * Date: 25.11.2017
  */

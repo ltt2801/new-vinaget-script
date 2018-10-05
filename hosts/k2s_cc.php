@@ -52,7 +52,7 @@ class dl_k2s_cc extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * K2s.cc Download Plugin
  * Date: 26.11.2017
  */

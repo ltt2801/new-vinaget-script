@@ -70,7 +70,7 @@ class dl_rapidgator_net extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Rapidgator.net Download Plugin
  * Date: 04.10.2017
  */

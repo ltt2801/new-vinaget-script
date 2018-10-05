@@ -39,7 +39,7 @@ class dl_hitfile_net extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Hitfile.net Download Plugin
  * Date: 14.02.2018
  */

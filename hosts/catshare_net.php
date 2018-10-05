@@ -40,7 +40,7 @@ class dl_catshare_net extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Catshare.net Download Plugin
  * Date: 24.07.2017
  */

@@ -99,7 +99,7 @@ class dl_filefactory_com extends Download
 /*
  * Open Source Project
  * New Vinaget by LTT
- * Version: 3.3 LTSB
+ * Version: 3.3 LTS
  * Filefactory.com Download Plugin
  * Date: 30.07.2017
  */
