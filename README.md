@@ -1,7 +1,7 @@
 New Vinaget Script 3.3 LTS - Developed by LTT  
 Worked with PHP 7. Required: php-curl, php-mbstring, php-mcrypt, mod_rewrite (apache)  
 Referer from: https://github.com/giaythuytinh176/vinaget-script   
-Contact email for request plugin updates: lethanhtuan2897@gmail.com  
+Contact email for request plugin updates [attach premium hosting account (if any)]: lethanhtuan2897@gmail.com  
 
 ######################################  
 How to use:  
