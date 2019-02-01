@@ -5,11 +5,9 @@ class dl_upfile_vn extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://upfile.vn/payments/index.html", $cookie, "");
-        if (stristr($data, 'Chuyển về tài khoản Free:')) {
-            return array(true, "Until " . $this->lib->cut_str($this->lib->cut_str($data, 'Chuyển về tài khoản Free:', '</tr>'), '<td>', '</td>'));
-        } elseif (stristr($data, 'Loại Tài Khoản:') && !stristr($data, 'Chuyển về tài khoản Free')) {
-            return array(false, "accfree");
+        $data = $this->lib->curl("http://upfile.vn/user/", $cookie, "");
+        if (stristr($data, 'Quản lý tài khoản')) {
+            return array(true, "accfree");
         } else {
             return array(false, "accinvalid");
         }
@@ -18,14 +16,31 @@ class dl_upfile_vn extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("http://upfile.vn/login.html", "", "loginUsername={$user}&loginPassword={$pass}&submitme=1&submit=Đăng%20nhập");
+        $data = $this->lib->curl("http://upfile.vn/", "", "Act=Login&Email=" . rawurlencode($user) . "&Password=" . strtoupper(hash('sha256', hash('sha256', 'UpFile.VN') . rawurlencode($pass))));
         $cookie = $this->lib->GetCookies($data);
         return $cookie;
     }
 
     public function Leech($url)
     {
-        return trim($url);
+        $data = $this->lib->curl($url, $this->lib->cookie, "");
+
+        if (stristr($data, 'RẤT TIẾC, FILE BẠN CẦN HIỆN KHÔNG')) {
+            $this->error("dead", true, false, 2);
+        }
+
+        if (preg_match('/https?:\/\/upfile.vn\/(.*?)\/(.*)/', $url, $match)) {
+            $idhash = strtoupper(hash('sha256', trim($match[1]) . '7891'));
+            $data = $this->lib->curl($url, $this->lib->cookie, "Token={$idhash}", 0);
+
+            if (empty($data)) {
+                $this->error("dead", true, false, 2);
+            } else {
+                $json = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data), true);
+                return trim($json["Link"]);
+            }
+        }
+
         return false;
     }
 
@@ -36,5 +51,5 @@ class dl_upfile_vn extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Upfile.vn Download Plugin
- * Date: 01.09.2018
+ * Date: 02.01.2019
  */

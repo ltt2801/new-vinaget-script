@@ -5,9 +5,9 @@ class dl_prefiles_com extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://prefiles.com/", "", "");
+        $data = $this->lib->curl("https://prefiles.com/", "", "");
         $cok = $this->lib->GetCookies($data);
-        $data = $this->lib->curl("http://prefiles.com/my-account", "{$cok}{$cookie}", "");
+        $data = $this->lib->curl("https://prefiles.com/my-account", "{$cok}{$cookie}", "");
         if (stristr($data, 'PRO Membership</dt>')) {
             return array(true, "Until " . $this->lib->cut_str($data, '<dd class="small">', '</dd>') . "<br>Storage: " . strip_tags($this->lib->cut_str($data, '<td>Storage</td>', '</td>')) . "<br>Traffic: " . strip_tags($this->lib->cut_str($data, '<td>Traffic Remaining</td>', '</td>')));
         } elseif (stristr($data, '<dt>FREE Account</dt>') && !stristr($data, 'Username')) {
@@ -19,9 +19,9 @@ class dl_prefiles_com extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("http://prefiles.com/", "", "");
+        $data = $this->lib->curl("https://prefiles.com/", "", "");
         $cok = $this->lib->GetCookies($data);
-        $data = $this->lib->curl("http://prefiles.com/login", $cok, "op=login&token=&rand=&redirect=&login={$user}&password={$pass}");
+        $data = $this->lib->curl("https://prefiles.com/login", $cok, "op=login&token=&rand=&redirect=&login={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
 
         return $cookie;
@@ -69,5 +69,5 @@ class dl_prefiles_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Prefiles.com Download Plugin
- * Date: 23.06.2018
+ * Date: 07.10.2018
  */
