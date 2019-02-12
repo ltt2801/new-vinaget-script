@@ -24,7 +24,7 @@ class dl_subyshare_com extends Download
         }
 
         $cookie = "lang=english; {$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

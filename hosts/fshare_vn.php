@@ -21,7 +21,7 @@ class dl_fshare_vn extends Download
         $_csrf_app = trim($this->lib->cut_str($page, 'name="_csrf-app" value="', '"'));
         $data = $this->lib->curl("https://www.fshare.vn/site/login", $this->lib->GetCookies($page), "_csrf-app={$_csrf_app}&LoginForm%5Bemail%5D=" . urlencode($user) . "&LoginForm%5Bpassword%5D=" . urlencode($pass) . "&LoginForm%5BrememberMe%5D=0");
         $cookie = $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

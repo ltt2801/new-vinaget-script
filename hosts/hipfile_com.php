@@ -20,7 +20,7 @@ class dl_hipfile_com extends Download
     {
         $data = $this->lib->curl("http://hipfile.com/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://hipfile.com/login.html");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function FreeLeech($url)

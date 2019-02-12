@@ -20,7 +20,7 @@ class dl_mixshared_com extends Download
     {
         $data = $this->lib->curl("http://mixshared.com/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://mixshared.com/plugin-status.html");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

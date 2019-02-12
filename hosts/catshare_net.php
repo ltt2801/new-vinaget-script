@@ -18,7 +18,7 @@ class dl_catshare_net extends Download
         $data = $this->lib->curl("http://catshare.net/login", "", "user_email={$user}&user_password={$pass}");
         $cookie = $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

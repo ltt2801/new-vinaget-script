@@ -27,7 +27,7 @@ class dl_oboom_com extends Download
         $js = @json_decode($page, true);
 
         $cookie = 'user=' . urlencode($js[1]['cookie']) . '; lang=EN; ';
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($link)

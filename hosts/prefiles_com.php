@@ -24,7 +24,7 @@ class dl_prefiles_com extends Download
         $data = $this->lib->curl("https://prefiles.com/login", $cok, "op=login&token=&rand=&redirect=&login={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

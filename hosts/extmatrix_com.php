@@ -21,7 +21,7 @@ class dl_extmatrix_com extends Download
     {
         $data = $this->lib->curl("http://www.extmatrix.com/login.php", "", "user={$user}&pass={$pass}&submit=Login&task=dologin&return=http://www.extmatrix.com/members/myfiles.php");
         $cookie = $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

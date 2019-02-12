@@ -21,7 +21,7 @@ class dl_4share_vn extends Download
         $data = $this->lib->curl('http://4share.vn/index/login', '', 'username=' . $user . '&password=' . $pass . '&submit= ĐĂNG NHẬP ');
         $cookie = $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($link)

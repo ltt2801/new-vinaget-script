@@ -20,7 +20,7 @@ class dl_wipfiles_net extends Download
     {
         $data = $this->lib->curl("http://wipfiles.net/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://wipfiles.net/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

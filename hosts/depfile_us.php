@@ -24,7 +24,7 @@ class dl_depfile_us extends Download
         $data = $this->lib->curl("https://depfile.us/", "sdlanguageid=2", "login=login&loginemail={$user}&loginpassword={$pass}&submit=login&rememberme=1");
         $cookie = $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

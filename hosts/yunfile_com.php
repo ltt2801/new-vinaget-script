@@ -20,7 +20,7 @@ class dl_yunfile_com extends Download
     {
         $data = $this->lib->curl("http://www.yunfile.com/view", "language=en_us", "module=member&action=validateLogin&username={$user}&password={$pass}&remember=1");
         $cookie = "language=en_us;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

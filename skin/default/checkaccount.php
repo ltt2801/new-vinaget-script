@@ -24,8 +24,7 @@ if (isset($_POST["check"])) {
             if (method_exists($download, "CheckAcc")) {
                 if ($type == "account") {
                     list($user, $pass) = explode(':', $account);
-                    file_put_contents("data.html", $user . " " . $pass);
-                    $cookie = $download->Login($user, $pass);
+                    list($f, $cookie) = $download->Login($user, $pass);
                 } else {
                     $cookie = $account;
                 }

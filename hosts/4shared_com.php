@@ -26,7 +26,7 @@ class dl_4shared_com extends Download
         $data = $this->lib->curl("http://www.4shared.com/web/login", "4langcookie=en", "login={$user}&password={$pass}&remember=1&_remember=on&returnTo=http://www.4shared.com/account/home.jsp&ausk=&inviteId=&inviterName=");
         $cookie = "4langcookie=en; savelogin=true; {$this->lib->GetCookies($data)}";
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

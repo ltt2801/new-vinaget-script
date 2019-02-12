@@ -26,7 +26,7 @@ class dl_plunder_com extends Download
         $post["submit"] = "Submit";
         $data = $this->lib->curl("http://www.plunder.com/login/", "", $post);
         $cookie = $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

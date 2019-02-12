@@ -20,7 +20,7 @@ class dl_filesflash_com extends Download
     {
         $data = $this->lib->curl("http://filesflash.com/login.php", "googtrans=/en/en", "email={$user}&password={$pass}&submit=Submit");
         $cookie = "googtrans=/en/en;" . $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

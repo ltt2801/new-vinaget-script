@@ -47,7 +47,7 @@ class dl_filejoker_net extends Download
         $data = $this->curl_old('https://filejoker.net', '', '');
         $data = $this->curl_old('https://filejoker.net/login', '', "recaptcha_response_field=&op=login&redirect=&rand=&email={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

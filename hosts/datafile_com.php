@@ -31,7 +31,7 @@ class dl_datafile_com extends Download
         $data = $this->lib->curl("https://www.datafile.com/login.html", "lang=en", "login={$user}&password={$pass}&remember_me=1");
         $cookie = "lang=en;" . $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

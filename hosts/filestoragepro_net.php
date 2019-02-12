@@ -18,7 +18,7 @@ class dl_filestoragepro_net extends Download
     {
         $data = $this->lib->curl("http://filestoragepro.net/en/login.php", "mfh_mylang=en", "user={$user}&pass={$pass}&act=login&autologin=1&login=Log me in&refer_url=");
         $cookie = "mfh_mylang=en;" . $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

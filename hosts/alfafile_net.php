@@ -25,7 +25,7 @@ class dl_alfafile_net extends Download
 
         $cookie = "lang=en;" . $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

@@ -22,7 +22,7 @@ class dl_easybytez_com extends Download
         $rand = $this->lib->cut_str($cutrand, 'name="rand" value="', '">');
         $data = $this->lib->curl("http://www.easybytez.com/", "lang=english", "login={$user}&password={$pass}&op=login2&rand={$rand}&redirect=http://www.easybytez.com/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

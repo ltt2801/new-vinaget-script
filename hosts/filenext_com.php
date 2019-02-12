@@ -19,7 +19,7 @@ class dl_filenext_com extends Download
     {
         $data = $this->lib->curl("https://www.filenext.com/", "lang=english", "op=login&login={$user}&password={$pass}&redirect=https://www.filenext.com/?op=my_files");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

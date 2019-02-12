@@ -1123,7 +1123,7 @@ class stream_get extends getinfo
         $this->jobs[$hash] = $job;
         $this->save_jobs();
         $tiam = time() . rand(0, 999);
-        $gach = explode('/', $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        $gach = explode('/', $_SERVER['SERVER_NAME'] . ($_SERVER['SERVER_PORT'] != 80 ? ":" . $_SERVER['SERVER_PORT'] : "") . $_SERVER['REQUEST_URI']);
         $sv_name = "";
         for ($i = 0; $i < count($gach) - 1; $i++) {
             $sv_name .= $gach[$i] . "/";
@@ -2124,9 +2124,18 @@ class Download
         return $cookies;
     }
 
-    public function save($cookies = "", $save = true)
+    public function save($cookies = "", $save = true, $filter = true)
     {
-        $cookie = $cookies != "" ? $this->filter_cookie(($this->lib->cookie ? $this->lib->cookie . ";" : "") . $cookies) : "";
+        $cookie = "";
+        if ($cookies != "") {
+            if ($filter) {
+                $cookie = $this->filter_cookie(($this->lib->cookie ? $this->lib->cookie . ";" : "") . $cookies);
+            }
+            else {
+                $cookie = $cookies;
+            }
+        }
+       
         if ($save) {
             $this->lib->save_cookies($this->site, $cookie);
         }
@@ -2278,8 +2287,9 @@ class Download
 
                     if (empty($cookie)) {
                         $cookie = false;
+                        $f = true;
                         if (method_exists($this, "Login")) {
-                            $cookie = $this->Login($user, $pass);
+                            list($f, $cookie) = $this->Login($user, $pass);
                         }
 
                     }
@@ -2287,7 +2297,7 @@ class Download
                         continue;
                     }
 
-                    $this->save($cookie);
+                    $this->save($cookie, true, $f);
                     if (method_exists($this, "CheckAcc")) {
                         $status = $this->CheckAcc($this->lib->cookie);
                     } else {

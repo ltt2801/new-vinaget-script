@@ -12,7 +12,7 @@ class dl_tusfiles_net extends Download {
     public function Login($user, $pass){
         $data = $this->lib->curl("http://www.tusfiles.net/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://www.tusfiles.net/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-		return $cookie;
+		return array(true, $cookie);
     }
   
     public function FreeLeech($url) {

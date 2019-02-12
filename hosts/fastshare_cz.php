@@ -21,7 +21,7 @@ class dl_fastshare_cz extends Download
     {
         $data = $this->lib->curl("http://fastshare.cz/sql.php", "lang=en", "login={$user}&heslo={$pass}");
         $cookie = "lang=en;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

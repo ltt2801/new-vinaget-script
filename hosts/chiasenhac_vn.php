@@ -25,7 +25,7 @@ class dl_chiasenhac_vn extends Download
         $data = $this->lib->curl("http://chiasenhac.vn/login.php", "", $post);
         $cookie = $this->lib->GetCookies($data);
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

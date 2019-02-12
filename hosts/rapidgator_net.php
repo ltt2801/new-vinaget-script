@@ -41,7 +41,7 @@ class dl_rapidgator_net extends Download
         $session_id = $json["response"]["session_id"];
         $cookie = "session_id={$session_id};";
 
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

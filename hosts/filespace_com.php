@@ -20,7 +20,7 @@ class dl_filespace_com extends Download
     {
         $data = $this->lib->curl("http://filespace.com/?op=login&login={$user}&password={$pass}&redirect=", "lang=english;", "");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        return $cookie;
+        return array(true, $cookie);
     }
 
     public function Leech($url)

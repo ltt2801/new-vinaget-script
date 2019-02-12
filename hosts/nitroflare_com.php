@@ -23,7 +23,7 @@ class dl_nitroflare_com extends Download
         $token = $this->lib->cut_str($page, 'hidden" name="token" value="', '" />');
         $data = $this->lib->curl("https://nitroflare.com/login", $ck, "email={$user}&password={$pass}&login=&token={$token}");
         $cookie = $this->lib->GetCookies($data);
-        return $cookie;
+        return array(true, $cookie);
     }
     public function Leech($url)
     {
