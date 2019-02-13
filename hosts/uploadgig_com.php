@@ -19,18 +19,18 @@ class dl_uploadgig_com extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://uploadgig.com/login/form", "", "");
-        $cookie = $this->lib->GetCookies($data);
+        $cook = $this->lib->GetCookies($data);
         if (preg_match('/<input type="hidden" name="csrf_tester" value="(.*?)"/', $data, $match)) {
             $csrf_tester = $match[1];
         }
 
-        $data = $this->lib->curl("https://uploadgig.com/login/do_login", $cookie, "csrf_tester={$csrf_tester}&email={$user}&pass={$pass}&rememberme=1");
+        $data = $this->lib->curl("https://uploadgig.com/login/do_login", $cook, "csrf_tester={$csrf_tester}&email={$user}&pass={$pass}&rememberme=1");
         if (stristr($data, '"state":"3"')) {
-            $this->error("Uploadgig.com: " . $this->lib->cut_str($data, '"msg":"', '"}'));
-            return;
+            $this->error("Uploadgig.com: " . $this->lib->cut_str($data, '"msg":"', '"}'), true, true);
         }
+        $cookie = preg_replace('/(firewall=.*?; )/', '', $this->lib->GetCookies($data));
 
-        return preg_replace('/(firewall=.*?; )/', '', $this->lib->GetCookies($data));
+        return array(true, $cookie);
     }
 
     public function Leech($url)

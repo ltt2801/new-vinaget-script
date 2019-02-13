@@ -6,7 +6,9 @@ class dl_filecloud_io extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://secure.filecloud.io/user-login_p.html", "lang=en", "username={$user}&password={$pass}");
-        return "lang=en;{$this->lib->GetCookies($data)}";
+        $cookie = "lang=en; {$this->lib->GetCookies($data)}";
+
+        return array(true, $cookie);
     }
 
     public function Leech($url)

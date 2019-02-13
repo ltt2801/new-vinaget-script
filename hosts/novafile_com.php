@@ -20,7 +20,9 @@ class dl_novafile_com extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://novafile.com/login", "lang=english", "login={$user}&password={$pass}&op=login&rand=&redirect=");
-        return "lang=english;{$this->lib->GetCookies($data)}";
+        $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+
+        return array(true, $cookie);
     }
 
     public function Leech($url)

@@ -1,3 +1,6 @@
+v19:
+- Fix depositfiles.com, hitfile.net, novafile.com, uploadgig.com
+- Reformat code
 v18:
 - Update k2s.cc
 - Add option not filter cookie when save cookie

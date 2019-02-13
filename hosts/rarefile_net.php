@@ -20,6 +20,7 @@ class dl_rarefile_net extends Download
     {
         $data = $this->lib->curl("http://www.rarefile.net/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://www.rarefile.net/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+        
         return array(true, $cookie);
     }
 

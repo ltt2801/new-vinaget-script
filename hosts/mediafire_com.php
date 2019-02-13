@@ -57,6 +57,7 @@ class dl_mediafire_com extends Download
         $cookies = $this->lib->GetCookies($page1);
         $page2 = $this->lib->curl("http://www.mediafire.com/dynamic/login.php?popup=1", $cookies, "login_email={$user}&login_pass={$pass}&login_remember=1&submit_login=Log%20in%20to%20MediaFire");
         $cookie = "{$cookies};{$this->lib->GetCookies($page2)}";
+
         return array(true, $cookie);
     }
 

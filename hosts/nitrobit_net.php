@@ -6,7 +6,7 @@ class dl_nitrobit_net extends Download
     public function Leech($url)
     {
         $pwdkey = preg_replace("/\s+/", "", str_replace(";", "", $pwdkey = str_replace("=", "", $this->lib->cookie)));
-        if (preg_match('@^https?:\/\/www.nitrobit\.net\/view\/(.*)@i', $url, $fileID));
+        if (preg_match('@^https?:\/\/www.nitrobit\.net\/view\/(.*)@i', $url, $fileID)) ;
         $data = $this->lib->curl("http://www.nitrobit.net/ajax/unlock.php", "", "file={$fileID[1]}&password=N{$pwdkey}&keep=true");
 
         if ($link = $this->lib->cut_str($data, 'id="download" href="', '">')) {

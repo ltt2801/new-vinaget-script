@@ -42,6 +42,7 @@ class dl_uploaded_net extends Download
     {
         $data = $this->lib->curl("http://uploaded.net/io/login", "", "id={$user}&pw={$pass}");
         $cookie = $this->lib->GetCookies($data);
+        
         return array(true, $cookie);
     }
 

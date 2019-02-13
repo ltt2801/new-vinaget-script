@@ -1,4 +1,5 @@
 <?php
+
 class dl_4shared_com extends Download
 {
     public function CheckAcc($cookie)

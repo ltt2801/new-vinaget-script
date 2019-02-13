@@ -3,59 +3,6 @@
 class dl_youtube_com extends Download
 {
 
-    private function rebuild_url($url)
-    {
-        return $url['scheme'] . '://' . (!empty($url['user']) && !empty($url['pass']) ? rawurlencode($url['user']) . ':' . rawurlencode($url['pass']) . '@' : '') . $url['host'] . (!empty($url['port']) && $url['port'] != 80 && $url['port'] != 443 ? ':' . $url['port'] : '') . (empty($url['path']) ? '/' : $url['path']) . (!empty($url['query']) ? '?' . $url['query'] : '') . (!empty($url['fragment']) ? '#' . $url['fragment'] : '');
-    }
-
-    private function sigDecode($sig)
-    {
-        $this->error('Encoded signature found D:', true, false);
-    }
-
-    private function FormToArr($content, $v1 = '&', $v2 = '=')
-    {
-        $rply = array();
-        if (strpos($content, $v1) === false || strpos($content, $v2) === false) {
-            return $rply;
-        }
-
-        foreach (array_filter(array_map('trim', explode($v1, $content))) as $v) {
-            $v = array_map('trim', explode($v2, $v, 2));
-            if ($v[0] != '') {
-                $rply[$v[0]] = $v[1];
-            }
-
-        }
-        return $rply;
-    }
-
-    private function GetVideosArr($fmtmaps)
-    {
-        $fmturls = array();
-        foreach ($fmtmaps as $fmtlist) {
-            $fmtlist = array_map('urldecode', $this->FormToArr($fmtlist));
-            if (!in_array($fmtlist['itag'], $this->fmts)) {
-                continue;
-            }
-
-            $fmtlist['url'] = parse_url($fmtlist['url']);
-            $fmtlist['url']['query'] = array_map('urldecode', $this->FormToArr($fmtlist['url']['query']));
-            if (empty($fmtlist['url']['query']['signature'])) {
-                $fmtlist['url']['query']['signature'] = (!empty($fmtlist['s']) ? $this->sigDecode($fmtlist['s']) : $fmtlist['sig']);
-            }
-
-            foreach (array_diff(array_keys($fmtlist), array('signature', 'sig', 's', 'url')) as $k) {
-                $fmtlist['url']['query'][$k] = $fmtlist[$k];
-            }
-
-            ksort($fmtlist['url']['query']);
-            $fmtlist['url']['query'] = http_build_query($fmtlist['url']['query']);
-            $fmturls[$fmtlist['itag']] = $this->rebuild_url($fmtlist['url']);
-        }
-        return $fmturls;
-    }
-
     public function FreeLeech($url)
     {
         $url = preg_replace('/https?:\/\/(www.)?/i', 'http://www.', $url);
@@ -133,6 +80,59 @@ class dl_youtube_com extends Download
         $this->lib->reserved['filename'] = urldecode(urldecode(str_replace(str_split('\\/:*?"<>|'), '_', html_entity_decode(trim($response['title']), ENT_QUOTES)))) . "$ext";
         return trim($furl);
         return false;
+    }
+
+    private function FormToArr($content, $v1 = '&', $v2 = '=')
+    {
+        $rply = array();
+        if (strpos($content, $v1) === false || strpos($content, $v2) === false) {
+            return $rply;
+        }
+
+        foreach (array_filter(array_map('trim', explode($v1, $content))) as $v) {
+            $v = array_map('trim', explode($v2, $v, 2));
+            if ($v[0] != '') {
+                $rply[$v[0]] = $v[1];
+            }
+
+        }
+        return $rply;
+    }
+
+    private function GetVideosArr($fmtmaps)
+    {
+        $fmturls = array();
+        foreach ($fmtmaps as $fmtlist) {
+            $fmtlist = array_map('urldecode', $this->FormToArr($fmtlist));
+            if (!in_array($fmtlist['itag'], $this->fmts)) {
+                continue;
+            }
+
+            $fmtlist['url'] = parse_url($fmtlist['url']);
+            $fmtlist['url']['query'] = array_map('urldecode', $this->FormToArr($fmtlist['url']['query']));
+            if (empty($fmtlist['url']['query']['signature'])) {
+                $fmtlist['url']['query']['signature'] = (!empty($fmtlist['s']) ? $this->sigDecode($fmtlist['s']) : $fmtlist['sig']);
+            }
+
+            foreach (array_diff(array_keys($fmtlist), array('signature', 'sig', 's', 'url')) as $k) {
+                $fmtlist['url']['query'][$k] = $fmtlist[$k];
+            }
+
+            ksort($fmtlist['url']['query']);
+            $fmtlist['url']['query'] = http_build_query($fmtlist['url']['query']);
+            $fmturls[$fmtlist['itag']] = $this->rebuild_url($fmtlist['url']);
+        }
+        return $fmturls;
+    }
+
+    private function sigDecode($sig)
+    {
+        $this->error('Encoded signature found D:', true, false);
+    }
+
+    private function rebuild_url($url)
+    {
+        return $url['scheme'] . '://' . (!empty($url['user']) && !empty($url['pass']) ? rawurlencode($url['user']) . ':' . rawurlencode($url['pass']) . '@' : '') . $url['host'] . (!empty($url['port']) && $url['port'] != 80 && $url['port'] != 443 ? ':' . $url['port'] : '') . (empty($url['path']) ? '/' : $url['path']) . (!empty($url['query']) ? '?' . $url['query'] : '') . (!empty($url['fragment']) ? '#' . $url['fragment'] : '');
     }
 
 }

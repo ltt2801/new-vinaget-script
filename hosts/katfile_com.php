@@ -1,4 +1,5 @@
 <?php
+
 class dl_katfile_com extends Download
 {
 
@@ -14,12 +15,15 @@ class dl_katfile_com extends Download
         }
 
     }
+
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://katfile.com/", "lang=english", "op=login&login={$user}&password={$pass}&redirect=");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+
         return array(true, $cookie);
     }
+
     public function Leech($url)
     {
         list($url, $pass) = $this->linkpassword($url);

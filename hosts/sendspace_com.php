@@ -20,6 +20,7 @@ class dl_sendspace_com extends Download
     {
         $data = $this->lib->curl("http://www.sendspace.com/login.html", "", "remember=on&action=login&submit=login&username={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
+        
         return array(true, $cookie);
     }
 

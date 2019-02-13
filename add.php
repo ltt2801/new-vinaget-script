@@ -17,6 +17,7 @@ function check_account($host, $account)
 
     return false;
 }
+
 if (!empty($_POST["accounts"])) {
     $obj = new stream_get();
     $type = $_POST['type'];

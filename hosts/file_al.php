@@ -1,4 +1,5 @@
 <?php
+
 class dl_file_al extends Download
 {
 
@@ -14,10 +15,12 @@ class dl_file_al extends Download
         }
 
     }
+
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://file.al/login.html", "lang=english", "op=login&login={$user}&password={$pass}&redirect=https://file.al/login.html");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+
         return array(true, $cookie);
     }
 

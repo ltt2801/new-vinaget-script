@@ -20,6 +20,7 @@ class dl_ryushare_com extends Download
     {
         $data = $this->lib->curl("http://ryushare.com/", "lang=english", "op=login&login={$user}&password={$pass}&loginFormSubmit=Login&redirect=http://ryushare.com/");
         $cookie = "lang=english;" . $this->lib->GetCookies($data);
+        
         return array(true, $cookie);
     }
 

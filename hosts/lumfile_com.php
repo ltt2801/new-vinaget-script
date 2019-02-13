@@ -20,6 +20,7 @@ class dl_lumfile_com extends Download
     {
         $data = $this->lib->curl("http://lumfile.com/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://lumfile.com/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+
         return array(true, $cookie);
     }
 

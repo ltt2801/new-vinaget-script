@@ -18,6 +18,7 @@ class dl_upfile_vn extends Download
     {
         $data = $this->lib->curl("http://upfile.vn/", "", "Act=Login&Email=" . rawurlencode($user) . "&Password=" . strtoupper(hash('sha256', hash('sha256', 'UpFile.VN') . rawurlencode($pass))));
         $cookie = $this->lib->GetCookies($data);
+        
         return array(true, $cookie);
     }
 

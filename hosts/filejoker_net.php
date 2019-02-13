@@ -3,6 +3,27 @@
 class dl_filejoker_net extends Download
 {
 
+    public function CheckAcc($cookie)
+    {
+        $data = $this->lib->curl("https://filejoker.net/profile", $cookie, "");
+        $dt = $this->lib->cut_str($data, '<div class="alert alert-success alert-promo">', '</div>');
+        if (stristr($data, 'Premium account expires') && stristr($dt, ">Extend Premium<")) {
+            return array(true, "Until " . $this->lib->cut_str($dt, "Premium account expires: ", '				<a h') . '<br>Traffic Available: ' . $this->lib->cut_str($this->lib->cut_str($data, "td>Traffic Available:</td>", "</tr>"), 'td>', '</td'));
+        } else {
+            return array(false, "accinvalid");
+        }
+
+    }
+
+    public function Login($user, $pass)
+    {
+        $data = $this->curl_old('https://filejoker.net', '', '');
+        $data = $this->curl_old('https://filejoker.net/login', '', "recaptcha_response_field=&op=login&redirect=&rand=&email={$user}&password={$pass}");
+        $cookie = $this->lib->GetCookies($data);
+
+        return array(true, $cookie);
+    }
+
     private function curl_old($url, $cookies, $post, $header = 1)
     {
         $ch = @curl_init();
@@ -28,26 +49,6 @@ class dl_filejoker_net extends Download
         $page = curl_exec($ch);
         curl_close($ch);
         return $page;
-    }
-
-    public function CheckAcc($cookie)
-    {
-        $data = $this->lib->curl("https://filejoker.net/profile", $cookie, "");
-        $dt = $this->lib->cut_str($data, '<div class="alert alert-success alert-promo">', '</div>');
-        if (stristr($data, 'Premium account expires') && stristr($dt, ">Extend Premium<")) {
-            return array(true, "Until " . $this->lib->cut_str($dt, "Premium account expires: ", '				<a h') . '<br>Traffic Available: ' . $this->lib->cut_str($this->lib->cut_str($data, "td>Traffic Available:</td>", "</tr>"), 'td>', '</td'));
-        } else {
-            return array(false, "accinvalid");
-        }
-
-    }
-
-    public function Login($user, $pass)
-    {
-        $data = $this->curl_old('https://filejoker.net', '', '');
-        $data = $this->curl_old('https://filejoker.net/login', '', "recaptcha_response_field=&op=login&redirect=&rand=&email={$user}&password={$pass}");
-        $cookie = $this->lib->GetCookies($data);
-        return array(true, $cookie);
     }
 
     public function Leech($url)

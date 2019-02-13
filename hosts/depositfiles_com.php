@@ -20,8 +20,9 @@ class dl_depositfiles_com extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://depositfiles.com/login.php?return=%2F", "lang_current=en", "go=1&login=$user&password=$pass");
+        $cookie = $this->lib->GetCookies($data);
 
-        return $this->lib->GetCookies($data);
+        return array(true, $cookie);
     }
 
     public function Leech($url)

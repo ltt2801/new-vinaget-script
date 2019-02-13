@@ -34,6 +34,16 @@ class dl_datafile_com extends Download
         return array(true, $cookie);
     }
 
+    private function descrypt_hash($html)
+    {
+        $html = str_replace("window.location.href=", "document.write(", $html);
+        $html = str_replace("+'';", "+'');", $html);
+        file_put_contents($this->lib->fileinfo_dir . "/datafile_descrypt.html", $html) or $this->error("Cannot locate " . $this->lib->fileinfo_dir . "/datafile_descrypt.html", true, false);
+        $code = file_get_contents($this->lib->fileinfo_dir . "/datafile_descrypt.html");
+
+        return $code;
+    }
+
     public function Leech($url)
     {
         $data = $this->lib->curl($url, $this->lib->cookie, "");
@@ -59,16 +69,6 @@ class dl_datafile_com extends Download
         }
 
         return false;
-    }
-
-    private function descrypt_hash($html)
-    {
-        $html = str_replace("window.location.href=", "document.write(", $html);
-        $html = str_replace("+'';", "+'');", $html);
-        file_put_contents($this->lib->fileinfo_dir . "/datafile_descrypt.html", $html) or $this->error("Cannot locate " . $this->lib->fileinfo_dir . "/datafile_descrypt.html", true, false);
-        $code = file_get_contents($this->lib->fileinfo_dir . "/datafile_descrypt.html");
-
-        return $code;
     }
 }
 

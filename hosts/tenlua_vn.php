@@ -27,6 +27,7 @@ class dl_tenlua_vn extends Download
         $data = $this->lib->curl('http://api.tenlua.vn/', '', '[{"a":"user_login","user":"' . $user . '","password":"' . $pass . '","permanent":false}]', 0);
         $cookie = json_decode($data, true);
         $cookie = " " . $cookie[0];
+        
         return array(true, $cookie);
     }
 

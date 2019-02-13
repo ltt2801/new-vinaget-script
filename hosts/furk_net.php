@@ -20,6 +20,7 @@ class dl_furk_net extends Download
     {
         $data = $this->lib->curl("https://www.furk.net/api/login/login", "", "login={$user}&pwd={$pass}");
         $cookie = $this->lib->GetCookies($data);
+
         return array(true, $cookie);
     }
 

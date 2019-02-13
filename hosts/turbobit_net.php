@@ -33,6 +33,7 @@ class dl_turbobit_net extends Download
         }
 
         $cookie = "user_lang=en;" . $this->lib->GetCookies($data);
+        
         return array(true, $cookie);
     }
 

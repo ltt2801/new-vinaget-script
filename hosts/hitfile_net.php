@@ -13,13 +13,14 @@ class dl_hitfile_net extends Download
         } else {
             return array(false, 'accinvalid');
         }
-
     }
 
     public function Login($user, $pass)
     {
         $data = $this->lib->curl('https://hitfile.net/user/login', 'user_lang=en', 'user%5Blogin%5D=' . urlencode($user) . '&user%5Bpass%5D=' . urlencode($pass) . '&user%5Bsubmit%5D=Log+in&user%5Bmemory%5D=on');
-        return $this->lib->GetCookies($data);
+        $cookie = $this->lib->GetCookies($data);
+
+        return array(true, $cookie);
     }
 
     public function Leech($link)

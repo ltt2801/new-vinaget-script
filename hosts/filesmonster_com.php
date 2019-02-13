@@ -22,6 +22,7 @@ class dl_filesmonster_com extends Download
     {
         $data = $this->lib->curl("http://filesmonster.com/login.php", "yab_ulang=en", "act=login&user={$user}&pass={$pass}&captcha_shown=0&login=Login");
         $cookie = "yab_ulang=en;" . $this->lib->GetCookies($data);
+
         return array(true, $cookie);
     }
 

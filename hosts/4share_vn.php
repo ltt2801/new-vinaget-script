@@ -2,7 +2,6 @@
 
 class dl_4share_vn extends Download
 {
-
     public function CheckAcc($cookie)
     {
         $data = $this->lib->curl('http://4share.vn/member', $cookie, '');
@@ -47,7 +46,6 @@ class dl_4share_vn extends Download
 
         return false;
     }
-
 }
 
 /*

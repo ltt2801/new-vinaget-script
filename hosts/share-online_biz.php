@@ -21,6 +21,7 @@ class dl_share_online_biz extends Download
     {
         $data = $this->lib->curl("https://www.share-online.biz/user/login", "animations=1;newsscrl=1;page_language=english", "user={$user}&pass={$pass}&l_rememberme=1&submit=Log%20in");
         $cookie = "animations=1;newsscrl=1;page_language=english;{$this->lib->GetCookies($data)}";
+        
         return array(true, $cookie);
     }
 

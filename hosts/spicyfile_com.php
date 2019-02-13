@@ -20,6 +20,7 @@ class dl_spicyfile_com extends Download
     {
         $data = $this->lib->curl("http://spicyfile.com/login.html", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://spicyfile.com/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+        
         return array(true, $cookie);
     }
 

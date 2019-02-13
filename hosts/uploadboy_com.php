@@ -20,6 +20,7 @@ class dl_uploadboy_com extends Download
     {
         $data = $this->lib->curl("http://uploadboy.com/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://uploadboy.com/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+        
         return array(true, $cookie);
     }
 

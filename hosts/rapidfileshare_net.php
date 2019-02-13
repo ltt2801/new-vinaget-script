@@ -20,6 +20,7 @@ class dl_rapidfileshare_net extends Download
     {
         $data = $this->lib->curl("http://www.rapidfileshare.net/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://www.rapidfileshare.net/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+        
         return array(true, $cookie);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 class dl_uptobox_com extends Download
 {
     public function CheckAcc($cookie)
@@ -18,6 +19,7 @@ class dl_uptobox_com extends Download
     {
         $data = $this->lib->curl("https://uptobox.com/?op=login&referer=homepage", "lang=english", "login={$user}&password={$pass}&redirect=");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
+        
         return array(true, $cookie);
     }
 
