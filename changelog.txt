@@ -1,3 +1,5 @@
+v20:
+- Fix uptobox.com
 v19:
 - Fix depositfiles.com, hitfile.net, novafile.com, uploadgig.com
 - Reformat code

@@ -4,7 +4,7 @@ class dl_uptobox_com extends Download
 {
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://uptobox.com/?op=my_account", "lang=english;{$cookie}", "");
+        $data = $this->lib->curl("https://uptobox.com/?op=my_account", "lang=english;{$cookie}", "");
         if (stristr($data, "class='expiration-date")) {
             return array(true, "Until " . $this->lib->cut_str($data, "expiration-date red'>", "</span>"));
         } elseif (stristr($data, "My affiliate link:") && !stristr($data, "class='expiration-date")) {
@@ -64,5 +64,5 @@ class dl_uptobox_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Uptobox.com Download Plugin
- * Date: 05.03.2017
+ * Date: 21.04.2019
  */
