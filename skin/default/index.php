@@ -18,13 +18,13 @@
 				var colorname = '<?php echo $obj->colorfn; ?>';
 				var colorfile = '<?php echo $obj->colorfs; ?>';
 				var lang = new Array();
-				<?php 
+				<?php
 				foreach($obj->lang as $key=>$val){
 					$val = str_replace("'", "\'", $val);
 					echo "lang['{$key}'] = '{$val}'; ";
 				}
 				?>
-			</script> 
+			</script>
 			<!--
 			<center><img src="images/logo.png" alt="RapidLeech PlugMod" border="0" /></center><br />
 			-->
@@ -32,7 +32,7 @@
 				<div style="border:1px #ffffff solid; width:960px; padding:5px; margin-top:50px;">
 					<div id="listlinks"><textarea style='width:950px;height:400px' id="textarea"></textarea></div>
 					<table style='width:950px;'><tr>
-					<td width="50%" vAlign="left" align="left">	
+					<td width="50%" vAlign="left" align="left">
 					<input type='button' value="bbcode" onclick="return bbcode('list');" />
 					<input type='button' id ='SelectAll' value="Select All"/>
 					<input type='button' id="copytext" value="Copy To Clipboard"/>
@@ -77,7 +77,7 @@
 							</table><br />
 						</td></tr>
 						<?php } ?>
-					
+
 					</table>
 				</td>
 				<!-- ########################## End Plugins ########################## -->
@@ -89,25 +89,25 @@
 							<td class="cell-nav"><a class="ServerFiles" href="./?id=donate"><?php printf($obj->lang['donate']); ?></a></td>
 							<td class="cell-nav"><a class="ServerFiles" href="./?id=listfile"><?php printf($obj->lang['listfile']); ?></a></td>
 							<td class="cell-nav"><a class="ServerFiles" href="./?id=check"><?php printf($obj->lang['check']); ?></a></td>
-							<?php if ($obj->Secure || $obj->isadmin()) 
+							<?php if ($obj->Secure || $obj->isAdmin())
 							echo '<td class="cell-nav"><a class="ServerFiles" href="./?id=admin"> '.$obj->lang['admin'].'</a></td>'; ?>
-							<?php if ($obj->Secure) 
+							<?php if ($obj->Secure)
 							echo '<td class="cell-nav"><a class="ServerFiles" href="./login.php?go=logout"> '.$obj->lang['log'].'</a></td>'; ?>
 						</tr>
 					</tbody></table>
 					<table id="tb_content"><tbody>
 						<tr><td height="5px"></td></tr>
 						<tr><td align="center">
-<?php 
+<?php
 						#---------------------------- begin list file ----------------------------#
 						if ((isset($_GET['id']) && $_GET['id']=='listfile') || isset($_POST['listfile']) || isset($_POST['option']) || isset($_POST['renn']) || isset($_POST['remove']))  {
-							if($obj->listfile || $obj->isadmin())$obj->fulllist();
+							if($obj->listfile || $obj->isAdmin())$obj->fulllist();
 							else echo "<BR><BR><font color=red size=2>".$obj->lang['notaccess']."</b></font>";
 						}
 						#---------------------------- end list file ----------------------------#
 
 						#---------------------------- begin donate  ----------------------------#
-						else if (isset($_GET['id']) && $_GET['id']=='donate') { 
+						else if (isset($_GET['id']) && $_GET['id']=='donate') {
 ?>
 							<div align="center">
 								<BR><div id="wait"><font color="#FF3300"><?php printf($obj->lang['donations1']); ?><br/><?php printf($obj->lang['donations2']); ?></font></div>
@@ -115,7 +115,7 @@
 									<table>
 										<tr>
 											<td>
-												<?php printf($obj->lang['acctype']); ?> 
+												<?php printf($obj->lang['acctype']); ?>
 												<select name='type' id='type'>
 												<?php
 												foreach($host as $key => $val) {
@@ -137,30 +137,30 @@
 								</form>
 								<div id="check"><font color=#FF6600>user:pass</font> or <font color=#FF6600>cookie</font></div><BR><BR>
 							</div>
-<?php					
+<?php
 						}
 						#---------------------------- end donate  ----------------------------#
 
 						#---------------------------- begin check  ---------------------------#
 						else if (isset($_GET['id']) && $_GET['id']=='check'){
-							if($obj->checkacc || $obj->isadmin()) include("checkaccount.php");
+							if($obj->checkacc || $obj->isAdmin()) include("checkaccount.php");
 							else echo "<BR><BR><font color=red size=2>".$obj->lang['notaccess']."</b></font>";
 						}
 						#---------------------------- end check  ------------------------------#
-						
+
 						#---------------------------- begin admin  ---------------------------#
 						else if (isset($_GET['id']) && $_GET['id']=='admin'){
-							if($obj->isadmin()) include("admin.php");
+							if($obj->isAdmin()) include("admin.php");
 							else echo "<BR><BR><font color=red size=2>".$obj->lang['notaccess']."</b></font>";
 						}
 						#---------------------------- end admin  ------------------------------#
-						
+
 						#---------------------------- begin get  ------------------------------#
 						else {
 ?>
 							<form action="javascript:get(document.getElementById('linkform'));" name="linkform" id="linkform">
 								<font color="#FF3300"><b><font color="#FFFF66"><?php printf($obj->lang['version']);?></font> - <?php printf($obj->lang['welcome']);?></b></font>
-								<?php if($obj->isadmin()){
+								<?php if($obj->isAdmin()){
 									$obj->last_version = $obj->getversion();
 									if($obj->last_version > $obj->ltt_version) {
 										echo '<br><font color="#dbac58"><b>'.sprintf($obj->lang['update1']).'</b> - <a href="https://github.com/ltt2801/new-vinaget-script">'.sprintf($obj->lang['update2'],$obj->last_version).'</a></font> - <a href="https://raw.githubusercontent.com/ltt2801/new-vinaget-script/master/changelog.txt">changelog</a><br>';
@@ -188,7 +188,7 @@
 							</div>
 							<div id="bbcode" align="center" style="display: none;"></div>
 							<div id="showresults" align="center"></div>
-<?php						
+<?php
 						}
 						#---------------------------- end get  ------------------------------#
 ?>
@@ -206,7 +206,7 @@
 						<?php showStat();?>
 						<!-- End Server Info -->
 						<hr />
-						<script type="text/javascript" language="javascript" src="ajax.js?v=<?php echo mt_rand(); ?>"></script> 
+						<script type="text/javascript" language="javascript" src="ajax.js?v=<?php echo mt_rand(); ?>"></script>
 					<!-- Copyright please don't remove-->
 						<STRONG><SPAN class='powered'>
 							Based on <a href='https://github.com/giaythuytinh176/vinaget-script'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br/>

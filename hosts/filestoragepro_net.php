@@ -45,7 +45,7 @@ class dl_filestoragepro_net extends Download
         }
         if (stristr($data, 'name="downloadpw')) {
             $this->error("reportpass", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post["downloadverify"] = "1";
             $post["d"] = "1";
             $data = $this->lib->curl($url, $this->lib->cookie, $post);

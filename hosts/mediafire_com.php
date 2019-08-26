@@ -79,7 +79,7 @@ class dl_mediafire_com extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, "error.php")) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             if (preg_match('/kNO = "(http:\/\/.+)";/i', $data, $giay)) {
                 return trim($giay[1]);
             }

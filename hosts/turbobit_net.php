@@ -6,7 +6,7 @@ class dl_turbobit_net extends Download
     public function CheckAcc($cookie)
     {
         $data = $this->lib->curl("https://turbobit.net", $cookie, 0);
-        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isredirect($data)) {
+        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
             $data = $this->lib->curl(trim($this->redirect), $cookie, 0);
         }
 
@@ -28,12 +28,12 @@ class dl_turbobit_net extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://turbobit.net/user/login", "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
-        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isredirect($data)) {
+        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
             $this->lib->curl(trim($this->redirect), "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
         }
 
         $cookie = "user_lang=en;" . $this->lib->GetCookies($data);
-        
+
         return array(true, $cookie);
     }
 
@@ -44,7 +44,7 @@ class dl_turbobit_net extends Download
             $url = "https://turbobit.net/{$gach[5]}.html";
         }
         $data = $this->lib->curl($url, $this->lib->cookie, "");
-        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isredirect($data)) {
+        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
             $data = $this->lib->curl(trim($this->redirect), $this->lib->cookie, "");
         }
 
@@ -60,7 +60,7 @@ class dl_turbobit_net extends Download
         } elseif (preg_match("%a href='(.*)'><b>Download%U", $data, $link)) {
             $link = trim($link[1]);
             $data = $this->lib->curl($link, $this->lib->cookie, "");
-            if ($this->isredirect($data)) {
+            if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 

@@ -14,7 +14,7 @@ $obj = new stream_get();
 
 $page = !empty($_GET['page']) ? $_GET['page'] : '';
 
-if ($obj->Deny || !$obj->isadmin() || empty($page)) {
+if ($obj->Deny || !$obj->isAdmin() || empty($page)) {
     setcookie('msg', 'proccess.php :: Access Violation');
     header('Location: index.php');
     ob_end_flush();

@@ -20,7 +20,7 @@ class dl_uploadboy_com extends Download
     {
         $data = $this->lib->curl("http://uploadboy.com/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://uploadboy.com/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        
+
         return array(true, $cookie);
     }
 
@@ -89,7 +89,7 @@ class dl_uploadboy_com extends Download
         }
         if (stristr($data, 'type="password" name="password')) {
             $this->error("reportpass", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post0 = $this->parseForm($this->lib->cut_str($data, '<Form name="F1" method="POST"', '</Form>'));
             $data0 = $this->lib->curl($url, $this->lib->cookie, $post0);
             if (preg_match('@https?:\/\/(\w+\.)?uploadboy\.com(:\d+)?\/d\/[^"\'><\r\n\t]+@i', $data0, $giay)) {

@@ -13,7 +13,7 @@ require_once 'class.php';
 $obj = new stream_get();
 
 // This debug code should be available only to admins.
-if ($obj->Deny || !$obj->isadmin()) {
+if ($obj->Deny || !$obj->isAdmin()) {
     setcookie('msg', 'debug.php :: Access Violation');
     header('Location: index.php');
     ob_end_flush();

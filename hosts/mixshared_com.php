@@ -34,7 +34,7 @@ class dl_mixshared_com extends Download
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (stristr($data, 'Wrong password')) {
                 $this->error("wrongpass", true, false, 2);
-            } elseif (!$this->isredirect($data)) {
+            } elseif (!$this->isRedirect($data)) {
                 $giay = $this->lib->cut_str($this->lib->cut_str($data, 'dotted #bbb;padding:7px;">', '</span>'), 'href="', '">');
                 return trim($giay);
             } else {
@@ -48,7 +48,7 @@ class dl_mixshared_com extends Download
             $this->error("blockCountry", true, false);
         } elseif (stristr($data, 'The file was deleted by its owner')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             $giay = $this->lib->cut_str($this->lib->cut_str($data, 'dotted #bbb;padding:7px;">', '</span>'), 'href="', '">');

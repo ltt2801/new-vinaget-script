@@ -21,7 +21,7 @@ class dl_share_online_biz extends Download
     {
         $data = $this->lib->curl("https://www.share-online.biz/user/login", "animations=1;newsscrl=1;page_language=english", "user={$user}&pass={$pass}&l_rememberme=1&submit=Log%20in");
         $cookie = "animations=1;newsscrl=1;page_language=english;{$this->lib->GetCookies($data)}";
-        
+
         return array(true, $cookie);
     }
 
@@ -31,7 +31,7 @@ class dl_share_online_biz extends Download
         $this->save($this->lib->GetCookies($data));
         if (stristr($data, 'The requested file is not available')) {
             $this->error("dead", true, false, 2);
-        } elseif ($this->isredirect($data)) {
+        } elseif ($this->isRedirect($data)) {
             return trim($this->redirect);
         } elseif (preg_match('/var dl="(.*)";var file/', $data, $en64)) {
             $link = base64_decode($en64[1]);

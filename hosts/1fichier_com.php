@@ -27,7 +27,7 @@ class dl_1fichier_com extends Download
         $data = $this->lib->curl($url, $this->lib->cookie, "");
         if (stristr($data, "The requested file could not be found")) {
             $this->error("dead", true, false, 2);
-        } elseif ($this->isredirect($data)) {
+        } elseif ($this->isRedirect($data)) {
             return trim($this->redirect);
         }
 

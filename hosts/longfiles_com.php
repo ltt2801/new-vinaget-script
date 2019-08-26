@@ -20,7 +20,7 @@ class dl_longfiles_com extends Download
         } else {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
-            if ($this->isredirect($data)) {
+            if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 

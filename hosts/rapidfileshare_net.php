@@ -20,7 +20,7 @@ class dl_rapidfileshare_net extends Download
     {
         $data = $this->lib->curl("http://www.rapidfileshare.net/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://www.rapidfileshare.net/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        
+
         return array(true, $cookie);
     }
 
@@ -45,7 +45,7 @@ class dl_rapidfileshare_net extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, 'The file was deleted by its owner')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (!preg_match('@https?:\/\/(\w+\.)?rapidfileshare\.net(:\d+)?\/d\/[^"\'><\r\n\t]+@i', $data, $giay)) {

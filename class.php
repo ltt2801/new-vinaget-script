@@ -140,7 +140,7 @@ class getinfo extends Tools_get
         $this->pass = isset($_POST['pass']) ? $_POST['pass'] : "";
     }
 
-    public function isadmin()
+    public function isAdmin()
     {
         return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : $this->admin);
     }
@@ -645,7 +645,7 @@ class stream_get extends getinfo
         } while (stristr($header, "\r\n") == false);
 
         /* debug */
-        if ($this->isadmin() && isset($_GET['debug'])) {
+        if ($this->isAdmin() && isset($_GET['debug'])) {
             // Uncomment next line for enable to admins this debug code.
             // echo "<pre>connected to : $hosts ".($job['proxy'] == 0 ? '' : "via {$job['proxy']}")."\r\n$data\r\n\r\nServer replied: \r\n$header</pre>";
             die();
@@ -2090,7 +2090,7 @@ class Download
         return $a[$i];
     }
 
-    public function isredirect($data)
+    public function isRedirect($data)
     {
         if (preg_match('/ocation: (.*)/', $data, $match)) {
             $this->redirect = trim($match[1]);

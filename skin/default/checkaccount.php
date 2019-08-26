@@ -52,7 +52,7 @@ if (isset($_POST["check"])) {
                     }
                 }
             }
-            if (!$obj->isadmin()) {
+            if (!$obj->isAdmin()) {
                 $account = substr($account, 0, 5) . "****";
             }
 
@@ -79,6 +79,7 @@ if (isset($_POST["check"])) {
 
 } else {
     echo '<div style="overflow: auto; height: auto; width: 713px;" align="left">';
+    ksort($obj->acc);
     foreach ($obj->acc as $host => $acc) {
         if (count($acc["accounts"]) > 0) {
             echo '<table id="table-' . $host . '" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
@@ -87,7 +88,7 @@ if (isset($_POST["check"])) {
 				<td width="15%"><b>Type</b></td>
 				<td width="20%"><b>Status</b></td>
 				<td><b>Note</b></td>
-			</tr>';
+            </tr>';
             foreach ($acc["accounts"] as $account) {
                 if (stristr($account, ':')) {
                     $type = "account";
@@ -95,7 +96,7 @@ if (isset($_POST["check"])) {
                     $type = "cookie";
                 }
 
-                if (!$obj->isadmin()) {
+                if (!$obj->isAdmin()) {
                     $account = substr($account, 0, 5) . "****";
                 }
 

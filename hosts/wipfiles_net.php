@@ -20,7 +20,7 @@ class dl_wipfiles_net extends Download
     {
         $data = $this->lib->curl("http://wipfiles.net/", "lang=english", "login={$user}&password={$pass}&op=login&redirect=http://wipfiles.net/");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        
+
         return array(true, $cookie);
     }
 
@@ -43,7 +43,7 @@ class dl_wipfiles_net extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, 'The file was deleted by its owner')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (preg_match('@https?:\/\/(\w+\.)?wipfiles\.net(:\d+)?\/d\/[^"\'><\r\n\t]+@i', $data, $giay)) {

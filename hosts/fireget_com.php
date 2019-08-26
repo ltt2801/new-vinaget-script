@@ -34,7 +34,7 @@ class dl_fireget_com extends Download
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (stristr($data, 'Wrong password')) {
                 $this->error("wrongpass", true, false, 2);
-            } elseif (!$this->isredirect($data)) {
+            } elseif (!$this->isRedirect($data)) {
                 $giay = $this->lib->cut_str($this->lib->cut_str($data, '<div style="padding-left:20px; padding-right:20px;">', '</a></div>'), 'href="', '" style');
                 return trim($giay);
             } else {
@@ -48,7 +48,7 @@ class dl_fireget_com extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, 'The file was deleted by its owner')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             if (!stristr($data, "Create Download Link")) {
                 $this->error("Cannot get Create Download Link", true, false);
             } else {

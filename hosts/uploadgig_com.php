@@ -40,7 +40,7 @@ class dl_uploadgig_com extends Download
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, 'bandwidth')) {
             $this->error("LimitAcc");
-        } elseif ($this->isredirect($data)) {
+        } elseif ($this->isRedirect($data)) {
             return trim($this->redirect);
         }
 

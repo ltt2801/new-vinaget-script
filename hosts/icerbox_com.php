@@ -8,9 +8,11 @@ class dl_icerbox_com extends Download
         $token = $this->lib->cut_str($cookie, 'token=', ';');
         $data = $this->lib->curl("https://icerbox.com/api/v1/user/account", "", "", 0, 1, 0, 0, array("Authorization: Bearer {$token}"));
         $json = json_decode($data, true);
-        if ($json['data']['has_premium'] == true) {
-            return array(true, "Duration: " . $json['data']['package']['duration'] . " days left<br/>Daily Limit: " . $this->lib->convertmb($json['data']['package']['volume']) . "<br/>Bandwidth Left: " . $this->lib->convertmb($json['data']['package']['bandwidth']));
-        } elseif ($json['data']['has_premium'] == false) {
+        if (isset($json['data']['has_premium'])) {
+            if ($json['data']['has_premium'] == true) {
+                return array(true, "Duration: " . $json['data']['package']['duration'] . " days left<br/>Daily Limit: " . $this->lib->convertmb($json['data']['package']['volume']) . "<br/>Bandwidth Left: " . $this->lib->convertmb($json['data']['package']['bandwidth']));
+            }
+
             return array(false, "accfree");
         }
 
@@ -21,7 +23,8 @@ class dl_icerbox_com extends Download
     {
         $data = $this->lib->curl("https://icerbox.com/api/v1/auth/login", "", '{"email": "' . $user . '", "password": "' . $pass . '"}', 0);
         if (stristr($data, 'status_code":429')) {
-            $this->error("Captcha found when login account. Please try again later", true, false);
+            $this->error("Captcha icerbox found when login account. Please try again later", false, false);
+            return false;
         } elseif (preg_match('/"token":"(.*?)"/', $data, $match)) {
             return "token=" . trim($match[1]) . ';';
         }
@@ -52,5 +55,5 @@ class dl_icerbox_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Icerbox.com Download Plugin
- * Date: 05.10.2018
+ * Date: 18.06.2019
  */

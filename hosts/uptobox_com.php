@@ -18,8 +18,12 @@ class dl_uptobox_com extends Download
     public function Login($user, $pass)
     {
         $data = $this->lib->curl("https://uptobox.com/?op=login&referer=homepage", "lang=english", "login={$user}&password={$pass}&redirect=");
+        if (stristr($data, 'log in from a different country')) {
+            $this->error("Account uptobox block login from another country", false, false);
+            return false;
+        }
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
-        
+
         return array(true, $cookie);
     }
 
@@ -44,7 +48,7 @@ class dl_uptobox_com extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, 'The file was deleted by its owner') || stristr($data, 'Page not found / La page')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<form name="F1"', '</form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (preg_match('@https?:\/\/www\d+\.uptobox.com\/d\/[^\'\"\s\t<>\r\n]+@i', $data, $link)) {

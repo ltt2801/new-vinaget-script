@@ -18,7 +18,7 @@ class dl_filespace_com extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("http://filespace.com/?op=login&login={$user}&password={$pass}&redirect=", "lang=english;", "");
+        $data = $this->lib->curl("http://filespace.com/?op=login&login={$user}&password={$pass}&redirect=%2F", "lang=english", "");
         $cookie = "lang=english;{$this->lib->GetCookies($data)}";
 
         return array(true, $cookie);
@@ -30,7 +30,7 @@ class dl_filespace_com extends Download
         $data = $this->lib->curl($url, $this->lib->cookie, "");
         if (stristr($data, '>File not found.<')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $page = $this->lib->cut_str($data, '<div style="text-align:center;width:728px;">', '<div id="planlinks" width="100%"');
             preg_match('%input type="hidden" name="rand2" value="(.*?)%U', $page, $rand2);
             $post = $this->parseForm($page, '<Form name="F1"', '<div id="captcha">');
@@ -42,7 +42,7 @@ class dl_filespace_com extends Download
             }
 
             $data = $this->lib->curl($url . '?accounttype=premium', $this->lib->cookie, $post);
-            if ($this->isredirect($data)) {
+            if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 

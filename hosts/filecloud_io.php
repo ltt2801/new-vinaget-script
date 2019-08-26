@@ -23,7 +23,7 @@ class dl_filecloud_io extends Download
 
         $url = str_relace("ifile.it", "filecloud.io", $url);
         $data = $this->lib->curl($url, $this->lib->cookie, "");
-        if ($this->isredirect($data)) {
+        if ($this->isRedirect($data)) {
             return trim($this->redirect);
         } elseif (empty($data) == true) {
             $this->error("dead", true, false, 2);

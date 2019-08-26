@@ -34,7 +34,7 @@ class dl_file_al extends Download
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (stristr($data, 'Wrong password')) {
                 $this->error("wrongpass", true, false, 2);
-            } else if ($this->isredirect($data)) {
+            } else if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 
@@ -43,10 +43,10 @@ class dl_file_al extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, '<b>File Not Found</b>') || stristr($data, '<Title>File Not Found</Title>')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
-            if ($this->isredirect($data)) {
+            if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 

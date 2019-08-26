@@ -32,7 +32,6 @@ if ($page == 'config') {
             if (!in_array($file, $blacklist)) {
                 $lang .= "<option value='" . substr($file, 0, -4) . "' " . (substr($file, 0, -4) == $obj->config['language'] ? "selected" : "") . ">" . substr($file, 0, -4) . "</option>";
             }
-
         }
         $lang .= "</select>";
         closedir($handle);
@@ -44,7 +43,6 @@ if ($page == 'config') {
             if (!in_array($file, $blacklist)) {
                 $skin .= "<option value='" . $file . "' " . ($file == $obj->config['skin'] ? "selected" : "") . ">" . $file . "</option>";
             }
-
         }
         $skin .= "</select>";
         closedir($handle);
@@ -59,7 +57,6 @@ if ($page == 'config') {
             } else {
                 echo '<input size="50" type="text" name="config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off">';
             }
-
         } elseif (gettype($cval) == 'boolean') {
             echo '<label for="config[' . $ckey . '][\'on\']"><input type="radio" id="config[' . $ckey . '][\'on\']" value="on" name="config[' . $ckey . ']"' . ($cval ? ' checked="checked"' : '') . '/> On</label> <label for="config[' . $ckey . '][\'off\']"><input type="radio" id="config[' . $ckey . '][\'off\']" value="off" name="config[' . $ckey . ']"' . (!$cval ? ' checked="checked"' : '') . '/> Off</label>';
         }
@@ -70,54 +67,53 @@ if ($page == 'config') {
     echo '<tr class="flistmouseoff"><td><i><b>language</b></i></td><td style="text-align:right">' . $lang . '</td></tr>';
     echo '<tr class="flistmouseoff"><td><i><b>skin</b></i></td><td style="text-align:right">' . $skin . '</td></tr>';
     echo "</table>";
-    ?>	<br/>&nbsp;
-	<center>
-		<input id='submit' type='submit' name="submit" value='Save Config'/>
-	</center>
-	<br/>
+    ?> <br />&nbsp;
+<center>
+    <input id='submit' type='submit' name="submit" value='Save Config' />
+</center>
+<br />
 <?php
 }
 
 // cookie
 elseif ($page == 'cookie') {
     ?>
-	<table>
-	<tr>
-	<td>
-	<?php printf($obj->lang['acctype']);?>
-		<select name='type' id='type'>
-	<?php
-foreach ($host as $key => $val) {
-        if (!$val['alias']) {
-            require_once 'hosts/' . $val['file'];
-            if (method_exists($val['class'], "CheckAcc")) {
-                echo "<option value='{$key}'>{$key}</option>";
-            }
-
-        }
-    }
-    ?>
-	</select>
-	</td>
-	<td>
-		&nbsp; &nbsp; &nbsp; <input type="text" name="cookie" id="accounts" value="" size="50"><br />
-	</td>
-	<td>
-		&nbsp; &nbsp; &nbsp; <input type=submit value="Submit">
-	</td>
-	</tr>
-	</table>
+<table>
+    <tr>
+        <td>
+            <?php printf($obj->lang['acctype']); ?>
+            <select name='type' id='type'>
+                <?php
+                    foreach ($host as $key => $val) {
+                        if (!$val['alias']) {
+                            require_once 'hosts/' . $val['file'];
+                            if (method_exists($val['class'], "CheckAcc")) {
+                                echo "<option value='{$key}'>{$key}</option>";
+                            }
+                        }
+                    }
+                    ?>
+            </select>
+        </td>
+        <td>
+            &nbsp; &nbsp; &nbsp; <input type="text" name="cookie" id="accounts" value="" size="50"><br />
+        </td>
+        <td>
+            &nbsp; &nbsp; &nbsp; <input type=submit value="Submit">
+        </td>
+    </tr>
+</table>
 <?php
-echo '<table id="tableCOOKIE" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
+    echo '<table id="tableCOOKIE" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center" colspan="3"><B>COOKIE</B></td>
 			</tr>
-		';
+        ';
+    ksort($obj->cookies);
     foreach ($obj->cookies as $ckey => $cookies) {
         if ($cookies['cookie'] != "") {
             echo '<tr class="flistmouseoff"><td><B>' . $ckey . '</B></td><td style="word-break:break-all">' . $cookies['cookie'] . '</td><td width="1"><B><a style="color: black;" href="proccess.php?page=cookie&del=' . $ckey . '">[DELETE]</a></B></td></tr>';
         }
-
     }
     echo "</table>";
 }
@@ -125,34 +121,35 @@ echo '<table id="tableCOOKIE" class="filelist" align="left" cellpadding="3" cell
 // account
 elseif ($page == 'account') {
     ?>
-	<table>
-	<tr>
-	<td>
-	<?php printf($obj->lang['acctype']);?>
-		<select name='type' id='type'>
-	<?php
-foreach ($host as $key => $val) {
-        if (!$val['alias']) {
-            echo "<option value='{$key}'>{$key}</option>";
-        }
-    }
-    ?>
-	</select>
-	</td>
-	<td>
-		&nbsp; &nbsp; &nbsp; <textarea type="text" name="account" id="accounts" value="" rows="5" cols="50" placeholder="one account per line"></textarea><br />
-	</td>
-	<td>
-		&nbsp; &nbsp; &nbsp; <input type=submit value="Submit">
-	</td>
-	</tr>
-	</table>
+<table>
+    <tr>
+        <td>
+            <?php printf($obj->lang['acctype']); ?>
+            <select name='type' id='type'>
+                <?php
+                    foreach ($host as $key => $val) {
+                        if (!$val['alias']) {
+                            echo "<option value='{$key}'>{$key}</option>";
+                        }
+                    }
+                    ?>
+            </select>
+        </td>
+        <td>
+            &nbsp; &nbsp; &nbsp; <textarea type="text" name="account" id="accounts" value="" rows="5" cols="50" placeholder="one account per line"></textarea><br />
+        </td>
+        <td>
+            &nbsp; &nbsp; &nbsp; <input type=submit value="Submit">
+        </td>
+    </tr>
+</table>
 <?php
-echo '<table id="tableAccount" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
+    echo '<table id="tableAccount" class="filelist" align="left" cellpadding="3" cellspacing="1" width="713px">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center" colspan="3"><B>Account</B></td>
 			</tr>
-		';
+        ';
+    ksort($obj->acc);
     foreach ($obj->acc as $ckey => $val) {
         $max = count($val['accounts']);
         if ($max != 0) {
@@ -173,7 +170,8 @@ elseif ($page == 'host') {
 				<td align="center"><B>Proxy</B></td>
 				<td align="center"><B>Direct</B></td>
 			</tr>
-		';
+        ';
+    ksort($obj->acc);
     foreach ($obj->acc as $ckey => $val) {
         echo '<tr class="flistmouseoff">
 				<td><B>' . $ckey . '</B></td>
@@ -190,15 +188,31 @@ elseif ($page == 'host') {
 elseif ($page == 'debug') {
     ?>
 <table style="width:70%;">
-	<tr><td>URL </td><td> : </td><td><input type="text" id="link" name="link" style="width:100%;"></td></tr>
-	<tr><td>POST</td><td> : </td><td><input type="text" id="post" name="post" style="width:100%;"></td></tr>
-	<tr><td>COOKIE</td><td> : </td><td><input type="text" id="cookie" name="cookie" style="width:100%;"></td></tr>
-	<tr><td>PROXY</td><td> : </td><td><input type="text" id="proxy" name="proxy" style="width:100%;"></td></tr>
+    <tr>
+        <td>URL </td>
+        <td> : </td>
+        <td><input type="text" id="link" name="link" style="width:100%;"></td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td> : </td>
+        <td><input type="text" id="post" name="post" style="width:100%;"></td>
+    </tr>
+    <tr>
+        <td>COOKIE</td>
+        <td> : </td>
+        <td><input type="text" id="cookie" name="cookie" style="width:100%;"></td>
+    </tr>
+    <tr>
+        <td>PROXY</td>
+        <td> : </td>
+        <td><input type="text" id="proxy" name="proxy" style="width:100%;"></td>
+    </tr>
 </table>
 <input type='submit' value='Debug'>
 <input type='button' onClick="form.reset()" value='Reset'>
 </form>
-<br/>
+<br />
 <iframe name="debug" width="700" height="400" style="background:white" src="debug.php"></iframe>
 <?php
 } else {

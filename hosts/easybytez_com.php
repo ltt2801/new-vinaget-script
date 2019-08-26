@@ -45,7 +45,7 @@ class dl_easybytez_com extends Download
             $this->error("reportpass", true, false);
         } elseif (stristr($data, '>The uploader deleted the file.<') || stristr($data, '>File Not Found<')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, 'Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             $cut = $this->lib->cut_str($data, 'background:#f9f9f9;border:1px dotted #bbb;padding:7px', '</span>');

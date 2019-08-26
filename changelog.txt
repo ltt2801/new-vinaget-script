@@ -1,3 +1,8 @@
+v21:
+- Fix icerbox.com
+- Add hotlink.cc
+- Fix sort by Plugin/Premium Account Name in AdminCP
+- Remove catshare.net, tenlua.vn
 v20:
 - Fix uptobox.com
 v19:

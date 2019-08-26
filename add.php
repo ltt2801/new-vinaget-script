@@ -65,21 +65,6 @@ if (!empty($_POST["accounts"])) {
     if ($update == true && is_array($obj->acc) && count($obj->acc) > 0) {
         $obj->save_json($obj->fileaccount, $obj->acc);
     }
-################################## savve account  #############################################################################
+################################## save account  #############################################################################
 
 }
-/*
- * Home page: http://vinaget.us
- * Blog:    http://blog.vinaget.us
- * Script Name: Vinaget
- * Version: 3.2
- * Based on Vinaget 2.7.0
- * Description:
-- Vinaget is script generator premium link that allows you to download files instantly and at the best of your Internet speed.
-- Vinaget is your personal proxy host protecting your real IP to download files hosted on hosters like RapidShare, megaupload, hotfile...
-- You can now download files with full resume support from filehosts using download managers like IDM etc
-- Vinaget is a Free Open Source, supported by a growing community.
- * Code LeechViet by VinhNhaTrang
- * Developed by ..:: [H] ::..
-
- */

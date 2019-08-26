@@ -20,7 +20,7 @@ class dl_ryushare_com extends Download
     {
         $data = $this->lib->curl("http://ryushare.com/", "lang=english", "op=login&login={$user}&password={$pass}&loginFormSubmit=Login&redirect=http://ryushare.com/");
         $cookie = "lang=english;" . $this->lib->GetCookies($data);
-        
+
         return array(true, $cookie);
     }
 
@@ -53,7 +53,7 @@ class dl_ryushare_com extends Download
             $this->error("Ryushare Under Maintenance", true, false);
         } elseif (stristr($data, '>File Not Found<') || stristr($data, '>404 - Not Found<')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<form name="F1"', '</form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (stristr($data, '>Error happened when generating Download Link.<')) {

@@ -48,14 +48,14 @@ class dl_datafile_com extends Download
     {
         $data = $this->lib->curl($url, $this->lib->cookie, "");
 
-        if ($this->isredirect($data)) {
+        if ($this->isRedirect($data)) {
             $link = trim("http://www.datafile.com" . $this->redirect);
             $data = $this->lib->curl($link, $this->lib->cookie, "");
 
             if (stristr($data, "ErrorCode 6: Download limit in")) {
                 $this->error("LimitAcc", true, false);
             }
-            if ($this->isredirect($data)) {
+            if ($this->isRedirect($data)) {
                 $redir = trim($this->redirect);
             }
 

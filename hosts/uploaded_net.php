@@ -42,7 +42,7 @@ class dl_uploaded_net extends Download
     {
         $data = $this->lib->curl("http://uploaded.net/io/login", "", "id={$user}&pw={$pass}");
         $cookie = $this->lib->GetCookies($data);
-        
+
         return array(true, $cookie);
     }
 
@@ -60,7 +60,7 @@ class dl_uploaded_net extends Download
             $this->error("blockAcc", true, false);
         } elseif (stristr($data, "Download Blocked (ip)")) {
             $this->error("blockIP", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             if (preg_match('/action="(https?:\/\/.+)" style/i', $data, $link)) {
                 return trim($link[1]);
             }

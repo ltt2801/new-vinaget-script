@@ -27,7 +27,7 @@ class dl_filesflash_com extends Download
     public function Leech($url)
     {
         $data = $this->lib->curl($url, $this->lib->cookie, "");
-        if ($this->isredirect($data)) {
+        if ($this->isRedirect($data)) {
             return trim($this->redirect);
         } elseif (stristr($data, "That file has been deleted.")) {
             $this->error("dead", true, false, 2);

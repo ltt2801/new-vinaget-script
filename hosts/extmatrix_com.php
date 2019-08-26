@@ -32,7 +32,7 @@ class dl_extmatrix_com extends Download
             $this->error("An error occurred. Please try again later.", true, false, 2);
         } elseif (stristr($data, 'The file you have requested does not exists.')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             if (preg_match('/<a id=\'jd_support\' href="(.*?)"><\/a>/', $data, $link)) {
                 return trim($link[1]);
             }

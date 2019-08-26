@@ -20,7 +20,7 @@ class dl_sendspace_com extends Download
     {
         $data = $this->lib->curl("http://www.sendspace.com/login.html", "", "remember=on&action=login&submit=login&username={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
-        
+
         return array(true, $cookie);
     }
 
@@ -37,7 +37,7 @@ class dl_sendspace_com extends Download
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, "This file has been password protected")) {
             $this->error("reportpass", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             return trim($this->lib->cut_str($data, 'id="download_button" href="', '" onclick='));
         } else {
             return trim($this->redirect);

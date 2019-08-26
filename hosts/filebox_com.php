@@ -29,7 +29,7 @@ class dl_filebox_com extends Download
         $data = $this->lib->curl($url, $this->lib->cookie, "");
         if (stristr($data, '<h2>This file is no longer available</h2>')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form style=\'display:inline-block\'', '</form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (preg_match('@https?:\/\/www(\d+\.)?filebox\.com(:\d+)?\/d\/[a-z0-9]+\/[^/|\"|\'|<|>|\r|\n|\t]+@i', $this->lib->cut_str($data, 'onclick="document.location=\'', '\'" value=\'Download\' /></center>'), $giay)) {

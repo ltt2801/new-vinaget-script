@@ -40,7 +40,7 @@ class dl_nitroflare_com extends Download
             $this->error("LimitAcc", true, false, 2);
         }
 
-        if (!$this->isredirect($data)) {
+        if (!$this->isRedirect($data)) {
             $this->save($this->lib->GetCookies($data));
             return trim($this->lib->cut_str($data, 'id="download" href="', '">Click'));
         } else {

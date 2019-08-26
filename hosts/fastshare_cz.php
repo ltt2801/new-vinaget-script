@@ -30,7 +30,7 @@ class dl_fastshare_cz extends Download
         $data = $this->lib->curl($url, $this->lib->cookie, "");
         if (stristr($data, '>The file  has been deleted at request of its copyright owner.')) {
             $this->error("dead", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             if (preg_match('/href="(http:\/\/data\d+\.fastshare\.cz\/download\.php.+)">/i', $data, $giay)) {
                 return trim($giay[1]);
             }

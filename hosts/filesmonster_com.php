@@ -5,13 +5,13 @@ class dl_filesmonster_com extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://filesmonster.com/", "yab_ulang=en;" . $cookie, "");
-        if (stristr($data, 'Your membership type: <span class="em lightblack">Registered')) {
-            return array(false, "accfree");
-        } elseif (stristr($data, 'Your membership type: <span class="em lightblack">Premium') && !stristr($data, '>Expired:')) {
+        $data = $this->lib->curl("https://filesmonster.com/", "yab_ulang=en;" . $cookie, "");
+        if (stristr($data, 'Your membership type: <strong>Premium')) {
             return array(true, "Until " . $this->lib->cut_str($data, '<span>Valid until: <span class=\'green\'>', '</span><br /><input type='));
-        } elseif (stristr($data, "class='red em'>Expired:")) {
+        } elseif (stristr($data, "text-danger'>Premium expired:")) {
             return array(false, "Account Expired!");
+        } elseif (stristr($data, 'Your membership type: <strong>Regular')) {
+            return array(false, "accfree");
         } else {
             return array(false, "accinvalid");
         }
@@ -20,7 +20,7 @@ class dl_filesmonster_com extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("http://filesmonster.com/login.php", "yab_ulang=en", "act=login&user={$user}&pass={$pass}&captcha_shown=0&login=Login");
+        $data = $this->lib->curl("https://filesmonster.com/login.php", "yab_ulang=en", "act=login&user={$user}&pass={$pass}&captcha_shown=0&login=Login");
         $cookie = "yab_ulang=en;" . $this->lib->GetCookies($data);
 
         return array(true, $cookie);
@@ -36,7 +36,7 @@ class dl_filesmonster_com extends Download
         } elseif (preg_match('/href="(https?:\/\/filesmonster\.com\/get\/[^"\'><\r\n\t]+)">/', $data, $data1)) {
             $data2 = $this->lib->curl($data1[1], $this->lib->cookie, "");
             if (preg_match('/get_link\("([^"\'><\r\n\t]+)"\)/', $data2, $data3)) {
-                $data4 = $this->lib->curl("http://filesmonster.com" . $data3[1], $this->lib->cookie, "");
+                $data4 = $this->lib->curl("https://filesmonster.com" . $data3[1], $this->lib->cookie, "");
                 if (preg_match('%url":"(https?:.+fmdepo.net.+)"%U', $data4, $giay)) {
                     $giay = str_replace('\\', '', $giay[1]);
                     $giay = str_replace("https", "http", $giay);

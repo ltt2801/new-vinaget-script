@@ -70,7 +70,7 @@ class dl_filefactory_com extends Download
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (stristr($data, 'The Password entered was incorrect.') || stristr($data, 'The Password is required')) {
                 $this->error("wrongpass", true, false, 2);
-            } elseif (!$this->isredirect($data)) {
+            } elseif (!$this->isRedirect($data)) {
                 if (preg_match('/href="(https?:\/\/.+filefactory\.com\/get\/.+)" class/i', $data, $link)) {
                     return trim($link[1]);
                 }
@@ -82,7 +82,7 @@ class dl_filefactory_com extends Download
         }
         if (stristr($data, 'name="password" id="password" type="password"')) {
             $this->error("reportpass", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             if (preg_match('/href="(https?:\/\/.+filefactory\.com\/get\/.+)">/i', $data, $link)) {
                 return trim($link[1]);
             }

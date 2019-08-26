@@ -24,7 +24,7 @@ class dl_subyshare_com extends Download
         }
 
         $cookie = "lang=english; {$this->lib->GetCookies($data)}";
-        
+
         return array(true, $cookie);
     }
 
@@ -38,7 +38,7 @@ class dl_subyshare_com extends Download
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (stristr($data, 'Wrong password')) {
                 $this->error("wrongpass", true, false, 2);
-            } elseif ($this->isredirect($data)) {
+            } elseif ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 
@@ -47,10 +47,10 @@ class dl_subyshare_com extends Download
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, '<small>Password:</small> <input class="bttn')) {
             $this->error("reportpass", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
-            if ($this->isredirect($data)) {
+            if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
 

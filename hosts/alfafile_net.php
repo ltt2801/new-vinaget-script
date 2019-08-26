@@ -36,7 +36,7 @@ class dl_alfafile_net extends Download
             $this->error("dead", true, false, 2);
         } elseif (preg_match('/href="(https?:\/\/.+alfafile\.net\/dl\/.+)" class/i', $data, $link)) {
             return trim($link[1]);
-        } elseif ($this->isredirect($data)) {
+        } elseif ($this->isRedirect($data)) {
             return trim($this->redirect);
         }
 

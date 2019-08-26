@@ -91,7 +91,7 @@ class dl_hipfile_com extends Download
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, 'You have reached the download-limit:')) {
             $this->error("LimitAcc", true, false);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $post = $this->parseForm($this->lib->cut_str($data, '<Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             if (preg_match('@https?:\/\/hf(\d+)?\.hipfile\.com(:\d+)?\/d\/[^"\'><\r\n\t]+@i', $data, $giay)) {

@@ -2,8 +2,8 @@
 /*
 * New Vinaget by LTT
 * Version: 3.3 LTS
-* Based on Vinaget 2.7.0 Final Revision 93
-* Description: 
+* Based on Vinaget 2.7.0 Final Revision 94
+* Description:
 	- Vinaget is script generator premium link that allows you to download files instantly and at the best of your Internet speed.
 	- Vinaget is your personal proxy host protecting your real IP to download files hosted on hosters like RapidShare, megaupload, hotfile...
 	- You can now download files with full resume support from filehosts using download managers like IDM etc
@@ -28,7 +28,7 @@ require_once 'class.php';
 $obj = new stream_get();
 $obj->using = $using;
 $obj->current_version = 94;
-$obj->ltt_version = 20;
+$obj->ltt_version = 21;
 $obj->msg = false;
 if (!empty($_COOKIE['msg'])) {
     $obj->msg = htmlspecialchars($_COOKIE['msg']);

@@ -45,7 +45,7 @@ class dl_katfile_com extends Download
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, 'Your IP is blacklisted')) {
             $this->error("blockIP", true, false, 2);
-        } elseif (!$this->isredirect($data)) {
+        } elseif (!$this->isRedirect($data)) {
             $this->error("Please enable direct download in katfile account", true, false, 2);
         } else {
             return trim(str_replace('https', 'http', trim($this->redirect)));
