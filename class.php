@@ -2101,7 +2101,7 @@ class Download
 
     }
 
-    public function passredirect($data, $cookie)
+    public function passRedirect($data, $cookie)
     {
         if (stristr($data, "302 Found") && stristr($data, "ocation")) {
             preg_match('/ocation: (.*)/', $data, $match);

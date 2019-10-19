@@ -6,8 +6,9 @@ class dl_filesmonster_com extends Download
     public function CheckAcc($cookie)
     {
         $data = $this->lib->curl("https://filesmonster.com/", "yab_ulang=en;" . $cookie, "");
+
         if (stristr($data, 'Your membership type: <strong>Premium')) {
-            return array(true, "Until " . $this->lib->cut_str($data, '<span>Valid until: <span class=\'green\'>', '</span><br /><input type='));
+            return array(true, "Until " . $this->lib->cut_str($data, "<p>Valid until: <span class='em-success'>", "</span></p>"));
         } elseif (stristr($data, "text-danger'>Premium expired:")) {
             return array(false, "Account Expired!");
         } elseif (stristr($data, 'Your membership type: <strong>Regular')) {
@@ -29,11 +30,12 @@ class dl_filesmonster_com extends Download
     public function Leech($url)
     {
         $data = $this->lib->curl($url, $this->lib->cookie, "");
+
         if (stristr($data, 'File not found') || stristr($data, '<h1 class="block_header">The link could not be decoded</h1>')) {
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, 'Today you have already downloaded')) {
             $this->error("LimitAcc", true, false);
-        } elseif (preg_match('/href="(https?:\/\/filesmonster\.com\/get\/[^"\'><\r\n\t]+)">/', $data, $data1)) {
+        } elseif (preg_match('/href="(https?:\/\/filesmonster\.com\/get\/.*?)" class="premium-button"/', $data, $data1)) {
             $data2 = $this->lib->curl($data1[1], $this->lib->cookie, "");
             if (preg_match('/get_link\("([^"\'><\r\n\t]+)"\)/', $data2, $data3)) {
                 $data4 = $this->lib->curl("https://filesmonster.com" . $data3[1], $this->lib->cookie, "");

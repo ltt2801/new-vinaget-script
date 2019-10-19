@@ -1,3 +1,7 @@
+v22:
+- Fix filesmonster.com
+- Add isra.cloud
+- Minor fix class.php
 v21:
 - Fix icerbox.com
 - Add hotlink.cc

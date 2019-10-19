@@ -27,7 +27,7 @@ class dl_extmatrix_com extends Download
 
     public function Leech($url)
     {
-        $data = $this->passredirect($this->lib->curl($url, $this->lib->cookie, ""), $this->lib->cookie);
+        $data = $this->passRedirect($this->lib->curl($url, $this->lib->cookie, ""), $this->lib->cookie);
         if (stristr($data, 'An error occurred')) {
             $this->error("An error occurred. Please try again later.", true, false, 2);
         } elseif (stristr($data, 'The file you have requested does not exists.')) {
