@@ -1,3 +1,6 @@
+v23:
+- Update 4share.vn
+- Fix check link turbobit.net
 v22:
 - Fix filesmonster.com
 - Add isra.cloud

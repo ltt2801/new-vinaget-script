@@ -14,7 +14,7 @@ class dl_turbobit_net extends Download
             if (stristr($data, '> limit of premium downloads')) {
                 return array(true, "LimitAcc");
             } else {
-                return array(true, "Until " . $this->lib->cut_str($data, '>Turbo access till ', '</span><a'));
+                return array(true, "Until " . $this->lib->cut_str($data, '>Turbo access till ', '</span></a>'));
             }
 
         } else if (stristr($data, '<u>Turbo Access</u> denied.')) {

@@ -4,12 +4,12 @@ class dl_4share_vn extends Download
 {
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl('http://4share.vn/member', $cookie, '');
+        $data = $this->lib->curl('https://4share.vn/member', $cookie, '');
 
         if (stristr($data, 'còn <b>0</b> ngày sử dụng')) {
             return array(true, 'accfree');
         } elseif (stristr($data, '>Ngày hết hạn: <')) {
-            return array(true, 'Until ' . $this->lib->cut_str($data, 'Ngày hết hạn: <b>', '</b> (còn') . '<br/> Traffic avaiable: ' . $this->lib->cut_str($data, ') : <strong>', '</strong> [Tất cả: <strong>') . ' of ' . $this->lib->cut_str($data, '[Tất cả: <strong>', '</strong>]<br'));
+            return array(true, 'Until ' . $this->lib->cut_str($data, 'Ngày hết hạn: <b>', '</b> (còn') . '<br/> Traffic available: ' . $this->lib->cut_str($data, 'download <strong>', '</strong>') . ' of ' . $this->lib->cut_str($data, '/Tổng số: <strong>', '</strong>'));
         }
 
         return array(false, 'accinvalid');
@@ -17,7 +17,7 @@ class dl_4share_vn extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl('http://4share.vn/index/login', '', 'username=' . $user . '&password=' . $pass . '&submit= ĐĂNG NHẬP ');
+        $data = $this->lib->curl("https://4share.vn/a_p_i/public-common/login", "", "username={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
 
         return array(true, $cookie);
