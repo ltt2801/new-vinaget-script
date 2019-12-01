@@ -19,10 +19,22 @@ class dl_fshare_vn extends Download
     {
         $page = $this->lib->curl("https://www.fshare.vn/site/login", "", "");
         $_csrf_app = trim($this->lib->cut_str($page, 'name="_csrf-app" value="', '"'));
-        $data = $this->lib->curl("https://www.fshare.vn/site/login", $this->lib->GetCookies($page), "_csrf-app={$_csrf_app}&LoginForm%5Bemail%5D=" . urlencode($user) . "&LoginForm%5Bpassword%5D=" . urlencode($pass) . "&LoginForm%5BrememberMe%5D=0");
-        $cookie = $this->lib->GetCookies($data);
+        $data = $this->lib->curl("https://www.fshare.vn/site/login", $this->lib->GetCookies($page), "_csrf-app={$_csrf_app}&LoginForm%5Bemail%5D=" . urlencode($user) . "&LoginForm%5Bpassword%5D=" . urlencode($pass) . "&LoginForm%5BrememberMe%5D=1");
+        if (stristr($data, '<h2 class="title">Thông báo</h2>')) {
+            $post = $this->parseForm($this->lib->cut_str($data, '<div class="mdc-dialog__content"', '</form>'));
+            $post['remove'] = '';
+            $data = $this->lib->curl("https://www.fshare.vn/site/login", $this->lib->GetCookies($page), $post);
+        } else if (stristr($data, 'Tài khoản quý khách đã bị khóa')) {
+            $this->error("blockAcc", true, false);
+        }
 
-        return array(true, $cookie);
+        if (stristr($data, '_identity-app=')) {
+            $data = $this->lib->curl("https://www.fshare.vn/site/login", $this->lib->GetCookies($data), "");
+            $cookie = $this->lib->GetCookies($data);
+            return array(true, $cookie);
+        }
+
+        return array(false, '');
     }
 
     public function Leech($url)
@@ -95,5 +107,5 @@ class dl_fshare_vn extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Fshare.vn Download Plugin
- * Date: 31.01.2018
+ * Date: 01.12.2019
  */
