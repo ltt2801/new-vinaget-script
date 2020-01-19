@@ -24,20 +24,38 @@ class getinfo extends Tools_get
         $this->banned = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
         $this->unit = 512;
         $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36';
-        $this->config = $this->load_json($this->fileconfig);
+        $this->cfg = $this->load_json($this->fileconfig);
         include "config.php";
-        if (count($this->config) == 0) {
+        if (count($this->cfg) == 0) {
             $this->config = $config;
+            $this->cbox_config = $cbox_config;
+            $this->recaptcha_config = $recaptcha_config;
             $_GET['id'] = 'admin';
             $this->Deny = false;
             $this->admin = true;
         } else {
+            $this->config = $this->cfg['config'];
+            $this->cbox_config = $this->cfg['cbox_config'];
+            $this->recaptcha_config = $this->cfg['recaptcha_config'];
+
             foreach ($config as $key => $val) {
                 if (!isset($this->config[$key])) {
                     $this->config[$key] = $val;
                 }
-
             }
+
+            foreach ($cbox_config as $key => $val) {
+                if (!isset($this->cbox_config[$key])) {
+                    $this->cbox_config[$key] = $val;
+                }
+            }
+
+            foreach ($recaptcha_config as $key => $val) {
+                if (!isset($this->recaptcha_config[$key])) {
+                    $this->recaptcha_config[$key] = $val;
+                }
+            }
+
             if ($this->config['secure'] == false) {
                 $this->Deny = false;
             }
@@ -46,11 +64,11 @@ class getinfo extends Tools_get
             $password[] = $this->config['admin'];
             foreach ($password as $login_vng) {
                 if (isset($_COOKIE["secureid"]) && $_COOKIE["secureid"] == md5($login_vng)) {
+                    if ($login_vng === $this->config['admin']) $this->admin = true;
                     $this->Deny = false;
                     break;
                 }
             }
-
         }
         $this->set_config();
         if (!file_exists($this->fileinfo_dir)) {
@@ -127,22 +145,27 @@ class getinfo extends Tools_get
         $this->display_error = $this->config['display_error'];
         $this->proxy = false;
         $this->bbcode = $this->config['bbcode'];
-        $this->cbox_url = $this->config['cbox_url'];
         $this->hide_plugins_col = $this->config['hide_plugins_col'];
         $this->hide_preacc_col = $this->config['hide_preacc_col'];
         $this->hide_number_acc = $this->config['hide_number_acc'];
-        $this->show_func_cbox = $this->config['show_func_cbox'];
         $this->del_checked_acc = $this->config['del_checked_acc'];
         $this->prox = isset($_POST['proxy']) ? $_POST['proxy'] : "";
         $this->autopost = isset($_POST['autopcbox']) ? $_POST['autopcbox'] : "";
         $this->autosearch = isset($_POST['autosearchuser']) ? $_POST['autosearchuser'] : "";
         $this->user = isset($_POST['nick']) ? $_POST['nick'] : "";
         $this->pass = isset($_POST['pass']) ? $_POST['pass'] : "";
+        $this->recaptcha_login = $this->config['recaptcha_login'];
+        $this->show_func_cbox = $this->config['show_func_cbox'];
+
+        /*** Cbox Config ***/
+        $this->cbox_url = $this->cbox_config['cbox_url'];
+        $this->default_cbox_username = $this->cbox_config['default_cbox_username'];
+        $this->default_cbox_userkey = $this->cbox_config['default_cbox_userkey'];
     }
 
     public function isAdmin()
     {
-        return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : $this->admin);
+        return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : false);
     }
 
     public function getversion()
@@ -211,7 +234,6 @@ class getinfo extends Tools_get
             if ($id == "useronline") {
                 return Tools_get::useronline();
             }
-
         }
     }
 
@@ -223,7 +245,6 @@ class getinfo extends Tools_get
             if ($job['ip'] === $ip) {
                 $cnt++;
             }
-
         }
         return $cnt;
     }
@@ -397,7 +418,6 @@ class getinfo extends Tools_get
                 if (empty($this->acc[$site]['accounts'])) {
                     $this->acc[$site]['accounts'] = array();
                 }
-
             }
         }
     }
@@ -427,7 +447,6 @@ class getinfo extends Tools_get
             if (count($service['accounts']) > 0) {
                 $acc = $service['accounts'][rand(0, count($service['accounts']) - 1)];
             }
-
         }
         return $acc;
     }
@@ -439,7 +458,6 @@ class getinfo extends Tools_get
             if ($job['hash'] === $hash) {
                 return $job;
             }
-
         }
         return false;
     }
@@ -456,7 +474,6 @@ class getinfo extends Tools_get
                 if ($job['mtime'] < $lasttime) {
                     $lasttime = $job['mtime'];
                 }
-
             }
         }
         $lefttime = $this->ttl_ip * 60 - time() + $lasttime;
@@ -486,14 +503,12 @@ class stream_get extends getinfo
             } else {
                 $this->download($redir[3]);
             }
-
         } elseif (isset($_REQUEST['file'])) {
             if (stristr($_REQUEST['file'], 'mega_')) {
                 $this->downloadmega($_REQUEST['file']);
             } else {
                 $this->download($_REQUEST['file']);
             }
-
         } else {
             include "hosts.php";
             ksort($host);
@@ -637,11 +652,9 @@ class stream_get extends getinfo
                 if (!stristr($header, "HTTP/1")) {
                     break;
                 }
-
             } else {
                 $header .= stream_get_line($fp, $this->unit);
             }
-
         } while (stristr($header, "\r\n") == false);
 
         /* debug */
@@ -706,7 +719,6 @@ class stream_get extends getinfo
             if ($i != $max - 1) {
                 echo "\r\n\r\n";
             }
-
         }
         while (!feof($fp) && (connection_status() == 0)) {
             $recv = @stream_get_line($fp, $this->unit);
@@ -745,7 +757,7 @@ class stream_get extends getinfo
     {
         $str = substr(stristr($str, $left), strlen($left));
         $leftLen = strlen(stristr($str, $right));
-        $leftLen = $leftLen ? -($leftLen) : strlen($str);
+        $leftLen = $leftLen ? - ($leftLen) : strlen($str);
         $str = substr($str, 0, $leftLen);
         return $str;
     }
@@ -778,7 +790,6 @@ class stream_get extends getinfo
                 if ($cook = substr($temp[1], 0, stripos($temp[1], ';'))) {
                     $retCookie .= $cook . ";";
                 }
-
             }
         }
 
@@ -835,7 +846,6 @@ class stream_get extends getinfo
                 } else {
                     $dlhtml = $this->get($url);
                 }
-
             } else {
 
                 // ################## CHECK 3X #########################
@@ -861,7 +871,6 @@ class stream_get extends getinfo
                     } else {
                         $dlhtml = $this->get($url);
                     }
-
                 } else {
                     $dlhtml = printf($this->lang['issex'], $url);
                     unset($check3x);
@@ -981,24 +990,22 @@ class stream_get extends getinfo
             $linkdown = $link;
         } elseif ($this->longurl) {
             if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) {
-                $linkdown = 'http://' . $sv_name . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
+                $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             } else {
-                $linkdown = 'http://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
+                $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             }
-
         } else {
-            $linkdown = 'http://' . $sv_name . '?file=' . $job['hash'];
+            $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . '?file=' . $job['hash'];
         }
 
         // #########Begin short link ############
         if (empty($this->adslink) == true && empty($link) == false && empty($this->tinyurl) == true) {
             $datalink = $this->tinyurl($linkdown);
-            if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
+            if (preg_match('%(https?:\/\/.++)%U', $datalink, $shortlink)) {
                 $lik = trim($shortlink[1]);
             } else {
                 $lik = $linkdown;
             }
-
         } elseif (empty($this->adslink) == false && empty($link) == false) {
             $lik = $linkdown;
             if (empty($this->api_ads1) == false) {
@@ -1009,7 +1016,6 @@ class stream_get extends getinfo
                 if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                     $lik = trim($shortlink[1]);
                 }
-
             }
             if (empty($this->api_ads2) == false) {
                 $lik = $this->api_zip($lik, $this->api_ads2);
@@ -1019,7 +1025,6 @@ class stream_get extends getinfo
                 if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                     $lik = trim($shortlink[1]);
                 }
-
             }
             if (empty($this->api_ads3) == false) {
                 $lik = $this->api_zip($lik, $this->api_ads3);
@@ -1029,7 +1034,6 @@ class stream_get extends getinfo
                 if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
                     $lik = trim($shortlink[1]);
                 }
-
             }
         } // ########### End short link  ##########
         else {
@@ -1303,7 +1307,6 @@ class stream_get extends getinfo
             } else {
                 $this->error2('notsupport', $Original);
             }
-
         } else {
             $size_name = Tools_get::size_name($link, $this->cookie);
             $filesize = $size_name[0];
@@ -1372,13 +1375,12 @@ class stream_get extends getinfo
             $linkdown = $link;
         } elseif ($this->longurl) {
             if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) {
-                $linkdown = 'http://' . $sv_name . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
+                $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             } else {
-                $linkdown = 'http://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
+                $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             }
-
         } else {
-            $linkdown = 'http://' . $sv_name . '?file=' . $job['hash'];
+            $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . '?file=' . $job['hash'];
         }
 
         // #########Begin short link ############
@@ -1389,10 +1391,9 @@ class stream_get extends getinfo
         /* create shorten link */
         if (empty($linkdown) == false && $this->tinyurl == true) {
             $datalink = $this->tinyurl($linkdown);
-            if (preg_match('%(http:\/\/.++)%U', $datalink, $shortlink)) {
+            if (preg_match('%(https?:\/\/.++)%U', $datalink, $shortlink)) {
                 $linkdown = trim($shortlink[1]);
             }
-
         }
         // ########### End short link  ##########
 
@@ -1549,7 +1550,7 @@ class stream_get extends getinfo
 
         $files = array();
         foreach ($this->jobs as $job) {
-            if ($job['owner'] != $this->owner && $this->privatef == true) {
+            if (!$this->admin && $job['owner'] != $this->owner && $this->privatef == true) {
                 continue;
             }
 
@@ -1581,7 +1582,7 @@ class stream_get extends getinfo
         }
 
         echo '</select>';
-        echo '<div style="overflow: auto; height: auto; max-height: 500px; width: 713px;"><table id="table_filelist" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%"><thead><tr class="flisttblhdr" valign="bottom"><td id="file_list_checkbox_title" class="sorttable_checkbox">&nbsp;</td><td class="sorttable_alpha"><b>' . $this->lang['name'] . '</b></td>' . ($this->directdl ? '<td><b>' . $this->lang['direct'] . '</b></td>' : '') . '<td><b>' . $this->lang['original'] . '</b></td><td><b>' . $this->lang['size'] . '</b></td><td><b>' . $this->lang['date'] . '</b></td><td><b>IP</b></td></tr></thead><tbody>';
+        echo '<div style="overflow: auto; height: auto; max-height: 500px; width: 713px;"><table id="table_filelist" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%"><thead><tr class="flisttblhdr" valign="bottom"><td id="file_list_checkbox_title" class="sorttable_checkbox">&nbsp;</td><td class="sorttable_alpha"><b>' . $this->lang['name'] . '</b></td>' . ($this->directdl || $this->admin ? '<td><b>' . $this->lang['direct'] . '</b></td>' : '') . '<td><b>' . $this->lang['original'] . '</b></td><td><b>' . $this->lang['size'] . '</b></td><td><b>' . $this->lang['date'] . '</b></td><td><b>IP</b></td></tr></thead><tbody>';
         usort($files, array(
             $this,
             'datecmp',
@@ -1600,7 +1601,6 @@ class stream_get extends getinfo
                 } else {
                     $linkdown = 'index.php/' . Tools_get::site_hash($file[0]) . "/$file[2]/$file[3]";
                 }
-
             } else {
                 $linkdown = '?file=' . $file[2];
             }
@@ -1609,7 +1609,7 @@ class stream_get extends getinfo
       <tr class='flistmouseoff' align='center'>
         <td><input name='checkbox[]' value='$file[2]+++$file[3]' type='checkbox'></td>
         " . ($this->showlinkdown ? "<td><a href='$linkdown' style='font-weight: bold; color: rgb(0, 0, 0);'>$file[3]" . ($file[8] != 0 ? "<br/>({$file[8]})" : "") . "</a></td>" : "<td>$file[3]</td>") . "
-        " . ($this->directdl ? "<td><a href='$file[7]' style='color: rgb(0, 0, 0);'>" . $hosting . "</a></td>" : "") . "
+        " . ($this->directdl || $this->admin ? "<td><a href='$file[7]' style='color: rgb(0, 0, 0);'>" . $hosting . "</a></td>" : "") . "
         <td><a href='$file[0]' style='color: rgb(0, 0, 0);'>" . $hosting . "</a></td>
         <td>" . $file[6] . "</td>
         <td><a target='_blank' href='https://www.google.com/search?q=$file[0]' title='" . $this->lang['clickcheck'] . "' target='$file[1]'><font color=#000000>$timeago</font></a></center></td><td><a target='_blank' href='http://whatismyipaddress.com/ip/$file[5]'><font color=#000000>" . $file[5] . "</font></a></td>
@@ -1622,14 +1622,13 @@ class stream_get extends getinfo
         $MB1IP = Tools_get::convertmb($this->countMBIP * 1024 * 1024);
         $thislimitMBIP = Tools_get::convertmb($this->limitMBIP * 1024 * 1024);
         $timereset = Tools_get::convert_time($this->ttl * 60);
-        if ($this->config['showdirect'] == true) {
+        if ($this->config['showdirect'] || $this->admin) {
             echo "</tbody><tbody><tr class='flisttblftr'><td>&nbsp;</td><td>" . $this->lang['total'] . ":</td><td></td><td></td><td>$totalall</td><td></td><td>&nbsp;</td></tr></tbody></table>
 				</div></form><center><b>" . $this->lang['used'] . " $MB1IP/$thislimitMBIP - " . $this->lang['reset'] . " $timereset</b>.</center><br/>";
         } else {
             echo "</tbody><tbody><tr class='flisttblftr'><td>&nbsp;</td><td>" . $this->lang['total'] . ":</td><td></td><td>$totalall</td><td></td><td>&nbsp;</td></tr></tbody></table>
 				</div></form><center><b>" . $this->lang['used'] . " $MB1IP/$thislimitMBIP - " . $this->lang['reset'] . " $timereset</b>.</center><br/>";
         }
-
     }
 
     public function deljob()
@@ -1785,7 +1784,6 @@ class Tools_get
             if ($time < $oldest) {
                 unset($online[$ip]);
             }
-
         }
 
         // ## clean jobs ###
@@ -1873,11 +1871,9 @@ class Tools_get
                 if (!stristr($header, "HTTP/1")) {
                     break;
                 }
-
             } else {
                 $header .= fgets($fp, 8192);
             }
-
         } while (strpos($header, "\r\n\r\n") === false);
 
         if (stristr($header, "TTP/1.0 200 OK") || stristr($header, "TTP/1.1 200 OK") || stristr($header, "TTP/1.1 206")) {
@@ -1898,7 +1894,6 @@ class Tools_get
             } else {
                 $filename = trim($this->cut_str($header, "filename", "\n"));
             }
-
         } else {
             $filename = substr(strrchr($link, '/'), 1);
         }
@@ -2021,7 +2016,6 @@ class Tools_get
             } else {
                 $value = $value[1];
             }
-
         } else {
             $value = 0;
         }
@@ -2098,7 +2092,6 @@ class Download
         } else {
             return false;
         }
-
     }
 
     public function passRedirect($data, $cookie)
@@ -2126,7 +2119,6 @@ class Download
                     } else {
                         $post[$key] = "";
                     }
-
                 }
             }
         }
@@ -2170,7 +2162,6 @@ class Download
                 if ($link) {
                     return $link;
                 }
-
             }
         }
         $maxacc = count($this->lib->acc[$this->site]['accounts']);
@@ -2202,7 +2193,6 @@ class Download
                         if (method_exists($this, "Login")) {
                             list($f, $cookie) = $this->Login($user, $pass);
                         }
-
                     }
                     if (!$cookie) {
                         continue;
@@ -2229,11 +2219,9 @@ class Download
                             if ($link) {
                                 return $link;
                             }
-
                         } else {
                             $this->error('pluginerror');
                         }
-
                     } else {
                         $this->error($status[1]);
                     }
@@ -2252,7 +2240,6 @@ class Download
             } else {
                 return $link;
             }
-
         }
         $this->error("cantconnect", false, false);
         return false;
@@ -2305,12 +2292,10 @@ class Download
                 if ($val == $dul) {
                     $delete = true;
                 }
-
             }
             if (!$delete) {
                 $a[$key] = $val;
             }
-
         }
         foreach ($a as $b => $c) {
             $cookies .= "{$b}={$c}; ";
@@ -2332,7 +2317,6 @@ class Download
         if ($force || $this->last) {
             die($msg);
         }
-
     }
 }
 
@@ -2571,7 +2555,6 @@ class MEGA
             } else {
                 fwrite($destfile, $chunk);
             }
-
         }
 
         // Terminate decryption handle and close module

@@ -6,10 +6,24 @@ if (!ini_get('safe_mode')) {
 error_reporting(0);
 ignore_user_abort(true);
 date_default_timezone_set('Asia/Jakarta');
-$data = json_decode(file_get_contents("data/config.dat"), true);
+$cfg = json_decode(file_get_contents("data/config.dat"), true);
+$data = $cfg['config'];
+$recaptcha_config = $cfg['recaptcha_config'];
 if ($_GET['go'] == 'logout') {
     setcookie("secureid", "owner", time());
 } else {
+    if ($data['recaptcha_login']) {
+        if (isset($_POST['g-recaptcha-response'])){
+            $captcha = $_POST['g-recaptcha-response'];
+        }
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($recaptcha_config['recaptcha_secret_key']) .  '&response=' . urlencode($captcha);
+        $response = file_get_contents($url);
+        $responseKeys = json_decode($response, true);
+        if (!$responseKeys["success"]) {
+            die("<script>alert(\"You have to check the captcha form !\"); history.go(-1)</script>");
+        }
+    }
+
     $login = false;
     $password = explode(", ", $data['password']);
     $password[] = $data['admin'];

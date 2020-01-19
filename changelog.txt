@@ -1,3 +1,7 @@
+v25:
+- Support HTTPS downloading url while using SSL for vinaget
+- Update new Config Menu
+- Add option recaptcha v2 on login page
 v24:
 - Update fshare.vn
 v23:

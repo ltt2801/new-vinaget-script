@@ -75,6 +75,10 @@ color {
 	display: none;
 }
 
+.filelist ~ .filelist {
+	margin-top: 15px;
+}
+
 .filelist a {
 	text-decoration: none;
 }
@@ -194,6 +198,25 @@ th {
 .flistmouseoff {
 	background-color: #D49659;
 	color: black;
+}
+
+.flistmouseoff > td:first-child {
+	padding-left: 5px;
+	padding-right: 10px;
+}
+
+.tableconfig .flistmouseoff > td ~ td {
+	width: 300px;
+	padding-left: 5px !important;
+}
+
+.tableconfig .flistmouseoff input[type="text"] {
+	width: 290px;
+}
+
+.flistmouseoff input[type="text"] {
+	padding-left: 2px;
+	padding-right: 2px;
 }
 
 .workswith {

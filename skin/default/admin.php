@@ -20,7 +20,8 @@ if ($obj->msg) {
 // config
 if ($page == 'config') {
     include "config.php";
-    echo '<table id="tableCONFIG" class="filelist" align="left" cellpadding="3" cellspacing="1" width="100%">
+    /**** START CONFIG ****/
+    echo '<table id="tableCONFIG" class="tableconfig filelist" cellpadding="3" cellspacing="1" width="100%">
 			<tr class="flisttblhdr" valign="bottom">
 				<td align="center" colspan="2"><B>CONFIG</B></td>
 			</tr>
@@ -37,7 +38,7 @@ if ($page == 'config') {
         closedir($handle);
     }
     if ($handle = opendir('skin/')) {
-        $blacklist = array('.', '..', '', ' ');
+        $blacklist = array('.', '..', '', ' ', 'index.php');
         $skin = "<select name='config[skin]'>";
         while (false !== ($file = readdir($handle))) {
             if (!in_array($file, $blacklist)) {
@@ -50,28 +51,82 @@ if ($page == 'config') {
     unset($obj->config['skin']);
     unset($obj->config['language']);
     foreach ($obj->config as $ckey => $cval) {
-        echo '<tr class="flistmouseoff"><td><i><b>' . $ckey . '</b></i></td><td style="text-align:right">';
+        echo '<tr class="flistmouseoff"><td' . (isset($obj->lang['cfgdes_' . $ckey]) ? ' title="' . $obj->lang['cfgdes_' . $ckey] . '"' : "" ) . '><i><b>' . (isset($obj->lang['cfg_' . $ckey]) ? $obj->lang['cfg_' . $ckey] : $ckey) . '</b></i></td><td>';
         if (gettype($cval) == 'string' || gettype($cval) == 'integer') {
             if ($ckey == "api_ads") {
-                echo '<input size="50" type="text" name="config[' . $ckey . ']" value="' . $cval . '" placeholder="use quick link to shorten" spellcheck="false" autocomplete="off">';
+                echo '<input type="text" name="config[' . $ckey . ']" value="' . $cval . '" placeholder="use quick link to shorten" spellcheck="false" autocomplete="off">';
             } else {
-                echo '<input size="50" type="text" name="config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off">';
+                echo '<input type="text" name="config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off">';
             }
         } elseif (gettype($cval) == 'boolean') {
-            echo '<label for="config[' . $ckey . '][\'on\']"><input type="radio" id="config[' . $ckey . '][\'on\']" value="on" name="config[' . $ckey . ']"' . ($cval ? ' checked="checked"' : '') . '/> On</label> <label for="config[' . $ckey . '][\'off\']"><input type="radio" id="config[' . $ckey . '][\'off\']" value="off" name="config[' . $ckey . ']"' . (!$cval ? ' checked="checked"' : '') . '/> Off</label>';
+            echo '<label for="config[' . $ckey . '][\'on\']"><input type="radio" id="config[' . $ckey . '][\'on\']" value="on" name="config[' . $ckey . ']"' . ($cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['on'] . '</label> <label for="config[' . $ckey . '][\'off\']"><input type="radio" id="config[' . $ckey . '][\'off\']" value="off" name="config[' . $ckey . ']"' . (!$cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['off'] . '</label>';
         }
 
         echo '</td></tr>';
     }
 
-    echo '<tr class="flistmouseoff"><td><i><b>language</b></i></td><td style="text-align:right">' . $lang . '</td></tr>';
-    echo '<tr class="flistmouseoff"><td><i><b>skin</b></i></td><td style="text-align:right">' . $skin . '</td></tr>';
+    echo '<tr class="flistmouseoff"><td><i><b>Languages</b></i></td><td>' . $lang . '</td></tr>';
+    echo '<tr class="flistmouseoff"><td><i><b>Skin</b></i></td><td>' . $skin . '</td></tr>';
     echo "</table>";
+    /**** END CONFIG ****/
+
+    /**** START CBOX CONFIG ****/
+    echo '<table id="tableCBOXCONFIG" class="tableconfig filelist" cellpadding="3" cellspacing="1" width="100%" style="' . ($obj->config['show_func_cbox'] ? "" : "display:none") . '">
+    <tr class="flisttblhdr" valign="bottom">
+        <td align="center" colspan="2"><B>CBOX CONFIG</B></td>
+    </tr>';
+    foreach ($obj->cbox_config as $ckey => $cval) {
+        echo '<tr class="flistmouseoff"><td' . (isset($obj->lang['cfgdes_' . $ckey]) ? ' title="' . $obj->lang['cfgdes_' . $ckey] . '"' : "" ) . '><i><b>' . (isset($obj->lang['cfg_' . $ckey]) ? $obj->lang['cfg_' . $ckey] : $ckey) . '</b></i></td><td>';
+        if (gettype($cval) == 'string' || gettype($cval) == 'integer') {
+            echo '<input type="text" name="cbox_config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off">';
+        } elseif (gettype($cval) == 'boolean') {
+            echo '<label for="cbox_config[' . $ckey . '][\'on\']"><input type="radio" id="cbox_config[' . $ckey . '][\'on\']" value="on" name="cbox_config[' . $ckey . ']"' . ($cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['on'] . '</label> <label for="cbox_config[' . $ckey . '][\'off\']"><input type="radio" id="cbox_config[' . $ckey . '][\'off\']" value="off" name="cbox_config[' . $ckey . ']"' . (!$cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['off'] . '</label>';
+        }
+
+        echo '</td></tr>';
+    }
+    echo "</table>";
+    /**** END CBOX CONFIG ****/
+
+    /**** START RECAPTCHA CONFIG ****/
+    echo '<table id="tableRECAPTCHACONFIG" class="tableconfig filelist" cellpadding="3" cellspacing="1" width="100%" style="' . ($obj->config['recaptcha_login'] ? "" : "display:none") . '">
+    <tr class="flisttblhdr" valign="bottom">
+        <td align="center" colspan="2"><B>RECAPTCHA CONFIG</B></td>
+    </tr>';
+    foreach ($obj->recaptcha_config as $ckey => $cval) {
+        echo '<tr class="flistmouseoff"><td' . (isset($obj->lang['cfgdes_' . $ckey]) ? ' title="' . $obj->lang['cfgdes_' . $ckey] . '"' : "" ) . '><i><b>' . (isset($obj->lang['cfg_' . $ckey]) ? $obj->lang['cfg_' . $ckey] : $ckey) . '</b></i></td><td>';
+        if (gettype($cval) == 'string' || gettype($cval) == 'integer') {
+            echo '<input type="text" name="recaptcha_config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off" required>';
+        } elseif (gettype($cval) == 'boolean') {
+            echo '<label for="recaptcha_config[' . $ckey . '][\'on\']"><input type="radio" id="recaptcha_config[' . $ckey . '][\'on\']" value="on" name="recaptcha_config[' . $ckey . ']"' . ($cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['on'] . '</label> <label for="recaptcha_config[' . $ckey . '][\'off\']"><input type="radio" id="cbox_config[' . $ckey . '][\'off\']" value="off" name="recaptcha_config[' . $ckey . ']"' . (!$cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['off'] . '</label>';
+        }
+
+        echo '</td></tr>';
+    }
+    echo "</table>";
+    /**** END RECAPTCHA CONFIG ****/
     ?> <br />&nbsp;
-<center>
-    <input id='submit' type='submit' name="submit" value='Save Config' />
-</center>
+<div style="text-align:center">
+    <input id='submit' type='submit' name="submit" value='<?php echo $obj->lang['saveconfig'] ?>' />
+</div>
 <br />
+<script>
+    $('input[name="config[show_func_cbox]"]').click(function () {
+        if ($(this).val() === 'on') {
+            $("#tableCBOXCONFIG").show();
+        } else {
+            $("#tableCBOXCONFIG").hide();
+        }
+    });
+
+    $('input[name="config[recaptcha_login]"]').click(function () {
+        if ($(this).val() === 'on') {
+            $("#tableRECAPTCHACONFIG").show();
+        } else {
+            $("#tableRECAPTCHACONFIG").hide();
+        }
+    });
+</script>
 <?php
 }
 
@@ -177,7 +232,7 @@ elseif ($page == 'host') {
 				<td><B>' . $ckey . '</B></td>
 				<td><input type="text" name="host[' . $ckey . '][max_size]" value="' . $val['max_size'] . '"/></td>
 				<td><input type="text" name="host[' . $ckey . '][proxy]" value="' . $val['proxy'] . '"/></td>
-				<td><input type="checkbox" name="host[' . $ckey . '][direct]" value="ON" ' . ($val['direct'] ? 'checked' : '') . '/></td>
+				<td style="text-align:center"><input type="checkbox" name="host[' . $ckey . '][direct]" value="ON" ' . ($val['direct'] ? 'checked' : '') . '/></td>
 			</tr>';
     }
     echo "</table>";

@@ -16,7 +16,7 @@ function showPlugin()
         $xout = $obj->acc[$host]['accounts'];
         $max_size = $obj->acc[$host]['max_size'];
         if (empty($xout[0]) == false && empty($host) == false) {
-            if ($obj->hide_number_acc == true) {
+            if ($obj->hide_number_acc) {
                 $hosts[] = '<span class="plugincollst">' . $host . '</span><br/>';
             } else {
                 $hosts[] = '<span class="plugincollst">' . $host . ' ' . count($xout) . '</span><br/>';

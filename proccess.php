@@ -25,6 +25,8 @@ $msg = '';
 switch ($page) {
     case 'config':
         if (!empty($_POST['config']) && is_array($_POST['config'])) {
+            $cfg = array();
+
             foreach ($_POST['config'] as $ckey => $cval) {
                 if ($cval == 'on' || $cval == 'off') {
                     $cval = $cval == 'on' ? true : false;
@@ -36,7 +38,42 @@ switch ($page) {
 
                 $obj->config[$ckey] = $cval;
             }
-            $obj->save_json($obj->fileconfig, $obj->config);
+
+            $cfg['config'] = $obj->config;
+
+            if (!empty($_POST['cbox_config'])  && is_array($_POST['cbox_config'])) {
+                foreach ($_POST['cbox_config'] as $ckey => $cval) {
+                    if ($cval == 'on' || $cval == 'off') {
+                        $cval = $cval == 'on' ? true : false;
+                    } elseif (is_numeric($cval)) {
+                        $cval = intval($cval);
+                    } else {
+                        $cval = $cval;
+                    }
+
+                    $obj->cbox_config[$ckey] = $cval;
+                }
+
+                $cfg['cbox_config'] = $obj->cbox_config;
+            }
+
+            if (!empty($_POST['recaptcha_config'])  && is_array($_POST['recaptcha_config'])) {
+                foreach ($_POST['recaptcha_config'] as $ckey => $cval) {
+                    if ($cval == 'on' || $cval == 'off') {
+                        $cval = $cval == 'on' ? true : false;
+                    } elseif (is_numeric($cval)) {
+                        $cval = intval($cval);
+                    } else {
+                        $cval = $cval;
+                    }
+
+                    $obj->recaptcha_config[$ckey] = $cval;
+                }
+
+                $cfg['recaptcha_config'] = $obj->recaptcha_config;
+            }
+
+            $obj->save_json($obj->fileconfig, $cfg);
             $msg = 'Config Saved!';
         }
         break;

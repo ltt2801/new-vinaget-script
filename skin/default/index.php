@@ -101,7 +101,7 @@
 <?php
 						#---------------------------- begin list file ----------------------------#
 						if ((isset($_GET['id']) && $_GET['id']=='listfile') || isset($_POST['listfile']) || isset($_POST['option']) || isset($_POST['renn']) || isset($_POST['remove']))  {
-							if($obj->listfile || $obj->isAdmin())$obj->fulllist();
+							if($obj->listfile || $obj->isAdmin()) $obj->fulllist();
 							else echo "<BR><BR><font color=red size=2>".$obj->lang['notaccess']."</b></font>";
 						}
 						#---------------------------- end list file ----------------------------#
@@ -177,8 +177,8 @@
 								<?php if ($obj->show_func_cbox == true) { ?>
 								<input type="checkbox" id="autopcbox" /><font color="#FFFFFF"><?php printf($obj->lang['postcbox']);?></font>&nbsp;&nbsp;&nbsp;
 								<input type="checkbox" id="autosearchuser" /><font color="#FFFFFF"><?php printf($obj->lang['searchuser']);?></font><br><br>
-								<font color="#FFFFFF">Nick:</font> <input type="text" autocomplete="off" id="nick" style="width:25em"  value="" /><br><br>
-								<font color="#FFFFFF">Key:</font> <input type="password" autocomplete="off" id="pass" style="width:25em" value="" />
+								<font color="#FFFFFF">Cbox Username:</font> <input type="text" autocomplete="off" id="nick" style="width:25em"  value="<?php echo $obj->default_cbox_username ?>" /><br><br>
+								<font color="#FFFFFF">Cbox Userkey:</font> <input type="password" autocomplete="off" id="pass" style="width:25em" value="<?php echo $obj->default_cbox_userkey ?>" />
 								<?php } ?>
 							</form><BR><BR>
 							<div id="dlhere" align="left" style="display: none;">
