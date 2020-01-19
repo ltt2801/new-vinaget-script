@@ -96,7 +96,7 @@ if ($page == 'config') {
     foreach ($obj->recaptcha_config as $ckey => $cval) {
         echo '<tr class="flistmouseoff"><td' . (isset($obj->lang['cfgdes_' . $ckey]) ? ' title="' . $obj->lang['cfgdes_' . $ckey] . '"' : "" ) . '><i><b>' . (isset($obj->lang['cfg_' . $ckey]) ? $obj->lang['cfg_' . $ckey] : $ckey) . '</b></i></td><td>';
         if (gettype($cval) == 'string' || gettype($cval) == 'integer') {
-            echo '<input type="text" name="recaptcha_config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off" required>';
+            echo '<input type="text" name="recaptcha_config[' . $ckey . ']" value="' . $cval . '" spellcheck="false" autocomplete="off">';
         } elseif (gettype($cval) == 'boolean') {
             echo '<label for="recaptcha_config[' . $ckey . '][\'on\']"><input type="radio" id="recaptcha_config[' . $ckey . '][\'on\']" value="on" name="recaptcha_config[' . $ckey . ']"' . ($cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['on'] . '</label> <label for="recaptcha_config[' . $ckey . '][\'off\']"><input type="radio" id="cbox_config[' . $ckey . '][\'off\']" value="off" name="recaptcha_config[' . $ckey . ']"' . (!$cval ? ' checked="checked"' : '') . '/> ' . $obj->lang['off'] . '</label>';
         }
@@ -122,7 +122,9 @@ if ($page == 'config') {
     $('input[name="config[recaptcha_login]"]').click(function () {
         if ($(this).val() === 'on') {
             $("#tableRECAPTCHACONFIG").show();
+            $("#tableRECAPTCHACONFIG input").attr("required", "true");
         } else {
+            $("#tableRECAPTCHACONFIG input").removeAttr("required");
             $("#tableRECAPTCHACONFIG").hide();
         }
     });

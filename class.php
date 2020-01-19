@@ -165,7 +165,7 @@ class getinfo extends Tools_get
 
     public function isAdmin()
     {
-        return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : false);
+        return (isset($_COOKIE['secureid']) && $_COOKIE['secureid'] == md5($this->config['admin']) ? true : $this->admin);
     }
 
     public function getversion()

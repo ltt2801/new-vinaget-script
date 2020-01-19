@@ -1,3 +1,5 @@
+v26:
+- Hotfix for v25
 v25:
 - Support HTTPS downloading url while using SSL for vinaget
 - Update new Config Menu
