@@ -28,7 +28,7 @@ require_once 'class.php';
 $obj = new stream_get();
 $obj->using = $using;
 $obj->current_version = 94;
-$obj->ltt_version = 26;
+$obj->ltt_version = file_get_contents("version.txt");
 $obj->msg = false;
 if (!empty($_COOKIE['msg'])) {
     $obj->msg = htmlspecialchars($_COOKIE['msg']);
@@ -47,7 +47,6 @@ if ($obj->Deny == false) {
     } elseif (!isset($_POST['urllist'])) {
         include "{$skin}/index.php";
     }
-
 } else {
     include "{$skin}/login.php";
 }

@@ -1,3 +1,5 @@
+v27:
+- Update easybytez.com
 v26:
 - Hotfix for v25
 v25:

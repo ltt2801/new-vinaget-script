@@ -7,13 +7,12 @@ class dl_easybytez_com extends Download
     {
         $data = $this->lib->curl("http://www.easybytez.com/?op=my_account", "lang=english;{$cookie}", "");
         if (stristr($data, 'Premium account expire:')) {
-            return array(true, "Until " . $this->lib->cut_str($data, 'Premium account expire:</TD><TD><b>', '</b></TD><TD'));
+            return array(true, "Until " . $this->lib->cut_str($data, 'Premium account expire:</TD><TD><b>', '</b><br>'));
         } else if (stristr($data, 'Used space:') && !stristr($data, 'Premium account expire:')) {
             return array(false, "accfree");
         } else {
             return array(false, "accinvalid");
         }
-
     }
 
     public function Login($user, $pass)
@@ -39,7 +38,6 @@ class dl_easybytez_com extends Download
             } elseif (preg_match('/href="(http.+)">http/i', $this->lib->cut_str($data, 'background:#f9f9f9;border:1px dotted #bbb;padding:7px', '</span>'), $link)) {
                 return trim($link[1]);
             }
-
         }
         if (stristr($data, '>Password:</b> <input type="password" name="password')) {
             $this->error("reportpass", true, false);
@@ -52,14 +50,12 @@ class dl_easybytez_com extends Download
             if (preg_match('/href="(http.+)">http/i', $this->lib->cut_str($data, 'background:#f9f9f9;border:1px dotted #bbb;padding:7px', '</span>'), $link)) {
                 return trim($link[1]);
             }
-
         } else {
             return trim($this->redirect);
         }
 
         return false;
     }
-
 }
 
 /*
