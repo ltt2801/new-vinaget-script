@@ -1,3 +1,6 @@
+v28:
+- Add fileshark.pl
+- Update .gitignore
 v27:
 - Update easybytez.com
 v26:
