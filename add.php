@@ -37,7 +37,8 @@ if (!empty($_POST["accounts"])) {
     if (method_exists($download, "CheckAcc")) {
         if (strpos($account, ":")) {
             list($user, $pass) = explode(':', $account);
-            $cookie = $download->Login($user, $pass);
+            $cook = $download->Login($user, $pass);
+            $cookie = $cook[1];
         } else {
             $cookie = $account;
         }
