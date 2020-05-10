@@ -1,3 +1,5 @@
+v30:
+- Change how to get new update
 v29:
 - Fix Donate Account function
 v28:

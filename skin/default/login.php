@@ -94,7 +94,7 @@
 			<!-- Copyright please don't remove-->
 			<STRONG><SPAN class='powered'>
 					Based on <a href='http://rapidleech.com/forum/viewforum.php?f=23'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br />
-					Developed by LTT. Find me on Github:<a target='_blank' href='https://github.com/ltt2801/new-vinaget-script'>ltt2801/new-vinaget-script</a>
+					Developed by LTT. Find me on <a target='_blank' href='https://github.com/ltt2801/new-vinaget-script'>GitHub</a>
 				</SPAN></STRONG><br />
 			<SPAN class='copyright'>Copyright 2009-<?php echo date('Y'); ?> by <a href='http://vinaget.us/'>http://vinaget.us</a>. All rights reserved.</SPAN><br />
 			<!-- Copyright please don't remove-->

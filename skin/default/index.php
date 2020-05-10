@@ -163,7 +163,7 @@
 								<?php if($obj->isAdmin()){
 									$obj->last_version = $obj->getversion();
 									if($obj->last_version > $obj->ltt_version) {
-										echo '<br><font color="#dbac58"><b>'.sprintf($obj->lang['update1']).'</b> - <a href="https://github.com/ltt2801/new-vinaget-script">'.sprintf($obj->lang['update2'],$obj->last_version).'</a></font> - <a href="https://raw.githubusercontent.com/ltt2801/new-vinaget-script/master/changelog.txt">changelog</a><br>';
+										echo '<br><font color="#dbac58"><b>'.sprintf($obj->lang['update1']).'</b> - <a href="https://github.com/ltt2801/new-vinaget-script/archive/v'.$obj->last_version.'.zip">'.sprintf($obj->lang['update2'],$obj->last_version).'</a></font> - <a href="https://raw.githubusercontent.com/ltt2801/new-vinaget-script/master/changelog.txt">changelog</a><br>';
 									}
 								}
 								?>
@@ -210,7 +210,7 @@
 					<!-- Copyright please don't remove-->
 						<STRONG><SPAN class='powered'>
 							Based on <a href='https://github.com/giaythuytinh176/vinaget-script'>Vinaget 2.7.0 Final Revision <?php printf($obj->current_version); ?></a> by [FZ]<br/>
-							Developed by LTT. Find me on Github <a target='_blank' href='https://github.com/ltt2801/new-vinaget-script'><?php printf($obj->ltt_version); ?></a>
+							Developed by LTT. Find me on <a target='_blank' href='https://github.com/ltt2801/new-vinaget-script'>GitHub</a>. Current version is <?php if ($obj->isAdmin()) printf($obj->ltt_version); ?>
 						</SPAN></STRONG><br/>
 						<SPAN class='copyright'>Copyright 2009-<?php echo date('Y');?> by <a href='http://vinaget.us/'>http://vinaget.us</a>. All rights reserved.</SPAN><br />
 					<!-- Copyright please don't remove-->
