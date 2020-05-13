@@ -1,3 +1,9 @@
+v31:
+- Add chomikuj.pl
+- Add new lib function TrimCookies
+- Update lib function parseRedirect
+- Update lastest user agents string
+- Enhanced GUI
 v30:
 - Change how to get new update
 v29:

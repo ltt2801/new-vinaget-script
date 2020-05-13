@@ -23,7 +23,7 @@ class getinfo extends Tools_get
         $this->fileinfo_ext = "vng";
         $this->banned = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
         $this->unit = 512;
-        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36';
+        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36';
         $this->cfg = $this->load_json($this->fileconfig);
         include "config.php";
         if (count($this->cfg) == 0) {
@@ -775,8 +775,11 @@ class stream_get extends getinfo
             $a[$key] = $val;
         }
         foreach ($a as $b => $c) {
-            $cookies .= "{$b}={$c}; ";
+            if (!in_array($b, ['__cfduid'])) {
+                $cookies .= "{$b}={$c}; ";
+            }
         }
+
         return $cookies;
     }
 
@@ -788,12 +791,25 @@ class stream_get extends getinfo
             preg_match('/Set-Cookie: (.*)/i', $val, $temp);
             if (isset($temp[1])) {
                 if ($cook = substr($temp[1], 0, stripos($temp[1], ';'))) {
-                    $retCookie .= $cook . ";";
+                    $retCookie .= "{$cook}; ";
                 }
             }
         }
 
         return $retCookie;
+    }
+
+    public function TrimCookies($cookie, $keepItems = [])
+    {
+        $newCookie = "";
+        foreach ($keepItems as $item) {
+            if (preg_match("/($item=.+?;)/", $cookie, $match)) {
+                $newCookie .= "{$match[0]} ";
+            }
+        }
+
+        if ($newCookie == "") return $cookie;
+        return $newCookie;
     }
 
     public function mf_str_conv($str_or)
@@ -2094,11 +2110,15 @@ class Download
         }
     }
 
-    public function passRedirect($data, $cookie)
+    public function passRedirect($data, $cookie, $post = "", $domain = "")
     {
         if (stristr($data, "302 Found") && stristr($data, "ocation")) {
             preg_match('/ocation: (.*)/', $data, $match);
-            $data = $this->lib->curl(trim($match[1]), $cookie, "");
+            $url = trim($match[1]);
+            if (strpos($url, 'http') !== 0) {
+                $url = $domain . $url;
+            }
+            $data = $this->lib->curl($url, $cookie, $post, "");
         }
         return $data;
     }

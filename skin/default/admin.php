@@ -8,9 +8,9 @@ echo '<h3><a href="?id=admin&page=config">Config</a> |
 $page = isset($_GET['page']) ? $_GET['page'] : 'config';
 
 if ($page == "debug") {
-    echo "<form method='POST' action='debug.php' target='debug'>";
+    echo "<form method='POST' action='debug.php' target='debug' autocomplete='off'>";
 } else {
-    echo "<form method='POST' action='proccess.php?page={$page}'>";
+    echo "<form method='POST' action='proccess.php?page={$page}' autocomplete='off'>";
 }
 
 if ($obj->msg) {
@@ -153,7 +153,7 @@ elseif ($page == 'cookie') {
             </select>
         </td>
         <td>
-            &nbsp; &nbsp; &nbsp; <input type="text" name="cookie" id="accounts" value="" size="50"><br />
+            &nbsp; &nbsp; &nbsp; <textarea type="text" name="cookie" id="cookie" value="" rows="5" cols="50" placeholder="put cookie here (abc=xyz;)"></textarea><br />
         </td>
         <td>
             &nbsp; &nbsp; &nbsp; <input type=submit value="Submit">
@@ -193,7 +193,7 @@ elseif ($page == 'account') {
             </select>
         </td>
         <td>
-            &nbsp; &nbsp; &nbsp; <textarea type="text" name="account" id="accounts" value="" rows="5" cols="50" placeholder="one account per line"></textarea><br />
+            &nbsp; &nbsp; &nbsp; <textarea type="text" name="account" id="accounts" value="" rows="5" cols="50" placeholder="one account per line (user:pass)"></textarea><br />
         </td>
         <td>
             &nbsp; &nbsp; &nbsp; <input type=submit value="Submit">
