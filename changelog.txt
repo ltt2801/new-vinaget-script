@@ -1,3 +1,6 @@
+v33:
+- Add worldbytez.com
+- Minor fix class.php
 v32:
 - Add filefox.cc, filer.net, florenfile.com, wupfile.com
 - Minor fix class.php

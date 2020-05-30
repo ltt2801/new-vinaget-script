@@ -597,8 +597,10 @@ class stream_get extends getinfo
         $gach = explode("/", $link);
         list($path1, $path) = explode($gach[2], $link);
         if (isset($schema['port'])) {
-            $scheme = "tls://";
             $port = $schema['port'];
+            if ($schema['scheme'] == 'https') {
+                $scheme = "tls://";
+            }
         } elseif ($schema['scheme'] == 'https') {
             $scheme = "ssl://";
             $port = 443;
@@ -1840,8 +1842,10 @@ class Tools_get
         $gach = explode("/", $link);
         list($path1, $path) = explode($gach[2], $link);
         if (isset($schema['port'])) {
-            $scheme = "tls://";
             $port = $schema['port'];
+            if ($schema['scheme'] == 'https') {
+                $scheme = "tls://";
+            }
         } elseif ($schema['scheme'] == 'https') {
             $scheme = "ssl://";
             $port = 443;
