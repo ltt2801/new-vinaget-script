@@ -1,3 +1,6 @@
+v32:
+- Add filefox.cc, filer.net, florenfile.com, wupfile.com
+- Minor fix class.php
 v31:
 - Add chomikuj.pl
 - Add new lib function TrimCookies

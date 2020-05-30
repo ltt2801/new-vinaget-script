@@ -591,21 +591,25 @@ class stream_get extends getinfo
             $new_length = $filesize - $start;
         }
         $port = 80;
+        $scheme = "tcp://";
         $schema = parse_url(trim($link));
         $host = $schema['host'];
-        $scheme = "http://";
         $gach = explode("/", $link);
         list($path1, $path) = explode($gach[2], $link);
         if (isset($schema['port'])) {
+            $scheme = "tls://";
             $port = $schema['port'];
         } elseif ($schema['scheme'] == 'https') {
             $scheme = "ssl://";
             $port = 443;
         }
-        if ($scheme != "ssl://") {
-            $scheme = "";
-        }
         $hosts = $scheme . $host . ':' . $port;
+        $context = stream_context_create(array(
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false
+            ]
+        ));
         if ($job['proxy'] != 0) {
             if (strpos($job['proxy'], "|")) {
                 list($ip, $user) = explode("|", $job['proxy']);
@@ -619,21 +623,21 @@ class stream_get extends getinfo
                 $data .= "Proxy-Authorization: Basic $auth\r\n";
             }
 
-            $fp = @stream_socket_client("tcp://{$ip}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+            $fp = @stream_socket_client("tcp://{$ip}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context);
         } else {
             $data = "GET {$path} HTTP/1.1\r\n";
-            $fp = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+            $fp = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context);
         }
         if (!$fp) {
             sleep(15);
             header("HTTP/1.1 404 Not Found");
             die("HTTP/1.1 404 Not Found");
         }
-        $data .= "User-Agent: " . $this->UserAgent . "\r\n";
-        $data .= "Host: {$host}\r\n";
+        $data .= "User-Agent: {$this->UserAgent}\r\n";
+        $data .= "Host: {$host}:{$port}\r\n";
         $data .= "Accept: */*\r\n";
         $data .= "Referer: {$referer}\r\n";
-        $data .= $this->cookie ? "Cookie: " . $this->cookie . "\r\n" : '';
+        $data .= $this->cookie ? "Cookie: {$this->cookie}\r\n" : '';
         if (!empty($range)) {
             $data .= "Range: bytes={$range}\r\n";
         }
@@ -1826,9 +1830,9 @@ class Tools_get
 
         $link = str_replace(" ", "%20", $link);
         $port = 80;
+        $scheme = "tcp://";
         $schema = parse_url(trim($link));
         $host = $schema['host'];
-        $scheme = "http://";
         if (empty($schema['path'])) {
             return;
         }
@@ -1836,18 +1840,23 @@ class Tools_get
         $gach = explode("/", $link);
         list($path1, $path) = explode($gach[2], $link);
         if (isset($schema['port'])) {
+            $scheme = "tls://";
             $port = $schema['port'];
         } elseif ($schema['scheme'] == 'https') {
             $scheme = "ssl://";
             $port = 443;
         }
 
-        if ($scheme != "ssl://") {
-            $scheme = "";
-        }
         $errno = 0;
         $errstr = "";
         $hosts = $scheme . $host . ':' . $port;
+        $context = stream_context_create(array(
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false
+            ]
+        ));
+
         if ($this->proxy != 0) {
             if (strpos($this->proxy, "|")) {
                 list($ip, $user) = explode("|", $this->proxy);
@@ -1861,16 +1870,16 @@ class Tools_get
                 $data .= "Proxy-Authorization: Basic $auth\r\n";
             }
 
-            $fp = @stream_socket_client("tcp://{$ip}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+            $fp = @stream_socket_client("tcp://{$ip}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context);
         } else {
             $data = "GET {$path} HTTP/1.1\r\n";
-            $fp = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+            $fp = @stream_socket_client($hosts, $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context);
         }
 
-        $data .= "User-Agent: " . $this->UserAgent . "\r\n";
-        $data .= "Host: {$host}\r\n";
+        $data .= "User-Agent: {$this->UserAgent}\r\n";
+        $data .= "Host: {$host}:{$port}\r\n";
         $data .= "Referer: {$this->url}\r\n";
-        $data .= $cookie ? "Cookie: $cookie\r\n" : '';
+        $data .= $cookie ? "Cookie: {$cookie}\r\n" : '';
         $data .= "Connection: Close\r\n\r\n";
 
         if (!$fp) {
@@ -1883,12 +1892,12 @@ class Tools_get
         $header = "";
         do {
             if (!$header) {
-                $header .= fgets($fp, 8192);
+                $header .= fgets($fp, $this->unit);
                 if (!stristr($header, "HTTP/1")) {
                     break;
                 }
             } else {
-                $header .= fgets($fp, 8192);
+                $header .= fgets($fp, $this->unit);
             }
         } while (strpos($header, "\r\n\r\n") === false);
 
@@ -2255,7 +2264,7 @@ class Download
     {
         $link = str_replace(" ", "%20", $link);
         for ($i = 0; $i < $a; $i++) {
-            if ($size = $this->lib->getsize($link, $this->lib->cookie) <= 0) {
+            if ($this->lib->getsize($link, $this->lib->cookie) <= 0) {
                 $link = $this->getredirect($link, $this->lib->cookie);
             } else {
                 return $link;
