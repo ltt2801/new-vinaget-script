@@ -2,9 +2,9 @@
 
 class dl_icerbox_com extends Download
 {
-
     public function CheckAcc($cookie)
     {
+        // Using Cookie: Inspect Local Storage at Homepage to get Bearer Token
         $token = $this->lib->cut_str($cookie, 'token=', ';');
         $data = $this->lib->curl("https://icerbox.com/api/v1/user/account", "", "", 0, 1, 0, 0, array("Authorization: Bearer {$token}"));
         $json = json_decode($data, true);
@@ -24,12 +24,12 @@ class dl_icerbox_com extends Download
         $data = $this->lib->curl("https://icerbox.com/api/v1/auth/login", "", '{"email": "' . $user . '", "password": "' . $pass . '"}', 0);
         if (stristr($data, 'status_code":429')) {
             $this->error("Captcha icerbox found when login account. Please try again later", false, false);
-            return false;
+            return array(false, "");
         } elseif (preg_match('/"token":"(.*?)"/', $data, $match)) {
-            return "token=" . trim($match[1]) . ';';
+            return array(true, "token=" . trim($match[1]) . ';');
         }
 
-        return false;
+        return array(false, "");
     }
 
     public function Leech($url)

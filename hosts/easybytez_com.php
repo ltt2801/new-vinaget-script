@@ -47,7 +47,7 @@ class dl_easybytez_com extends Download
             $post = $this->parseForm($this->lib->cut_str($data, 'Form name="F1"', '</Form>'));
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
             $cut = $this->lib->cut_str($data, 'background:#f9f9f9;border:1px dotted #bbb;padding:7px', '</span>');
-            if (preg_match('/href="(http.+)">http/i', $this->lib->cut_str($data, 'background:#f9f9f9;border:1px dotted #bbb;padding:7px', '</span>'), $link)) {
+            if (preg_match('/href="(http.+)">http/i', $cut, $link)) {
                 return trim($link[1]);
             }
         } else {
@@ -63,5 +63,5 @@ class dl_easybytez_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Easybytez.com Download Plugin
- * Date: 01.09.2018
+ * Date: 21.08.2020
  */

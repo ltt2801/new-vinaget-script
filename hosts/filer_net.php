@@ -31,12 +31,17 @@ class dl_filer_net extends Download
         $data = $this->lib->curl($link, $this->lib->cookie, "");
         if (stristr($data, 'Datei nicht mehr vorhanden')) {
             $this->error("dead", true, false, 2);
-        } elseif ($this->isRedirect($data)) {
-            return trim($this->redirect);
         } elseif (preg_match('/href="(.*?)">Get download<\/a>/', $data, $match)) {
             $data = $this->lib->curl("https://filer.net" . trim($match[1]), $this->lib->cookie, "");
             if ($this->isRedirect($data)) {
-                return trim($this->redirect);
+                return $this->redirect;
+            }
+        } else {
+            $data = $this->passRedirect($data, $this->lib->cookie, "", "https://filer.net");
+            if (preg_match('/<a href="(.*?)">/', $data, $match)) {
+                return trim($match[1]);
+            } elseif ($this->isRedirect($data)) {
+                return $this->redirect;
             }
         }
 
@@ -48,5 +53,5 @@ class dl_filer_net extends Download
  * Open Source Project
  * New Vinaget by LTT
  * Filer.net Download Plugin
- * Date: 26.05.2020
+ * Date: 25.06.2020
  */

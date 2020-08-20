@@ -607,10 +607,10 @@ class stream_get extends getinfo
         }
         $hosts = $scheme . $host . ':' . $port;
         $context = stream_context_create(array(
-            'ssl' => [
+            'ssl' => array(
                 'verify_peer' => false,
                 'verify_peer_name' => false
-            ]
+            )
         ));
         if ($job['proxy'] != 0) {
             if (strpos($job['proxy'], "|")) {
@@ -781,7 +781,7 @@ class stream_get extends getinfo
             $a[$key] = $val;
         }
         foreach ($a as $b => $c) {
-            if (!in_array($b, ['__cfduid'])) {
+            if (!in_array($b, array('__cfduid'))) {
                 $cookies .= "{$b}={$c}; ";
             }
         }
@@ -805,7 +805,7 @@ class stream_get extends getinfo
         return $retCookie;
     }
 
-    public function TrimCookies($cookie, $keepItems = [])
+    public function TrimCookies($cookie, $keepItems = array())
     {
         $newCookie = "";
         foreach ($keepItems as $item) {
@@ -1781,6 +1781,10 @@ class stream_get extends getinfo
             $this->fulllist();
         }
     }
+
+    public function convertmb($filesize) {
+        return Tools_get::convertmb($filesize);
+    }
 }
 
 // #################################### End class stream_get ###################################
@@ -1855,10 +1859,10 @@ class Tools_get
         $errstr = "";
         $hosts = $scheme . $host . ':' . $port;
         $context = stream_context_create(array(
-            'ssl' => [
+            'ssl' => array(
                 'verify_peer' => false,
                 'verify_peer_name' => false
-            ]
+            )
         ));
 
         if ($this->proxy != 0) {
@@ -2212,6 +2216,8 @@ class Download
 
             if (!empty($cookie) || (!empty($user) && !empty($pass))) {
                 for ($j = 0; $j < 2; $j++) {
+                    $f = true;
+
                     if (($maxacc - $k) == 1 && $j == 1) {
                         $this->last = true;
                     }
@@ -2222,7 +2228,6 @@ class Download
 
                     if (empty($cookie)) {
                         $cookie = false;
-                        $f = true;
                         if (method_exists($this, "Login")) {
                             list($f, $cookie) = $this->Login($user, $pass);
                         }
@@ -2482,7 +2487,8 @@ class MEGA
 
     public function aes_cbc_decrypt($data, $key)
     {
-        return mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $data, MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
+        // return mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $data, MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
+        return openssl_decrypt($data, 'AES-256-ECB', $key);
     }
 
     public function a32_to_str($hex)

@@ -13,7 +13,6 @@ class dl_uploadgig_com extends Download
         } else {
             return array(false, "accinvalid");
         }
-
     }
 
     public function Login($user, $pass)
@@ -41,12 +40,17 @@ class dl_uploadgig_com extends Download
         } elseif (stristr($data, 'bandwidth')) {
             $this->error("LimitAcc");
         } elseif ($this->isRedirect($data)) {
-            return trim($this->redirect);
+            preg_match('/(https?:\/\/[^\/]+)\//i', $this->redirect, $matches);
+            $domain = $matches[1];
+            $data = $this->passRedirect($data, $this->lib->cookie, "");
+            if (preg_match("/window.location.href = '(.*?)'/", $data, $match)) {
+                return $domain . trim($match[1]);
+            }
+            return $this->redirect;
         }
 
         return false;
     }
-
 }
 
 /*
@@ -54,5 +58,5 @@ class dl_uploadgig_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Uploadgig.com Download Plugin
- * Date: 25.11.2017
+ * Date: 12.06.2020
  */

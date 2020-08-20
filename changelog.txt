@@ -1,3 +1,6 @@
+v34:
+- Fix class.php
+- Update nitroflare.com, uploadgig.com, icerbox.com, easybytez.com, filer.net, katfile.com
 v33:
 - Add worldbytez.com
 - Minor fix class.php
