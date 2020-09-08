@@ -1,3 +1,6 @@
+v36:
+- Fix hosts.php
+- Update class.php
 v35:
 - Fix class.php
 - Update k2s.cc

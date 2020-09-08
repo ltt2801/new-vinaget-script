@@ -1,25 +1,23 @@
 <?php
 $host = array();
 $alias = array();
-$alias['dfiles.eu'] = 'depositfiles.com';
-$alias['dfiles.ru'] = 'depositfiles.com';
-$alias['depositfiles.net'] = 'depositfiles.com';
-$alias['depositfiles.org'] = 'depositfiles.com';
-$alias['ul.to'] = 'uploaded.net';
-$alias['uploaded.to'] = 'uploaded.net';
-$alias['chiasenhac.com'] = 'chiasenhac.vn';
-$alias['d01.megashares.com'] = 'megashares.com';
-$alias['fp.io'] = 'filepost.com';
-$alias['clz.to'] = 'cloudzer.net';
-$alias['yfdisk.com'] = 'yunfile.com';
-$alias['filemarkets.com'] = 'yunfile.com';
-$alias['dfpan.com'] = 'yunfile.com';
-$alias['keep2s.cc'] = 'k2s.cc';
-$alias['keep2share.cc'] = 'k2s.cc';
-$alias['rg.to'] = 'rapidgator.net';
-$alias['depfile.com'] = 'depfile.us';
-$alias['mega.co.nz'] = 'mega.nz';
-$alias['up.4share.vn'] = '4share.vn';
+$alias['depositfiles.com']['dfiles.eu'] = true;
+$alias['depositfiles.com']['dfiles.ru'] = true;
+$alias['depositfiles.com']['depositfiles.net'] = true;
+$alias['depositfiles.com']['depositfiles.org'] = true;
+$alias['uploaded.net']['ul.to'] = true;
+$alias['uploaded.net']['uploaded.to'] = true;
+$alias['chiasenhac.vn']['chiasenhac.com'] = true;
+$alias['yunfile.com']['yfdisk.com'] = true;
+$alias['yunfile.com']['filemarkets.com'] = true;
+$alias['yunfile.com']['dfpan.com'] = true;
+$alias['k2s.cc']['keep2s.cc'] = true;
+$alias['k2s.cc']['keep2share.cc'] = true;
+$alias['rapidgator.net']['rg.to'] = true;
+$alias['depfile.us']['depfile.com'] = true;
+$alias['mega.nz']['mega.co.nz'] = true;
+$alias['4share.vn']['up.4share.vn'] = true;
+
 
 // general hosts
 $folderhost = opendir("hosts/");
@@ -32,20 +30,22 @@ while ($hostname = readdir($folderhost)) {
     if (stripos($hostname, "php")) {
         $site = str_replace("_", ".", substr($hostname, 0, -4));
         if (isset($alias[$site])) {
-            $host[$site] = array(
-                'alias' => true,
-                'site' => $alias[$site],
-                'file' => str_replace(".", "_", $alias[$site]) . ".php",
-                'class' => "dl_" . str_replace(array(".", "-"), "_", $alias[$site]),
-            );
-        } else {
-            $host[$site] = array(
-                'alias' => false,
-                'site' => $site,
-                'file' => $hostname,
-                'class' => "dl_" . str_replace(array(".", "-"), "_", $site),
-            );
+            foreach ($alias[$site] as $alias_host => $value) {
+                $host[$alias_host] = array(
+                    'alias' => true,
+                    'site' => $site,
+                    'file' => str_replace(".", "_", $site) . ".php",
+                    'class' => "dl_" . str_replace(array(".", "-"), "_", $site),
+                );
+            }
         }
+
+        $host[$site] = array(
+            'alias' => false,
+            'site' => $site,
+            'file' => $hostname,
+            'class' => "dl_" . str_replace(array(".", "-"), "_", $site),
+        );
     }
 }
 
@@ -56,5 +56,5 @@ closedir($folderhost);
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Alias Hosts
- * Date: 23.06.2018
+ * Date: 08.09.2020
  */

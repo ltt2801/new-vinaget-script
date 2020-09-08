@@ -654,7 +654,6 @@ class stream_get extends getinfo
         do {
             if (!$header) {
                 $header .= stream_get_line($fp, $this->unit);
-                print_r($header);
                 if (!stristr($header, "HTTP/1")) {
                     break;
                 }
