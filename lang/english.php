@@ -169,7 +169,9 @@ $lang = array(
     'cfgdes_hide_number_acc'    => 'Hide number of premium accounts per file hosting',
     'cfgdes_show_func_cbox'     => 'Show functions for cbox on main page',
     'cfgdes_del_checked_acc'    => 'Allow to delete invalid accounts while checking them',
-    'cfgdes_recaptcha_login'    => 'Show reCAPTCHA v2 from Google on Login page for preventing spam and bot'
+    'cfgdes_recaptcha_login'    => 'Show reCAPTCHA v2 from Google on Login page for preventing spam and bot',
+    'datanotprotected'          => '%s couldn\'t be protected, Anonymous users will see it.<br/>',
+    'msgcheckdata'              => 'Make sure .htaccess file and mod_rewrite module are working.'
 );
 
 /*

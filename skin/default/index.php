@@ -8,7 +8,7 @@
 			<link title="Rapidleech Style" href="<?php echo $skin;?>/rl_style_pm.css" rel="stylesheet" type="text/css" />
 		</head>
 		<body>
-			<script type="text/javascript" language="javascript" src="images/jquery-1.7.1.min.js"></script>
+			<script type="text/javascript" language="javascript" src="images/jquery-1.12.4.min.js"></script>
 			<script type="text/javascript" src="images/ZeroClipboard.js"></script>
 			<script type="text/javascript" src="images/sprintf.js"></script>
 			<script type="text/javascript" language="javascript">
@@ -97,6 +97,9 @@
 					</tbody></table>
 					<table id="tb_content"><tbody>
 						<tr><td height="5px"></td></tr>
+						<tr><td>
+							<?php if (!$obj->Secure || $obj->isAdmin()) $obj->verifyDataSecured(); ?>
+						</td></tr>
 						<tr><td align="center">
 <?php
 						#---------------------------- begin list file ----------------------------#

@@ -2096,6 +2096,30 @@ class Tools_get
 
         return $time;
     }
+
+    public function verifyDataSecured() {
+        $content = "";
+        $error = false;
+        $head1 = get_headers($this->self . $this->fileinfo_dir . $this->fileaccount);
+        if (!stristr($head1[0], "403 Forbidden")) {
+            $error = true;
+            $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->fileaccount . "'>" . $this->fileinfo_dir . $this->fileaccount . "</a>");
+        }
+        $head2 = get_headers($this->self . $this->fileinfo_dir . $this->filecookie);
+        if (!stristr($head2[0], "403 Forbidden")) {
+            $error = true;
+            $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->filecookie . "'>" . $this->fileinfo_dir . $this->filecookie . "</a>");
+        }
+        $head3 = get_headers($this->self . $this->fileinfo_dir . $this->fileconfig);
+        if (!stristr($head3[0], "403 Forbidden")) {
+            $error = true;
+            $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->fileconfig . "'>" . $this->fileinfo_dir . $this->fileconfig . "</a>");
+        }
+        if ($error) {
+            $content .= ">>> " . sprintf($this->lang['msgcheckdata']);
+            echo '<div style="border:1px solid yellow;padding:10px">'. $content . '</div><br/>';
+        }
+    }
 }
 
 // #################################### End class Tools_get #####################################

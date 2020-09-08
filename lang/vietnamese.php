@@ -169,7 +169,9 @@ $lang = array(
     'cfgdes_hide_number_acc'    => 'Ẩn số lượng tài khoản mỗi host',
     'cfgdes_show_func_cbox'     => 'Hiện chức năng dành cho cbox trên màn hình chính',
     'cfgdes_del_checked_acc'    => 'Cho phép xoá tài khoản không hợp lệ khi đang kiểm tra nó',
-    'cfgdes_recaptcha_login'    => 'Hiện reCAPTCHA v2 từ Google để tránh bị spam và bot'
+    'cfgdes_recaptcha_login'    => 'Hiện reCAPTCHA v2 từ Google để tránh bị spam và bot',
+    'datanotprotected'          => '%s chưa được bảo vệ. Người lạ có thể xem được nó.<br/>',
+    'msgcheckdata'              => 'Hãy chắc chắn file .htaccess and mô-đun mod_rewrite đang hoạt động.'
 );
 
 /*
