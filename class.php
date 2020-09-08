@@ -2224,19 +2224,21 @@ class Download
 
                     if (empty($cookie)) {
                         $cookie = $this->lib->get_cookie($this->site);
+                        $this->save($cookie, true, false);
                     }
 
                     if (empty($cookie)) {
                         $cookie = false;
                         if (method_exists($this, "Login")) {
                             list($f, $cookie) = $this->Login($user, $pass);
+                            $this->save($cookie, true, $f);
                         }
                     }
+
                     if (!$cookie) {
                         continue;
                     }
 
-                    $this->save($cookie, true, $f);
                     if (method_exists($this, "CheckAcc")) {
                         $status = $this->CheckAcc($this->lib->cookie);
                     } else {
