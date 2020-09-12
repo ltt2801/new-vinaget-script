@@ -1,3 +1,9 @@
+v38:
+- Update class.php
+- Update ajax.js
+- Update k2s.cc
+- Upscale theme size, add selectize.js
+- Fix bug check account
 v37:
 - JQuery upgrade to version 1.12.4 due to CVE-2017-16011
 - Add Data-Leakage notification

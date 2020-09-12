@@ -24,7 +24,9 @@ if (isset($_POST["check"])) {
             if (method_exists($download, "CheckAcc")) {
                 if ($type == "account") {
                     list($user, $pass) = explode(':', $account);
+                    $obj->checkingAcc = true;
                     list($f, $cookie) = $download->Login($user, $pass);
+                    $obj->checkingAcc = false;
                 } else {
                     $cookie = $account;
                 }
@@ -56,7 +58,7 @@ if (isset($_POST["check"])) {
                 $account = substr($account, 0, 5) . "****";
             }
 
-            echo '<tr class="flistmouseoff" align="center"><td style="word-break:break-all"><B>' . $account . '</B></td><td>' . $type . '</td><td id="unknown-' . $check . '">' . $msg[0] . '</td><td id="unknown-' . $check . '">' . $msg[1] . '</td></tr>';
+            echo '<tr class="flistmouseoff" align="center"><td style="word-break:break-all"><b>' . $account . '</b></td><td>' . $type . '</td><td id="unknown-' . $check . '">' . $msg[0] . '</td><td id="unknown-' . $check . '">' . $msg[1] . '</td></tr>';
             $i++;
         }
         echo "</table>";

@@ -1,147 +1,147 @@
 hr {
-	height: 1px;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-left-width: 0px;
-	padding: 0px;
-	margin-top: 1px;
-	margin-right: 0px;
-	margin-bottom: 2px;
-	margin-left: 0px;
-	border-bottom-width: 0px;
-	background-color: #4A4A4A;
-	color: #4A4A4A;
+  height: 1px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-left-width: 0px;
+  padding: 0px;
+  margin-top: 1px;
+  margin-right: 0px;
+  margin-bottom: 2px;
+  margin-left: 0px;
+  border-bottom-width: 0px;
+  background-color: #4a4a4a;
+  color: #4a4a4a;
 }
 
 img {
-	border: 0;
+  border: 0;
 }
 
 body {
-	font-family: "Segoe UI", Tahoma, sans-serif;
-	font-size: 11px;
-	color: #FFFFFF;
-	background-color: #000000;
-	margin: 0px;
-	padding: 0px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 12px;
+  color: #ffffff;
+  background-color: #000000;
+  margin: 0px;
+  padding: 0px;
 }
 
 .showlistlink {
-	background: url(../../images/bglist.png);
-	height: 100%;
-	width: 100%;
-	color: #FFFFFF;
-	font-size: 16px;
-	position: fixed;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	display: none;
+  background: url(../../images/bglist.png);
+  height: 100%;
+  width: 100%;
+  color: #ffffff;
+  font-size: 16px;
+  position: fixed;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: none;
 }
 
 tr {
-	font-family: "Segoe UI", Tahoma;
-	font-size: 11px;
-	line-height: 14.5px;
-	color: #FFFFFF;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 12px;
+  line-height: 14.5px;
+  color: #ffffff;
 }
 
 input {
-	font-family: "Segoe UI", Tahoma;
-	font-size: 11px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 12px;
 }
 
 select {
-	font-family: "Segoe UI", Tahoma;
-	font-size: 11px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 12px;
 }
 
 textarea {
-	font-family: "Segoe UI", Tahoma;
-	font-size: 11.5px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 11.5px;
 }
 
 a {
-	color: #55aaff;
+  color: #55aaff;
 }
 
 color {
-	color: #FFFFFF;
+  color: #ffffff;
 }
 
 /*.show-table {display: block;}*/
 .hide-table {
-	display: none;
+  display: none;
 }
 
 .filelist ~ .filelist {
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 .filelist a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .filelist a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 .title {
-	font-size: 18px;
-	font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .g {
-	text-align: center;
-	color: #00FF00;
+  text-align: center;
+  color: #00ff00;
 }
 
 .y {
-	text-align: center;
-	color: #FFFF00;
+  text-align: center;
+  color: #ffff00;
 }
 
 .r {
-	text-align: center;
-	color: #FF0000;
+  text-align: center;
+  color: #ff0000;
 }
 
 .n {
-	text-align: center;
-	color: blue;
+  text-align: center;
+  color: blue;
 }
 
 .style1 {
-	font-size: 12px;
-	font-weight: bold;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .style2 {
-	font-weight: bold
+  font-weight: bold;
 }
 
 .linkchecker-load {
-	filter: alpha(opacity=20);
-	-moz-opacity: 0.2;
-	opacity: 0.2;
+  filter: alpha(opacity=20);
+  -moz-opacity: 0.2;
+  opacity: 0.2;
 }
 
 .font-black {
-	color: #000;
+  color: #000;
 }
 
 .font-blue {
-	color: #05F;
+  color: #05f;
 }
 
 .caption {
-	font-family: Tahoma;
-	font-size: 11px;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
 }
 
 th {
-	border-left: 1px solid white;
+  border-left: 1px solid white;
 }
 
 /*
@@ -149,177 +149,236 @@ th {
 */
 /*the file checkbox menu */
 .chkmenu {
-	color: #99C9E6;
+  color: #99c9e6;
 }
 
 /* the files list table header */
 .flisttblhdr {
-	background-color: #4B433B;
-	text-align: center;
-	color: white;
+  background-color: #4b433b;
+  text-align: center;
+  color: white;
 }
 
 .flisttblftr {
-	background-color: #4B433B;
-	color: white;
-	text-align: center;
+  background-color: #4b433b;
+  color: white;
+  text-align: center;
 }
 
 .ftpprogress {
-	background-color: #FFFFFF;
-	margin: 1px;
-	width: 0%;
-	height: 8px;
+  background-color: #ffffff;
+  margin: 1px;
+  width: 0%;
+  height: 8px;
 }
 
 /* main.php */
 .plugincolhd {
-	background-color: #657B87;
-	color: #eee;
-	padding: 1px;
-	width: 103px;
-	margin: 1px auto 2px 2px;
+  background-color: #657b87;
+  color: #eee;
+  padding: 1px;
+  width: 103px;
+  margin: 1px auto 2px 2px;
 }
 
 .plugincollst {
-	color: #ccc;
+  color: #ccc;
 }
 
 .ServerFiles {
-	text-decoration: none;
-	color: #FFC500;
+  text-decoration: none;
+  color: #ffc500;
 }
 
 .flistmouseon {
-	background-color: #F5A249;
-	color: black;
+  background-color: #f5a249;
+  color: black;
 }
 
 .flistmouseoff {
-	background-color: #D49659;
-	color: black;
+  background-color: #d49659;
+  color: black;
+}
+
+.flistmouseoff > td {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .flistmouseoff > td:first-child {
-	padding-left: 5px;
-	padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 10px;
 }
 
 .tableconfig .flistmouseoff > td ~ td {
-	width: 300px;
-	padding-left: 5px !important;
+  width: 300px;
+  padding-left: 5px !important;
 }
 
 .tableconfig .flistmouseoff input[type="text"] {
-	width: 290px;
+  width: 290px;
 }
 
 .flistmouseoff input[type="text"] {
-	padding-left: 2px;
-	padding-right: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .workswith {
-	text-align: center;
-	padding: 3px;
-	color: #dedede;
-	margin: 0 auto;
-	width: 450px;
-	font-size: 9px;
-	height: 50px;
-	overflow: auto;
-	border: 1px solid #666;
+  text-align: center;
+  padding: 3px;
+  color: #dedede;
+  margin: 0 auto;
+  width: 450px;
+  font-size: 9px;
+  height: 50px;
+  overflow: auto;
+  border: 1px solid #666;
 }
 
 .autodel {
-	color: #FFCC00;
+  color: #ffcc00;
 }
 
 .cell-plugin {
-	height: 27px;
-	width: 109px;
-	font-family: "Tahoma";
-	font-size: 10px;
-	color: #FFC500;
-	text-align: center;
-	line-height: 27px;
-	background: url(../../images/button_bg2.gif);
-	background-position: center;
-	background-repeat: no-repeat;
+  height: 27px;
+  width: 109px;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  color: #ffc500;
+  text-align: center;
+  line-height: 27px;
+  background: url(../../images/button_bg2.gif);
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .button-auto {
-	height: 23px;
-	width: 105px;
-	margin-bottom: 1px;
-	margin-top: 1px;
-	font-family: "Tahoma";
-	font-size: 10px;
-	color: #FFAD00;
-	text-align: center;
-	border: 0px solid;
-	background: #17668C url(../../images/button_bg3.gif);
-	background-position: center;
-	background-repeat: no-repeat;
-	cursor: pointer;
+  height: 23px;
+  width: 105px;
+  margin-bottom: 1px;
+  margin-top: 1px;
+  font-family: Tahoma, sans-serif;
+  font-size: 10px;
+  color: #ffad00;
+  text-align: center;
+  border: 0px solid;
+  background: #17668c url(../../images/button_bg3.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 /* The progressbar for upload and download, including the outer div holder */
 .progressouter {
-	border: 1px solid #FFFFFF;
-	width: 300px;
-	height: 10px;
+  border: 1px solid #ffffff;
+  width: 300px;
+  height: 10px;
 }
 
 .progressdown {
-	background-color: #FFFFFF;
-	width: 0%;
-	height: 8px;
-	margin: 1px;
+  background-color: #ffffff;
+  width: 0%;
+  height: 8px;
+  margin: 1px;
 }
 
 .progressup {
-	background-color: #FFFFFF;
-	width: 0%;
-	height: 8px;
-	margin: 1px;
+  background-color: #ffffff;
+  width: 0%;
+  height: 8px;
+  margin: 1px;
 }
 
 /* The "new-and-improved" tabs xD */
 .selected {
-	background-color: #85cbeb !important;
+  background-color: #85cbeb !important;
 }
 
 .cell-nav {
-	height: 31px;
-	width: 119px;
-	font-family: "Tahoma";
-	font-size: 10px;
-	color: #FFC500;
-	text-align: center;
-	background: url(../../images/button_bg1.gif);
-	background-position: center;
-	background-repeat: no-repeat;
-	cursor: pointer;
+  height: 31px;
+  width: 119px;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  color: #ffc500;
+  text-align: center;
+  background: url(../../images/button_bg1.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .powered {
-	font-family: Arial;
-	color: #FF8700;
-	font-size: 10px;
-	line-height: 14px;
-	font-weight: bold;
+  font-family: Arial, sans-serif;
+  color: #ff8700;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: bold;
 }
 
 .copyright {
-	font-family: Arial;
-	line-height: 14px;
-	color: #CCCCCC;
-	font-size: 10px;
-	font-weight: bold;
+  font-family: Arial, sans-serif;
+  line-height: 14px;
+  color: #cccccc;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .copyright a {
-	color: red;
-	TEXT-DECORATION: none;
+  color: red;
+  text-decoration: none;
+}
+
+#server_stats {
+  line-height: 16px;
+  padding-bottom: 3px;
+}
+
+#server_stats .notice {
+  color: #cbac57;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.heading .version {
+  color: #ffff66;
+}
+
+.heading .welcome {
+  color: #ff3300;
+}
+
+.subheading {
+  margin-bottom: 5px;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  font-size: 10px;
+}
+
+#links {
+  display: block;
+  width: 550px;
+  height: 100px;
+}
+
+.proxy {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.selectize-now {
+  width: 140px;
+  display: inline-block;
+}
+
+.selectize-input {
+  padding: 1.6px 6px;
+  border-radius: 0 !important;
+}
+
+.selectize-dropdown {
+  border-radius: 0 !important;
 }

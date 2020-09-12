@@ -88,7 +88,7 @@ $lang = array(
     'checkall'                  => 'Kiểm tra tất cả',
     'uncheckall'                => 'Bỏ kiểm tra tất cả',
     'invert'                    => 'Chọn ngược lại',
-    'error1'                    => '<b><font color=red> %1$s </font></b>',
+    'error1'                    => '<b><font color=red>>%3$s: %1$s </font></b>',
     'error2'                    => '<b><a href="%2$s" style="text-decoration:none"><font color="red" face="Arial" size="2"><s>%2$s</s></font></a> <img src=images/chk_error.png width="15" alt="errorlink"> <font color=#ffcc33 face=Arial size=2>==&#9658; %1$s</font></b>',
     'pluginerror'               => 'Host %1$s bị lỗi. Liên hệ Admin!</font>',
     'noaccount'                 => 'Không có tài khoản %1$s trong website. Liên hệ Admin!</font>',

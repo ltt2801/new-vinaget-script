@@ -138,19 +138,21 @@ elseif ($page == 'cookie') {
 <table>
     <tr>
         <td>
-            <?php printf($obj->lang['acctype']); ?>
-            <select name='type' id='type'>
-                <?php
-                    foreach ($host as $key => $val) {
-                        if (!$val['alias']) {
-                            require_once 'hosts/' . $val['file'];
-                            if (method_exists($val['class'], "CheckAcc")) {
-                                echo "<option value='{$key}'>{$key}</option>";
+            <div style="display:flex;align-items:center">
+                <?php printf($obj->lang['acctype']); ?>&nbsp; &nbsp;
+                <select class="selectize-now" name="type" id="type">
+                    <?php
+                        foreach ($host as $key => $val) {
+                            if (!$val['alias']) {
+                                require_once 'hosts/' . $val['file'];
+                                if (method_exists($val['class'], "CheckAcc")) {
+                                    echo "<option value='{$key}'>{$key}</option>";
+                                }
                             }
                         }
-                    }
-                    ?>
-            </select>
+                        ?>
+                </select>
+            </div>
         </td>
         <td>
             &nbsp; &nbsp; &nbsp; <textarea type="text" name="cookie" id="cookie" value="" rows="5" cols="50" placeholder="put cookie here (abc=xyz;)"></textarea><br />
@@ -181,16 +183,18 @@ elseif ($page == 'account') {
 <table>
     <tr>
         <td>
-            <?php printf($obj->lang['acctype']); ?>
-            <select name='type' id='type'>
-                <?php
-                    foreach ($host as $key => $val) {
-                        if (!$val['alias']) {
-                            echo "<option value='{$key}'>{$key}</option>";
+            <div style="display:flex;align-items:center">
+                <?php printf($obj->lang['acctype']); ?>&nbsp; &nbsp;
+                <select class="selectize-now" name="type" id="type">
+                    <?php
+                        foreach ($host as $key => $val) {
+                            if (!$val['alias']) {
+                                echo "<option value='{$key}'>{$key}</option>";
+                            }
                         }
-                    }
-                    ?>
-            </select>
+                        ?>
+                </select>
+            </div>
         </td>
         <td>
             &nbsp; &nbsp; &nbsp; <textarea type="text" name="account" id="accounts" value="" rows="5" cols="50" placeholder="one account per line (user:pass)"></textarea><br />

@@ -22,7 +22,7 @@
 		.login {
 			color: #FFFFFF;
 			font-weight: bold;
-			font-family: Arial;
+			font-family: Arial, sans-serif;
 		}
 
 		.pass {
@@ -32,7 +32,7 @@
 		}
 
 		.powered {
-			font-family: Arial;
+			font-family: Arial, sans-serif;;
 			color: #FF8700;
 			font-size: 10px;
 			line-height: 14px;

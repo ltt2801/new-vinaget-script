@@ -18,8 +18,20 @@ class dl_k2s_cc extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("https://keep2share.cc/api/v2/login", "", "{\"username\":\"{$user}\",\"password\":\"{$pass}\"}", 0);
+        $post = array(
+            "username" => $user,
+            "password" => $pass,
+            "re_captcha_challenge" => isset($_REQUEST["recaptcha_challenge_field"]) ? $_REQUEST["recaptcha_challenge_field"] : "",
+            "re_captcha_response" => isset($_REQUEST["recaptcha_response_field"]) ? $_REQUEST["recaptcha_response_field"] : "",
+        );
+
+        $data = $this->lib->curl("https://keep2share.cc/api/v2/login", "", json_encode($post), 0);
         if (preg_match('/"message":"(.*?)"/', $data, $mess)) {
+            if (stristr($mess[1], "captcha")) {
+                $data = $this->lib->curl("https://keep2share.cc/api/v2/requestReCaptcha", "", "true=false", 0);
+                $json = @json_decode($data, true);
+                $this->error("captcha url code '{$json['challenge']}' url '{$json['captcha_url']}'", true, true);
+            }
             $this->error($mess[1], true, true);
         }
 
@@ -49,7 +61,6 @@ class dl_k2s_cc extends Download
 
         return false;
     }
-
 }
 
 /*

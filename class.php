@@ -24,6 +24,7 @@ class getinfo extends Tools_get
         $this->banned = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
         $this->unit = 512;
         $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36';
+        $this->checkingAcc = false;
         $this->cfg = $this->load_json($this->fileconfig);
         include "config.php";
         if (count($this->cfg) == 0) {
@@ -935,10 +936,8 @@ class stream_get extends getinfo
             return;
         }
 
-        $Original = $url;
+        $this->url = $url;
         $link = '';
-        $cookie = '';
-        $report = false;
 
         $megafile = new MEGA(urldecode($url));
 
@@ -949,9 +948,9 @@ class stream_get extends getinfo
         $filesize = $info['size'];
         $filename = isset($this->reserved['filename']) ? $this->reserved['filename'] : Tools_get::convert_name($info['attr']['n']);
 
-        $hosting = Tools_get::site_hash($Original);
+        $hosting = Tools_get::site_hash($this->url);
         if (!isset($filesize)) {
-            $this->error2('notsupport', $Original);
+            $this->error2('notsupport', $this->url);
         }
         $this->max_size = $this->acc[$site]['max_size'];
         if (!isset($this->max_size)) {
@@ -959,13 +958,13 @@ class stream_get extends getinfo
         }
 
         $msize = Tools_get::convertmb($filesize);
-        $hash = md5($_SERVER['REMOTE_ADDR'] . $Original);
+        $hash = md5($_SERVER['REMOTE_ADDR'] . $this->url);
         if ($hash === false) {
             $this->error1('cantjob');
         }
 
         if ($filesize > $this->max_size * 1024 * 1024) {
-            $this->error2('filebig', $Original, $msize, Tools_get::convertmb($this->max_size * 1024 * 1024));
+            $this->error2('filebig', $this->url, $msize, Tools_get::convertmb($this->max_size * 1024 * 1024));
         }
 
         if (($this->countMBIP + $filesize / (1024 * 1024)) >= $this->limitMBIP) {
@@ -988,7 +987,7 @@ class stream_get extends getinfo
             'msize' => $msize,
             'mtime' => time(),
             'speed' => 0,
-            'url' => urlencode($Original),
+            'url' => urlencode($this->url),
             'owner' => $this->owner,
             'ip' => $_SERVER['REMOTE_ADDR'],
             'type' => 'direct',
@@ -1063,7 +1062,7 @@ class stream_get extends getinfo
 
         if ($this->bbcode) {
             if (isset($this->autosearch) && $this->autosearch == 1) {
-                $domain = parse_url($Original, PHP_URL_HOST);
+                $domain = parse_url($this->url, PHP_URL_HOST);
                 $content = file_get_contents($this->cbox_url . "&sec=main");
                 $matches = explode('<tr id=', $content);
 
@@ -1074,7 +1073,7 @@ class stream_get extends getinfo
 
                     if (preg_match_all('/<a class="autoLink" href="(.*?' . $host_check . '.*?)" target="_blank">/i', $chat, $temp, PREG_PATTERN_ORDER)) {
                         foreach ($temp[1] as $linkcheck) {
-                            if (stristr($linkcheck, $Original)) {
+                            if (stristr($linkcheck, $this->url)) {
                                 preg_match('/<b class="(.*?)">(.*?)<\/b>/', $mess, $mem);
                                 $name = $mem[2]; //Get User Name
                             }
@@ -1285,10 +1284,8 @@ class stream_get extends getinfo
             return;
         }
 
-        $Original = $url;
+        $this->url = $url;
         $link = '';
-        $cookie = '';
-        $report = false;
 
         if (!$link) {
             $site = $this->using;
@@ -1302,7 +1299,7 @@ class stream_get extends getinfo
         }
 
         if (!$link) {
-            $domain = str_replace("www.", "", $this->cut_str($Original, "://", "/"));
+            $domain = str_replace("www.", "", $this->cut_str($this->url, "://", "/"));
             foreach ($this->list_host as $host => $arr_host) {
                 if (stristr($domain, $host)) {
                     require_once 'hosts/' . $this->list_host[$host]['file'];
@@ -1319,14 +1316,14 @@ class stream_get extends getinfo
         if (!$link) {
             $this->proxy = isset($this->acc[$site]['proxy']) ? $this->acc[$site]['proxy'] : false;
             $this->proxy = isset($this->prox) ? $this->prox : false;
-            $size_name = Tools_get::size_name($Original, "");
+            $size_name = Tools_get::size_name($this->url, "");
             $filesize = $size_name[0];
             $filename = $size_name[1];
             $this->max_size = $this->max_size_other_host;
             if ($size_name[0] > 1024 * 100) {
                 $link = $url;
             } else {
-                $this->error2('notsupport', $Original);
+                $this->error2('notsupport', $this->url);
             }
         } else {
             $size_name = Tools_get::size_name($link, $this->cookie);
@@ -1334,9 +1331,9 @@ class stream_get extends getinfo
             $filename = isset($this->reserved['filename']) ? $this->reserved['filename'] : $size_name[1];
         }
 
-        $hosting = Tools_get::site_hash($Original);
+        $hosting = Tools_get::site_hash($this->url);
         if (!isset($filesize)) {
-            $this->error2('notsupport', $Original);
+            $this->error2('notsupport', $this->url);
         }
         $this->max_size = $this->acc[$site]['max_size'];
         if (!isset($this->max_size)) {
@@ -1344,13 +1341,13 @@ class stream_get extends getinfo
         }
 
         $msize = Tools_get::convertmb($filesize);
-        $hash = md5($_SERVER['REMOTE_ADDR'] . $Original);
+        $hash = md5($_SERVER['REMOTE_ADDR'] . $this->url);
         if ($hash === false) {
             $this->error1('cantjob');
         }
 
         if ($filesize > $this->max_size * 1024 * 1024) {
-            $this->error2('filebig', $Original, $msize, Tools_get::convertmb($this->max_size * 1024 * 1024));
+            $this->error2('filebig', $this->url, $msize, Tools_get::convertmb($this->max_size * 1024 * 1024));
         }
 
         if (($this->countMBIP + $filesize / (1024 * 1024)) >= $this->limitMBIP) {
@@ -1373,7 +1370,7 @@ class stream_get extends getinfo
             'msize' => $msize,
             'mtime' => time(),
             'speed' => 0,
-            'url' => urlencode($Original),
+            'url' => urlencode($this->url),
             'owner' => $this->owner,
             'ip' => $_SERVER['REMOTE_ADDR'],
             'type' => 'direct',
@@ -1422,7 +1419,7 @@ class stream_get extends getinfo
 
         if ($this->bbcode) {
             if (isset($this->autosearch) && $this->autosearch == 1) {
-                $domain = parse_url($Original, PHP_URL_HOST);
+                $domain = parse_url($this->url, PHP_URL_HOST);
                 $content = file_get_contents($this->cbox_url . "&sec=main");
                 $matches = explode('<tr id=', $content);
 
@@ -1433,7 +1430,7 @@ class stream_get extends getinfo
 
                     if (preg_match_all('/<a class="autoLink" href="(.*?' . $host_check . '.*?)" target="_blank">/i', $chat, $temp, PREG_PATTERN_ORDER)) {
                         foreach ($temp[1] as $linkcheck) {
-                            if (stristr($linkcheck, $Original)) {
+                            if (stristr($linkcheck, $this->url)) {
                                 preg_match('/<b class="(.*?)">(.*?)<\/b>/', $mess, $mem);
                                 $name = $mem[2]; //Get User Name
                             }
@@ -2097,7 +2094,8 @@ class Tools_get
         return $time;
     }
 
-    public function verifyDataSecured() {
+    public function verifyDataSecured()
+    {
         $content = "";
         $error = false;
         $head1 = get_headers($this->self . $this->fileinfo_dir . $this->fileaccount);
@@ -2206,7 +2204,6 @@ class Download
     public function General($url)
     {
         $this->url = $url;
-        $this->lib->url = $url;
         $this->cookie = "";
         if ($this->lib->acc[$this->site]['proxy'] != "") {
             $this->lib->proxy = $this->lib->acc[$this->site]['proxy'];
@@ -2368,13 +2365,21 @@ class Download
 
     public function error($msg, $force = false, $delcookie = true, $type = 1)
     {
+        if ($this->lib->checkingAcc) {
+            $this->url = "";
+        }
+
         if (isset($this->lib->lang[$msg])) {
             $msg = sprintf($this->lib->lang[$msg], $this->site, $this->url);
         }
 
-        $msg = sprintf($this->lib->lang["error{$type}"], $msg, $this->url);
+        $msg = sprintf($this->lib->lang["error{$type}"], $msg, $this->url, $this->site);
         if ($delcookie) {
             $this->save();
+        }
+
+        if ($this->lib->checkingAcc) {
+            return;
         }
 
         if ($force || $this->last) {

@@ -88,7 +88,7 @@ $lang = array(
     'checkall'                  => 'Check All',
     'uncheckall'                => 'Un-Check All',
     'invert'                    => 'Invert Selection',
-    'error1'                    => '<b><font color=red> %1$s </font></b>',
+    'error1'                    => '<b><font color=red>%3$s: %1$s </font></b>',
     'error2'                    => '<b><a href="%2$s" style="text-decoration:none"><font color="red" face="Arial" size="2"><s>%2$s</s></font></a> <img src=images/chk_error.png width="15" alt="errorlink"> <font color=#ffcc33 face=Arial size=2>==&#9658; %1$s</font></b>',
     'pluginerror'               => '%1$s plugin was error. Contact admin!',
     'noaccount'                 => 'There\'s no %1$s account in database. Contact admin!',
