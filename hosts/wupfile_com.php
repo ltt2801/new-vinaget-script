@@ -5,7 +5,7 @@ class dl_wupfile_com extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://wipfiles.net/?op=my_account", $cookie, "");
+        $data = $this->lib->curl("https://wupfile.com/?op=my_account", $cookie, "");
         if (stristr($data, "Account Balance") && stristr($data, "Premium expire")) {
             return array(true, "Until " . $this->lib->cut_str($data, "Premium expire&nbsp;&nbsp;", " </span>"));
         } else if (stristr($data, "Account Balance")) {
