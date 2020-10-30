@@ -1,3 +1,6 @@
+v39:
+- Update class.php
+- Update extmatrix.com, prefiles.com, hotlink.cc, hitfile.net
 v38:
 - Update class.php
 - Update ajax.js

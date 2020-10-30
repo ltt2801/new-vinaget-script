@@ -28,7 +28,7 @@ class dl_hitfile_net extends Download
         $data = $this->lib->curl($link, "user_lang=en;{$this->lib->cookie}", "");
         if (stristr($data, 'File was deleted or not found')) {
             $this->error("dead", true, false, 2);
-        } elseif (preg_match("/<a href='(.*?)'><b>Download/i", $data, $match)) {
+        } elseif (preg_match("/<h1><a href='(.*?)'><b>Download/", $data, $match)) {
             return trim($match[1]);
         }
 

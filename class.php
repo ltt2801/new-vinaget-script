@@ -2260,6 +2260,7 @@ class Download
                     }
 
                     if (method_exists($this, "CheckAcc")) {
+                        $this->lib->cookie = $cookie;
                         $status = $this->CheckAcc($this->lib->cookie);
                     } else {
                         $status = array(

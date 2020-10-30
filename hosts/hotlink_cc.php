@@ -33,10 +33,12 @@ class dl_hotlink_cc extends Download
 		$page = $this->lib->curl($url, $this->lib->cookie, "op=download2&id={$id}&method_premium=1");
 		if (stristr("You have reached the download-limit", $page)) {
 			$this->error("LimitAcc", true, false);
+		} elseif (stristr("ile was deleted by its own", $page)) {
+			$this->error("Link dead.", true, false);
 		}
 
-		if (preg_match('@http:\/\/\w+\.hotlink\.cc:[0-9]+\/d\/[^"\'><\r\n\t]+@i', $page, $matches)) {
-			return trim($matches[0]);
+		if (preg_match('/<a href="(.*?) class="files_list--active">/', $page, $match)) {
+			return trim($match[1]);
 		}
 
 		return false;
@@ -48,5 +50,5 @@ class dl_hotlink_cc extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Hotlink.cc Download Plugin
- * Date: 26.08.2019
+ * Date: 21.08.2020
  */
