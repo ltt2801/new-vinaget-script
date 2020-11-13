@@ -45,7 +45,7 @@ class dl_k2s_cc extends Download
 
     public function Leech($url)
     {
-        if (preg_match('/file\/(.*)[\/?]/', $url, $match)) {
+        if (preg_match('/file\/([a-zA-Z0-9]+)/', $url, $match)) {
             $fileid = trim($match[1]);
             $data = $this->lib->curl("https://keep2share.cc/api/v2/getUrl", "", "{{$this->lib->cookie}, \"file_id\":\"{$fileid}\"}", 0);
             $json = @json_decode($data, true);
@@ -68,5 +68,5 @@ class dl_k2s_cc extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * K2s.cc Download Plugin
- * Date: 08.09.2020
+ * Date: 11.11.2020
  */

@@ -5,7 +5,7 @@ class dl_turbobit_net extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("https://turbobit.net", $cookie, 0);
+        $data = $this->lib->curl("https://turbobit.net", $cookie, "", 0);
         if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
             $data = $this->lib->curl(trim($this->redirect), $cookie, 0);
         }
@@ -27,7 +27,9 @@ class dl_turbobit_net extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("https://turbobit.net/user/login", "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
+        $data = $this->lib->curl("https://turbobit.net/login", "user_lang=en", "");
+        $cook = $this->lib->GetCookies($data);
+        $data = $this->lib->curl("https://turbobit.net/user/login", $cook, "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
         if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
             $this->lib->curl(trim($this->redirect), "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
         }
@@ -75,5 +77,5 @@ class dl_turbobit_net extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Turbobit.net Download Plugin
- * Date: 09.06.2017
+ * Date: 11.11.2020
  */

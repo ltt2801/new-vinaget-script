@@ -2099,17 +2099,17 @@ class Tools_get
         $content = "";
         $error = false;
         $head1 = get_headers($this->self . $this->fileinfo_dir . $this->fileaccount);
-        if (!stristr($head1[0], "403 Forbidden")) {
+        if (!stristr($head1[0], "403 Forbidden") && !stristr($head1[0], "404 Not Found")) {
             $error = true;
             $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->fileaccount . "'>" . $this->fileinfo_dir . $this->fileaccount . "</a>");
         }
         $head2 = get_headers($this->self . $this->fileinfo_dir . $this->filecookie);
-        if (!stristr($head2[0], "403 Forbidden")) {
+        if (!stristr($head2[0], "403 Forbidden") && !stristr($head2[0], "404 Not Found")) {
             $error = true;
             $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->filecookie . "'>" . $this->fileinfo_dir . $this->filecookie . "</a>");
         }
         $head3 = get_headers($this->self . $this->fileinfo_dir . $this->fileconfig);
-        if (!stristr($head3[0], "403 Forbidden")) {
+        if (!stristr($head3[0], "403 Forbidden") && !stristr($head3[0], "404 Not Found")) {
             $error = true;
             $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->fileconfig . "'>" . $this->fileinfo_dir . $this->fileconfig . "</a>");
         }
