@@ -1,3 +1,6 @@
+v41:
+- Update uptobox.com, filefactory.com, hitfile.net, katfile.com
+- Update class.php
 v40:
 - Update turbobit.net, hitfile.net, k2s.cc
 - Update class.php

@@ -13,7 +13,7 @@ class getinfo extends Tools_get
 {
     public function config()
     {
-        $this->self = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('/\?.*$/', '', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF']);
+        $this->self = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/\?.*$/', '', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF']);
         $this->Deny = true;
         $this->admin = false;
         $this->fileinfo_dir = "data";
@@ -23,7 +23,7 @@ class getinfo extends Tools_get
         $this->fileinfo_ext = "vng";
         $this->banned = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
         $this->unit = 512;
-        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36';
+        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36';
         $this->checkingAcc = false;
         $this->cfg = $this->load_json($this->fileconfig);
         include "config.php";
@@ -756,7 +756,7 @@ class stream_get extends getinfo
             list($ip, $port) = explode(":", $proxy);
         }
 
-        die('<title>You must add this proxy to IDM ' . (strpos($proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . '</title><center><b><span style="color:#076c4e">You must add this proxy to IDM </span> <span style="color:#30067d">(' . (strpos($proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' and Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ')</span> <br><span style="color:red">PLEASE REMEMBER: IF YOU DO NOT ADD THE PROXY, YOU CAN NOT DOWNLOAD THIS LINK!</span><br><br>  Open IDM > Downloads > Options.<br><img src="http://i.imgur.com/v7FR3HE.png"><br><br>  Proxy/Socks > Choose "Use Proxy" > Add proxy server: <font color=\'red\'>' . $ip . '</font>, port: <font color=\'red\'>' . $port . '</font> ' . (strpos($proxy, "|") ? ', username: <font color=\'red\'>' . $user . '</font> and password: <font color=\'red\'>' . $pass . '</font>' : '') . ' > Choose http > OK.<br>' . (strpos($proxy, "|") ? '<img src="http://i.imgur.com/LUTpGyN.png">' : '<img src="http://i.imgur.com/zExhNVR.png">') . '<br><br>  Copy your link > Paste in IDM > OK.<br><img src="http://i.imgur.com/S355c5J.png"><br><br>  It will work > Start Download > Enjoy!<br><img src="http://i.imgur.com/vlh2vZf.png"></b></center>');
+        die('<title>You must add this proxy to IDM ' . (strpos($proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' & Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . '</title><center><b><span style="color:#076c4e">You must add this proxy to IDM </span> <span style="color:#30067d">(' . (strpos($proxy, "|") ? 'IP: ' . $ip . ' Port: ' . $port . ' User: ' . $user . ' and Pass: ' . $pass . '' : 'IP: ' . $ip . ' Port: ' . $port . '') . ')</span> <br><span style="color:red">PLEASE REMEMBER: IF YOU DO NOT ADD THE PROXY, YOU CAN NOT DOWNLOAD THIS LINK!</span><br><br>  Open IDM > Downloads > Options.<br><img src="http://i.imgur.com/v7FR3HE.png"><br><br>  Proxy/Socks > Choose "Use Proxy" > Add proxy server: <font color=\'red\'>' . $ip . '</font>, port: <font color=\'red\'>' . $port . '</font> ' . (strpos($proxy, "|") ? ', username: <font color=\'red\'>' . $user . '</font> and password: <font color=\'red\'>' . $pass . '</font>' : '') . ' > Choose http > OK.<br>' . (strpos($proxy, "|") ? '<img src="http://i.imgur.com/LUTpGyN.png">' : '<img src="http://i.imgur.com/zExhNVR.png">') . '<br><br>  Copy your link > Paste in IDM > OK.<br><img src="https://i.imgur.com/S355c5J.png"><br><br>  It will work > Start Download > Enjoy!<br><img src="https://i.imgur.com/vlh2vZf.png"></b></center>');
     }
 
     public function cut_str($str, $left, $right)
@@ -1009,7 +1009,7 @@ class stream_get extends getinfo
         if ($this->acc[$site]['direct']) {
             $linkdown = $link;
         } elseif ($this->longurl) {
-            if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) {
+            if ($this->checkFunctionUrlRewrite()) {
                 $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             } else {
                 $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
@@ -1176,14 +1176,15 @@ class stream_get extends getinfo
 
     public function tinyurl($url)
     {
-        $data = $this->curl("http://tinyurl.com/create.php", "", "url=$url", 0);
+        $data = $this->curl("https://tinyurl.com/create.php", "", "url=$url", 0);
         preg_match('/<div class="indent"><b>(.*?)<\/b><div id="success">/', $data, $match);
         return trim($match[1]);
     }
 
-    public function curl($url, $cookies, $post, $header = 1, $json = 0, $ref = 0, $xml = 0, $h = NULL)
+    public function curl($url, $cookies, $post, $header = 1, $json = 0, $ref = 0, $xml = 0, $h = NULL, $follow = 0)
     {
         $ch = @curl_init();
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_URL, $url);
         if ($json == 1) {
             $head[] = "Content-type: application/json";
@@ -1236,13 +1237,13 @@ class stream_get extends getinfo
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $follow);
 
-        if (!is_array($h)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Expect:',
-            ));
-        }
+        // if (!is_array($h)) {
+        //     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        //         'Expect:',
+        //     ));
+        // }
 
         $page = curl_exec($ch);
         curl_close($ch);
@@ -1392,7 +1393,7 @@ class stream_get extends getinfo
         if ($this->acc[$site]['direct']) {
             $linkdown = $link;
         } elseif ($this->longurl) {
-            if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) {
+            if ($this->checkFunctionUrlRewrite()) {
                 $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
             } else {
                 $linkdown = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $sv_name . 'index.php/' . $hosting . '/' . $job['hash'] . '/' . urlencode($filename);
@@ -1428,8 +1429,8 @@ class stream_get extends getinfo
                     preg_match('/<\/b>:(.*)/', $mess, $temp);
                     $chat = $temp[1]; //Get Chat
 
-                    if (preg_match_all('/<a class="autoLink" href="(.*?' . $host_check . '.*?)" target="_blank">/i', $chat, $temp, PREG_PATTERN_ORDER)) {
-                        foreach ($temp[1] as $linkcheck) {
+                    if (preg_match_all('/<a class="autoLink" href="(.*?' . $host_check . '.*?)" target="_blank">/i', $chat, $match, PREG_PATTERN_ORDER)) {
+                        foreach ($match[1] as $linkcheck) {
                             if (stristr($linkcheck, $this->url)) {
                                 preg_match('/<b class="(.*?)">(.*?)<\/b>/', $mess, $mem);
                                 $name = $mem[2]; //Get User Name
@@ -1614,7 +1615,7 @@ class stream_get extends getinfo
 
             $hosting = substr(Tools_get::site_hash($file[0]), 0, 15);
             if ($this->longurl) {
-                if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) {
+                if ($this->checkFunctionUrlRewrite()) {
                     $linkdown = Tools_get::site_hash($file[0]) . "/$file[2]/$file[3]";
                 } else {
                     $linkdown = 'index.php/' . Tools_get::site_hash($file[0]) . "/$file[2]/$file[3]";
@@ -1780,6 +1781,11 @@ class stream_get extends getinfo
 
     public function convertmb($filesize) {
         return Tools_get::convertmb($filesize);
+    }
+
+    private function checkFunctionUrlRewrite() {
+        if (function_exists("apache_get_modules") && in_array('mod_rewrite', @apache_get_modules())) return true;
+        return false;
     }
 }
 
@@ -2098,18 +2104,18 @@ class Tools_get
     {
         $content = "";
         $error = false;
-        $head1 = get_headers($this->self . $this->fileinfo_dir . $this->fileaccount);
-        if (!stristr($head1[0], "403 Forbidden") && !stristr($head1[0], "404 Not Found")) {
+        $head1 = stream_get::curl($this->self . $this->fileinfo_dir . $this->fileaccount, "", "", 1, 0, 0, 0, NULL, 1);
+        if (!stristr($head1, "403 Forbidden") && !stristr($head1, "404 Not Found")) {
             $error = true;
             $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->fileaccount . "'>" . $this->fileinfo_dir . $this->fileaccount . "</a>");
         }
-        $head2 = get_headers($this->self . $this->fileinfo_dir . $this->filecookie);
-        if (!stristr($head2[0], "403 Forbidden") && !stristr($head2[0], "404 Not Found")) {
+        $head2 = stream_get::curl($this->self . $this->fileinfo_dir . $this->filecookie, "", "", 1, 0, 0, 0, NULL, 1);
+        if (!stristr($head2, "403 Forbidden") && !stristr($head2, "404 Not Found")) {
             $error = true;
             $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->filecookie . "'>" . $this->fileinfo_dir . $this->filecookie . "</a>");
         }
-        $head3 = get_headers($this->self . $this->fileinfo_dir . $this->fileconfig);
-        if (!stristr($head3[0], "403 Forbidden") && !stristr($head3[0], "404 Not Found")) {
+        $head3 = stream_get::curl($this->self . $this->fileinfo_dir . $this->fileconfig, "", "", 1, 0, 0, 0, NULL, 1);
+        if (!stristr($head3, "403 Forbidden") && !stristr($head3, "404 Not Found")) {
             $error = true;
             $content .= sprintf($this->lang['datanotprotected'], "File <a target='_blank' href='" . $this->self . $this->fileinfo_dir . $this->fileconfig . "'>" . $this->fileinfo_dir . $this->fileconfig . "</a>");
         }

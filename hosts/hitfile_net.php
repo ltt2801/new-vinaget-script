@@ -9,7 +9,7 @@ class dl_hitfile_net extends Download
         if (stristr($data, '<span class="premium-date">') && stristr($data, "<b>free</b>")) {
             return array(true, "accfree");
         } elseif (stristr($data, '<span class="premium-date">') && stristr($data, "<b>premium</b>")) {
-            return array(true, "Until " . $this->lib->cut_str($data, "href='/premium'>", "</a>"));
+            return array(true, "Until " . $this->lib->cut_str($data, "<a href='/premium/info'>", "</a>"));
         } else {
             return array(false, "accinvalid");
         }
@@ -43,5 +43,5 @@ class dl_hitfile_net extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Hitfile.net Download Plugin
- * Date: 11.11.2020
+ * Date: 27.05.2021
  */

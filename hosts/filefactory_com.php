@@ -8,13 +8,13 @@ class dl_filefactory_com extends Download
         if (stristr($url, "/f/") || stristr($url, "/folder/")) {
             $data = $this->lib->curl($url, "", "");
             if (stristr($data, "<input type=\"checkbox\" value=\"")) {
-                $ffid = explode('<td><a href="http://www.filefactory.com/file', $data);
+                $ffid = explode('<td><a href="https://www.filefactory.com/file', $data);
                 $maxfile = count($ffid);
                 for ($i = 1; $i < $maxfile; $i++) {
                     preg_match('%\/(.+)\/%U', $ffid[$i], $code);
                     preg_match('%\/\w+\/(.+)"%U', $ffid[$i], $fn);
-                    //$list = "http://www.filefactory.com/file/".$code[1]."/".$fn[1]."<br/>";
-                    $list = "<a href=http://www.filefactory.com/file/" . $code[1] . "/" . urlencode($fn[1]) . ">http://www.filefactory.com/file/" . $code[1] . "/" . urlencode($fn[1]) . "<br/></a>";
+                    //$list = "https://www.filefactory.com/file/".$code[1]."/".$fn[1]."<br/>";
+                    $list = "<a href=https://www.filefactory.com/file/" . $code[1] . "/" . urlencode($fn[1]) . ">http://www.filefactory.com/file/" . $code[1] . "/" . urlencode($fn[1]) . "<br/></a>";
                     echo $list;
                 }
                 exit;
@@ -27,26 +27,29 @@ class dl_filefactory_com extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("http://www.filefactory.com/account/", "locale=en_US.utf8;" . $cookie, "");
+        $data = $this->lib->curl("https://www.filefactory.com/account/", "locale=en_US.utf8;" . $cookie, "");
         if (stristr($data, 'Premium valid until:')) {
             return array(true, "Until " . $this->lib->cut_str($data, 'Premium valid until: <strong>', '</strong>">'));
+        } elseif(stristr($data, '<strong>Unlimited</strong>')) {
+            return array(true, "Lifetime Account. Unlimited Bandwidth!");
         } elseif (stristr($data, '<strong>Free Member</strong>')) {
             return array(false, "accfree");
-        } else {
-            return array(false, "accinvalid");
         }
-
+        return array(false, "accinvalid");
     }
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("http://www.filefactory.com", "locale=en_US.utf8", "");
+        $data = $this->lib->curl("https://www.filefactory.com", "locale=en_US.utf8", "");
         $cookies = $this->lib->Getcookies($data);
         $post["loginEmail"] = $user;
         $post["loginPassword"] = $pass;
         $post['Submit'] = "Sign%20In";
-        $data = $this->lib->curl("http://www.filefactory.com/member/signin.php", "locale=en_US.utf8; {$cookies}", $post);
-        return "locale=en_US.utf8; {$cookies};" . $this->lib->GetCookies($data);
+        $data = $this->lib->curl("https://www.filefactory.com/member/signin.php", "locale=en_US.utf8; {$cookies}", $post);
+        if (stristr($data, 'code=160')) {
+            $this->error("You are unable to access our servers at this time as a precautionary measure against potential abuse.", true, false);
+        }
+        return array(true, "locale=en_US.utf8; {$cookies};" . $this->lib->GetCookies($data));
     }
 
     public function Leech($url)
