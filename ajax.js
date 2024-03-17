@@ -157,6 +157,15 @@ function ajaxget(id, url, type) {
                         $('#links').val(url + "\n" + $('#links').val());
                         $("#link" + id).html('');
                     }
+                } else if (/captcha image/.test(html) === true) {
+                    var text = /code \'(.*?)\' url \'(.*?)\'/g;
+                    var captcha = text.exec(html);
+                    if (/Authentication/i.test($('#showresults').html()) == false) {
+                        $("#link" + id).html('<center><form action="javascript:ajaxget(\'' + id + '\',\'' + url + '\',\'reget\');" name="formlink" id="formlink"><table><tr><td>Please enter captcha by the following image: ' + captcha[2] + '</td><td><input type="text" name="captcha_code" value="" size="20" placeholder="captcha code" autocomplete="off" /><input type="hidden" name="captcha_cookie" value="' + captcha[1] + '" /><input type="submit" value="Go"/> <a onclick="ajaxget(\'' + id + '\',\'' + url + '\',\'refresh\');" href="javascript:void(0)" style="TEXT-DECORATION: none">Refresh</a></td></tr></table></b></form></center>');
+                    } else {
+                        $('#links').val(url + "\n" + $('#links').val());
+                        $("#link" + id).html('');
+                    }
                 } else if (/is this link sex/.test(html) === true) {
                     $("#link" + id).html('<b><font color="red">is this link sex ??? ==&#9658; </font><a target="' + id + '" style=\'TEXT-DECORATION: none\' href="https://www.google.com/search?q=' + url + '"><font color="#0066FF">' + url + '</font></a> <a onclick="return ajaxget(\'' + id + '\',\'' + url + '|not3x\',\'reget\');" href="javascript:void(0)" style=\'TEXT-DECORATION: none\'><font color=#ffcc33>&nbsp; &nbsp; if not click here to try again</font></a></b>');
                 } else if (/please try again/.test(html) === true) {
