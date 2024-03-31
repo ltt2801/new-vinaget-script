@@ -36,7 +36,7 @@ class dl_fboom_me extends Download
             $cook = trim($_REQUEST["captcha_cookie"]);
             $data = $this->lib->curl("https://api.fboom.me/v1/users/me/captcha?v=" . mt_rand(), $cook, "", 0);
             $image_html = "<div style=\"display: block; background-color: #fff\">" . $data . "</div>";
-            $this->error("captcha image code '$cook' url '" . $image_html . "'", true, true);
+            $this->error("captcha image code '" . $cook . "' url '" . $image_html . "'", true, true);
         }
         if (!isset($_REQUEST["captcha_code"])) {
             $json["grant_type"] = "client_credentials";
@@ -59,15 +59,15 @@ class dl_fboom_me extends Download
         $json["username"] = $user;
         $json["password"] = $pass;
         $data = $this->lib->curl("https://api.fboom.me/v1/auth/token", $cook, json_encode($json), 1, 1);
-        if (preg_match('/"message":"(.*?)"/', $data, $mess)) {
+        if (stristr($data, "Invalid credentials")) {
+            return array(false, "");
+        } else if (preg_match('/"message":"(.*?)"/', $data, $mess)) {
             if (stristr($data, "captcha_required")) {
                 $data = $this->lib->curl("https://api.fboom.me/v1/users/me/captcha?v=" . mt_rand(), $cook, "", 0);
                 $image_html = "<div style=\"display: block; background-color: #fff\">" . $data . "</div>";
                 $this->error("captcha image code '$cook' url '" . $image_html . "'", true, true);
             }
             $this->error($mess[1], true, true);
-        } else if (stristr($data, "Invalid credentials")) {
-            return array(false, "");
         }
         $cookie = $this->lib->GetCookies($data);
         return array(true, $cookie);
@@ -75,7 +75,7 @@ class dl_fboom_me extends Download
 
     public function Leech($url)
     {
-        if (preg_match('/\/file\/(.*?)\//', $url, $match)) {
+        if (preg_match('/\/file\/(.*?)[\/|?]/', $url, $match) || preg_match('/\/file\/(.*)/', $url, $match)) {
             $id = trim($match[1]);
             $data = $this->lib->curl("https://api.fboom.me/v1/files/" . $id . "/download?referer=", $this->lib->cookie, "", 0);
             $json = @json_decode($data, true);
