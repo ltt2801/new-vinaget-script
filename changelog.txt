@@ -1,3 +1,5 @@
+v44:
+- Update class.php
 v43:
 - Update fboom.me
 v42:

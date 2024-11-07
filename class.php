@@ -23,7 +23,7 @@ class getinfo extends Tools_get
         $this->fileinfo_ext = "vng";
         $this->banned = explode(' ', '.htaccess .htpasswd .php .php3 .php4 .php5 .phtml .asp .aspx .cgi .pl');
         $this->unit = 512;
-        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36';
+        $this->UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
         $this->checkingAcc = false;
         $this->cfg = $this->load_json($this->fileconfig);
         include "config.php";
@@ -687,7 +687,7 @@ class stream_get extends getinfo
         header("Content-Transfer-Encoding: binary");
         header("Accept-Ranges: bytes");
 
-        if (stristr($header, "TTP/1.0 200 OK") || stristr($header, "TTP/1.1 200 OK")) {
+        if (stristr($header, "TTP/1.0 200 ") || stristr($header, "TTP/1.1 200 ")) {
             if (!is_numeric($filesize)) {
                 $filesize = trim($this->cut_str($header, "Content-Length:", "\n"));
             }
@@ -1911,7 +1911,7 @@ class Tools_get
             }
         } while (strpos($header, "\r\n\r\n") === false);
 
-        if (stristr($header, "TTP/1.0 200 OK") || stristr($header, "TTP/1.1 200 OK") || stristr($header, "TTP/1.1 206")) {
+        if (stristr($header, "TTP/1.0 200 ") || stristr($header, "TTP/1.1 200 ") || stristr($header, "TTP/1.1 206")) {
             $filesize = trim($this->cut_str($header, "Content-Length:", "\n"));
         } else {
             $filesize = -1;
