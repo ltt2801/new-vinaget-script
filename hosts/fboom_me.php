@@ -10,7 +10,7 @@ class dl_fboom_me extends Download
         }
         $json = @json_decode($data, true);
         if (isset($json["accountType"])) {
-            if ($json["accountType"] == "premium") {
+            if ($json["accountType"] == "premium" || $json["accountType"] == "premium_pro") {
                 $data = $this->lib->curl("https://api.fboom.me/v1/users/me/statistic", $cook, "", 0, 1, "https://fboom.me/profile");
                 $json_quota = @json_decode($data, true);
                 $quota = "";
@@ -23,6 +23,8 @@ class dl_fboom_me extends Download
                 return array(true, "Until " . $this->lib->convert_time($json["expires"]) . $quota);
             }
             return array(false, "accfree");
+        } else if (isset($json) && strlen($json) > 0) {
+            return array(false, $json);
         }
         return array(false, "accinvalid");
     }
