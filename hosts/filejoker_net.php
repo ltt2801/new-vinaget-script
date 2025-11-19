@@ -6,9 +6,8 @@ class dl_filejoker_net extends Download
     public function CheckAcc($cookie)
     {
         $data = $this->lib->curl("https://filejoker.net/profile", $cookie, "");
-        $dt = $this->lib->cut_str($data, '<div class="alert alert-success alert-promo">', '</div>');
-        if (stristr($data, 'Premium account expires') && stristr($dt, ">Extend Premium<")) {
-            return array(true, "Until " . $this->lib->cut_str($dt, "Premium account expires: ", '				<a h') . '<br>Traffic Available: ' . $this->lib->cut_str($this->lib->cut_str($data, "td>Traffic Available:</td>", "</tr>"), 'td>', '</td'));
+        if (stristr($data, 'Premium account expires') && stristr($data, ">Extend Premium<")) {
+            return array(true, "Until " . $this->lib->cut_str($data, 'Premium account expires: ', '</p>') . '<br>Traffic Available: ' . trim($this->lib->cut_str($data, 'valuemax="100" title="', 'available">')));
         } else {
             return array(false, "accinvalid");
         }
@@ -18,7 +17,7 @@ class dl_filejoker_net extends Download
     public function Login($user, $pass)
     {
         $data = $this->curl_old('https://filejoker.net', '', '');
-        $data = $this->curl_old('https://filejoker.net/login', '', "recaptcha_response_field=&op=login&redirect=&rand=&email={$user}&password={$pass}");
+        $data = $this->curl_old('https://filejoker.net/login', '', "op=login&redirect=&rand=&email={$user}&password={$pass}");
         $cookie = $this->lib->GetCookies($data);
 
         return array(true, $cookie);
@@ -59,11 +58,15 @@ class dl_filejoker_net extends Download
         } else {
             $post = $this->parseForm($data, '<form action="', '</form>');
             $data = $this->lib->curl($url, $this->lib->cookie, $post);
+
             if (strstr($data, "You have reached your download limit:")) {
                 $this->error("LimitAcc", true, false, 2);
             }
 
-            if (preg_match('%a href="(.*)" class="btn btn-green">Download File</a%U', $data, $linkpre)) {
+            if (preg_match('/<a href="(.*?)" class="btn btn-success/U', $data, $linkpre)) {
+                return trim($linkpre[1]);
+            }
+            if (preg_match('/<a class="btn btn-success" href="(.*?)"/U', $data, $linkpre)) {
                 return trim($linkpre[1]);
             }
 
@@ -78,5 +81,5 @@ class dl_filejoker_net extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Filejoker.net Download Plugin
- * Date: 01.09.2018
+ * Date: 19.11.2025
  */

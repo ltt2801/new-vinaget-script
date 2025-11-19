@@ -1,3 +1,5 @@
+v47:
+- Update 1fichier.com, alfafile.net, filefactory.com, filejoker.net, hitfile.net, katfile.cloud
 v46:
 - Update 1fichier.com, filextras.com, katfile.com
 v45:

@@ -67,6 +67,10 @@ class dl_filefactory_com extends Download
 
         $data = $this->lib->curl($url, $this->lib->cookie, "");
 
+        if (stristr($data, 'File Unavailable</h2>')) {
+            $this->error("dead", true, false, 2);
+        }
+
         if ($pass) {
             $post["password"] = $pass;
             $post["Submit"] = "Continue";
@@ -104,5 +108,5 @@ class dl_filefactory_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * Filefactory.com Download Plugin
- * Date: 30.07.2017
+ * Date: 19.11.2025
  */

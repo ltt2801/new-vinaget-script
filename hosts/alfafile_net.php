@@ -17,7 +17,7 @@ class dl_alfafile_net extends Download
 
     public function Login($user, $pass)
     {
-        $data = $this->lib->curl("http://alfafile.net/user/login/?url=%2F", "lang=en", "email=" . urlencode($user) . "&password=" . urlencode($pass) . "&remember_me=1");
+        $data = $this->lib->curl("https://alfafile.net/user/login/?url=%2F", "lang=en", "email=" . urlencode($user) . "&password=" . urlencode($pass) . "&remember_me=1");
 
         if (stristr($data, "Invalid captcha")) {
             die("Captcha found. Wait 30 mins to login again");
@@ -49,5 +49,5 @@ class dl_alfafile_net extends Download
  * New Vinaget by LTT
  * Version: 3.3
  * Alfafile.net Download Plugin
- * Date: 07.08.2017
+ * Date: 19.11.2025
  */

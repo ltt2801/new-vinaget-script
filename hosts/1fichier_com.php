@@ -31,10 +31,11 @@ class dl_1fichier_com extends Download
             $this->error("dead", true, false, 2);
         } elseif ($this->isRedirect($data)) {
             return trim($this->redirect);
-        } elseif (preg_match('/<form accept-charset="UTF-8"[^>]*action="([^"]+)"/i', $data, $matches)) {
+        } elseif (preg_match('/<form[^>]+action="([^"]+)"/i', $data, $matches)) {
             $urlDownload = trim($matches[1]);
             $data = $this->lib->curl($urlDownload, $this->lib->cookie, "did=0");
             if ($this->isRedirect($data)) {
+
                 return trim($this->redirect);
             }
         }
@@ -48,5 +49,5 @@ class dl_1fichier_com extends Download
  * New Vinaget by LTT
  * Version: 3.3 LTS
  * 1fichier.com Download Plugin
- * Date: 06.05.2025
+ * Date: 19.11.2025
  */

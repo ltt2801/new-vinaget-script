@@ -5,8 +5,8 @@ class dl_turbobit_net extends Download
 
     public function CheckAcc($cookie)
     {
-        $data = $this->lib->curl("https://turbobit.net", $cookie, "", 0);
-        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
+        $data = $this->lib->curl("https://turbobit.net/?site_version=1&from_mirror=1", $cookie, "");
+        if (stristr($data, "HTTP/1.1 307 Temporary Redirect") && $this->isRedirect($data)) {
             $data = $this->lib->curl(trim($this->redirect), $cookie, 0);
         }
 
@@ -30,7 +30,7 @@ class dl_turbobit_net extends Download
         $data = $this->lib->curl("https://turbobit.net/login", "user_lang=en", "");
         $cook = $this->lib->GetCookies($data);
         $data = $this->lib->curl("https://turbobit.net/user/login", $cook, "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
-        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
+        if (stristr($data, "HTTP/1.1 307 Temporary Redirect") && $this->isRedirect($data)) {
             $this->lib->curl(trim($this->redirect), "user_lang=en", "user[login]={$user}&user[pass]={$pass}&user[captcha_type]=&user[captcha_subtype]=&user[submit]=Sign+in&user[memory]=on");
         }
 
@@ -45,27 +45,26 @@ class dl_turbobit_net extends Download
             $gach = explode('/', $url);
             $url = "https://turbobit.net/{$gach[5]}.html";
         }
-        $data = $this->lib->curl($url, $this->lib->cookie, "");
-        if (stristr($data, "HTTP/1.1 301 Moved Permanently") && $this->isRedirect($data)) {
+        $data = $this->lib->curl($url . '?site_version=1&from_mirror=1', $this->lib->cookie, "");
+
+        if (stristr($data, "HTTP/1.1 307 Temporary Redirect") && $this->isRedirect($data)) {
             $data = $this->lib->curl(trim($this->redirect), $this->lib->cookie, "");
         }
-
         $this->save($this->lib->GetCookies($data));
         if (stristr($data, 'site is temporarily unavailable') || stristr($data, 'This document was not found in System')) {
             $this->error("dead", true, false, 2);
-        } elseif (stristr($data, 'Please wait, searching file')) {
+        } elseif (stristr($data, 'Please wait, searching file') || stristr($data, 'The file is not avaliable now because of technical problems.')) {
             $this->error("dead", true, false, 2);
         } elseif (stristr($data, 'You have reached the <a href=\'/user/messages\'>daily</a> limit of premium downloads') || stristr($data, 'You have reached the <a href=\'/user/messages\'>monthly</a> limit of premium downloads')) {
             $this->error("LimitAcc");
         } elseif (stristr($data, '<u>Turbo Access</u> denied')) {
             $this->error("blockAcc", true, false);
-        } elseif (preg_match("%a href='(.*)'><b>Download%U", $data, $link)) {
-            $link = trim($link[1]);
+        } elseif (preg_match("/<a[^>]+href='(https:\/\/turbobit\.net\/download\/redirect\/[^']+)'[^>]*>\s*<b>Download file<\/b>/i", $data, $match)) {
+            $link = trim($match[1]);
             $data = $this->lib->curl($link, $this->lib->cookie, "");
             if ($this->isRedirect($data)) {
                 return trim($this->redirect);
             }
-
         }
         return false;
     }
